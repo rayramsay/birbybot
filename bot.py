@@ -2,7 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import os
+import json
+import random
+from time import gmtime, strftime
+
+import requests
 from twython import Twython
+from flickrapi import shorturl
+from PIL import Image
+from io import BytesIO
 
 ############# GLOBALS ##############
 # Remember to ``source secrets.sh``!
@@ -19,10 +27,36 @@ twitter = Twython(
     ACCESS_TOKEN_SECRET
 )
 
-###### NOTE TO FUTURE RACHEL ######
-# Make short URLs: https://stuvel.eu/flickrapi-doc/8-shorturl.html
 
-message = "Snowy Plovers near Santa Barbara by Mick Thompson https://www.flickr.com/photos/mickthompson/17911734021/ #birbybot"
-photo = open('assets/plovers.jpg', 'rb')
-response = twitter.upload_media(media=photo)
+# https://github.com/molly/twitterbot_framework/blob/master/bot.py#L57-L62
+def log(message):
+    path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+    with open(os.path.join(path, "birbybot.log"), 'a+') as f:
+        t = strftime("%d %b %Y %H:%M:%S", gmtime())
+        f.write("\n" + t + " " + message)
+
+
+with open('plover_1530909825.json', 'r') as readfile:
+    photos = json.load(readfile)
+
+photo = random.choice(photos)
+
+title = photo['title']
+photographer = photo['ownername']
+shorturl = shorturl.url(photo['id'])
+
+message = f'{title} by {photographer} {shorturl} #birbybot'
+
+filename = 'temp.jpg'
+r = requests.get(photo['url_o'], stream=True)
+
+if r.status_code == 200:
+    with open(filename, 'wb') as image:
+        for chunk in r:
+            image.write(chunk)
+
+img = open('temp.jpg', 'rb')
+response = twitter.upload_media(media=img)
 twitter.update_status(status=message, media_ids=[response['media_id']])
+os.remove(filename)
+log(message)

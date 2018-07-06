@@ -3,6 +3,7 @@
 
 import os
 import json
+import time
 
 from flickrapi import FlickrAPI
 
@@ -17,15 +18,12 @@ flickr = FlickrAPI(FLICKR_PUBLIC, FLICKR_SECRET, format="parsed-json")
 # https://www.flickr.com/services/api/flickr.photos.search.html
 # https://www.flickr.com/services/api/flickr.photos.licenses.getInfo.html
 
-###### NOTE TO FUTURE RACHEL ######
-# Think about how you can modify this to only get new pictures.
-# Change sort, add date, append to results?
-
 text = "plover baby"
 license = "1,2,3,4,5,6,7,8,9,10"
 sort = "relevance"
 media = "photos"
-extras = "license,owner_name,url_o"
+extras = "license,date_upload,owner_name,url_o"
+min_upload_date = ""  # unix timestamp or mysql datetime
 
 results = flickr.photos.search(
     text=text,
@@ -40,6 +38,7 @@ print("Total results: " + str(results['photos']['total']))
 
 photos = results['photos']['photo']
 
-print("Writing results to results.txt")
-with open('results.txt', 'w') as outfile:
+filename = text.replace(" ", "_") + "_" + str(int(time.time())) + ".txt"
+print("Writing results to " + filename)
+with open(filename, 'w') as outfile:
     json.dump(photos, outfile, indent=4, ensure_ascii=False)
