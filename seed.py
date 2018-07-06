@@ -17,6 +17,10 @@ flickr = FlickrAPI(FLICKR_PUBLIC, FLICKR_SECRET, format="parsed-json")
 # https://www.flickr.com/services/api/flickr.photos.search.html
 # https://www.flickr.com/services/api/flickr.photos.licenses.getInfo.html
 
+###### NOTE TO FUTURE RACHEL ######
+# Think about how you can modify this to only get new pictures.
+# Change sort, add date, append to results?
+
 text = "plover baby"
 license = "1,2,3,4,5,6,7,8,9,10"
 sort = "relevance"

@@ -19,7 +19,10 @@ twitter = Twython(
     ACCESS_TOKEN_SECRET
 )
 
-message = "#birbybot"
+###### NOTE TO FUTURE RACHEL ######
+# Make short URLs: https://stuvel.eu/flickrapi-doc/8-shorturl.html
+
+message = "Snowy Plovers near Santa Barbara by Mick Thompson https://www.flickr.com/photos/mickthompson/17911734021/ #birbybot"
 photo = open('assets/plovers.jpg', 'rb')
 response = twitter.upload_media(media=photo)
 twitter.update_status(status=message, media_ids=[response['media_id']])
