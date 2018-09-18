@@ -1,30 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
 import json
+import logging
+import os
 import random
-from time import gmtime, strftime
+import sys
 
 import requests
-from twython import Twython
 from flickrapi import shorturl
+from twython import Twython
 
-############# GLOBALS ##############
-# Remember to ``source secrets.sh``!
-CONSUMER_KEY = os.environ['TWITTER_CONSUMER_KEY']
-CONSUMER_SECRET = os.environ['TWITTER_CONSUMER_SECRET']
-ACCESS_TOKEN = os.environ['TWITTER_ACCESS_TOKEN']
-ACCESS_TOKEN_SECRET = os.environ['TWITTER_ACCESS_SECRET']
-####################################
+import utils
 
-
-# https://github.com/molly/twitterbot_framework/blob/master/bot.py#L57-L62
-def log(string):
-    path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-    with open(os.path.join(path, "birbybot.log"), 'a+') as f:
-        t = strftime("%d %b %Y %H:%M:%S", gmtime())
-        f.write("\n" + t + " " + string)
+### LOGGING ####################################################################
+logger = logging.getLogger(__name__)
+utils.configure_logger(logger, console_output=True)
+### GLOBALS ####################################################################
+try:
+    CONSUMER_KEY = os.environ['TWITTER_CONSUMER_KEY']
+    CONSUMER_SECRET = os.environ['TWITTER_CONSUMER_SECRET']
+    ACCESS_TOKEN = os.environ['TWITTER_ACCESS_TOKEN']
+    ACCESS_TOKEN_SECRET = os.environ['TWITTER_ACCESS_SECRET']
+except KeyError as e:
+    logger.exception(e)
+    sys.exit(1)
+################################################################################
 
 
 def get_random_photo(json_file):
@@ -36,6 +37,7 @@ def get_random_photo(json_file):
 
 
 def download_image(url):
+    # Prefer url_l > url_c > url_z > url_o
     """Downloads image from URL."""
     filename = 'temp.jpg'
     r = requests.get(url, stream=True)

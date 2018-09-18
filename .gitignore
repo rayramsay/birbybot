@@ -1,4 +1,6 @@
 secrets.sh
+start.sh
+*.log
 *.pyc
 /env
 /assets
