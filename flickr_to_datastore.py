@@ -6,6 +6,7 @@ import logging
 import os
 import sys
 
+from dateutil.relativedelta import relativedelta
 from flickrapi import FlickrAPI
 from google.cloud import datastore
 
@@ -48,6 +49,7 @@ def create_entities_from_search(search_terms, min_upload_date=None):
     # https://github.com/sybrenstuvel/flickrapi/blob/master/doc/7-util.rst#walking-through-a-search-result
     # https://github.com/GoogleCloudPlatform/python-docs-samples/tree/master/datastore/cloud-client
 
+    logger.debug(f"Searching for photos of '{search_terms}' uploaded since {min_upload_date}...")
     flickr = FlickrAPI(FLICKR_PUBLIC, FLICKR_SECRET, format="etree")  # Walk requires ElementTree
     params = {"text": search_terms,
               "license": "1,2,3,4,5,6,7,8,9,10",  # All licenses except All Rights Reserved
@@ -55,8 +57,7 @@ def create_entities_from_search(search_terms, min_upload_date=None):
               "media": "photos",
               "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
               "min_upload_date": min_upload_date}
-
-    ds_client = datastore.Client(project="beachbirbys")
+    ds_client = datastore.Client()
     entities = list()
     exclude_from_indexes = ["secret",
                             "server",
@@ -76,7 +77,6 @@ def create_entities_from_search(search_terms, min_upload_date=None):
                             "width_c",
                             "width_l",
                             "width_o"]
-
     for photo in flickr.walk(**params):  # Creates a generator
         kind = "Photo"
         name = "Flickr-" + photo.get("id")
@@ -84,7 +84,9 @@ def create_entities_from_search(search_terms, min_upload_date=None):
         entity = datastore.Entity(key=key, exclude_from_indexes=exclude_from_indexes)
         entity.update({
             "source": "Flickr",
-            "search_terms": search_terms
+            "search_terms": search_terms,
+            "entity_updated": datetime.datetime.utcnow(),
+            "last_tweeted": datetime.datetime.utcfromtimestamp(1514764800)  # 1/1/18
         })
         for k, v in photo.items():
             if not k == "dateupload":
@@ -92,21 +94,33 @@ def create_entities_from_search(search_terms, min_upload_date=None):
             else:
                 entity.update({k: datetime.datetime.utcfromtimestamp(int(v))})
         entities.append(entity)
+    logger.info(f"Found {len(entities)} photos of '{search_terms}' uploaded since {min_upload_date}.")
     logger.debug(entities)
     return entities
 
-def write_entities_to_datastore(entities, project_id):
-    # TODO
+
+def write_entities_to_datastore(entities):
+    logger.debug(f"Writing {len(entities)} entities to Cloud Datastore for project beachbirbys...")
+    ds_client = datastore.Client()
+    with ds_client.batch():
+        ds_client.put_multi(entities)
+    logger.info(f"Wrote {len(entities)} entities to Cloud Datastore for project beachbirbys.")
     return
 
 ################################################################################
 if __name__ == "__main__":
     filename = os.path.basename(__file__)
-    logger.debug("Starting {filename}...".format(filename=filename))
+    logger.info(f"Starting {filename}...")
     try:
-        entities = create_entities_from_search("plover baby", "2017-01-01")
+        # This script will run on the first day of the month to check for photos
+        # uploaded the previous month.
+        first_day_of_current_month = datetime.datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        first_day_of_previous_month = first_day_of_current_month - relativedelta(months=1)
+        min_upload_date = first_day_of_previous_month.strftime("%Y-%m-%d")
+        search_terms = "plover baby"
+        entities = create_entities_from_search(search_terms, min_upload_date)
         if entities:
-            write_entities_to_datastore(entities, "beachbirbys")
-        logger.debug("Finished {filename}.".format(filename=filename))
+            write_entities_to_datastore(entities)
+        logger.info(f"Finished {filename}.")
     except Exception as e:
         logger.exception(e)
