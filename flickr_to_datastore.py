@@ -24,7 +24,7 @@ except KeyError as e:
     sys.exit(1)
 ################################################################################
 
-def create_entities_from_search(search_terms, min_upload_date=None):
+def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
     """Searches Flickr for non-copyrighted photos matching `search_terms` and
     creates Cloud Datastore entities from search results.
 
@@ -57,7 +57,6 @@ def create_entities_from_search(search_terms, min_upload_date=None):
               "media": "photos",
               "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
               "min_upload_date": min_upload_date}
-    ds_client = datastore.Client()
     entities = list()
     exclude_from_indexes = ["secret",
                             "server",
@@ -99,9 +98,8 @@ def create_entities_from_search(search_terms, min_upload_date=None):
     return entities
 
 
-def write_entities_to_datastore(entities):
+def write_entities_to_datastore(ds_client, entities):
     logger.debug(f"Writing {len(entities)} entities to Cloud Datastore for project beachbirbys...")
-    ds_client = datastore.Client()
     with ds_client.batch():
         ds_client.put_multi(entities)
     logger.info(f"Wrote {len(entities)} entities to Cloud Datastore for project beachbirbys.")
@@ -112,16 +110,13 @@ if __name__ == "__main__":
     filename = os.path.basename(__file__)
     logger.info(f"Starting {filename}...")
     try:
-        # This script will run on the first day of the month to check for photos
-        # uploaded the previous month.
-        first_day_of_current_month = datetime.datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-        first_day_of_previous_month = first_day_of_current_month - relativedelta(months=1)
-        min_upload_date = first_day_of_previous_month.strftime("%Y-%m-%d")
+        ds_client = datastore.Client()
         search_terms = ["plover baby", "sandpiper baby"]
+        first_day_of_previous_month = (datetime.datetime.utcnow().replace(day=1) - relativedelta(months=1)).strftime("%Y-%m-%d")
         for term in search_terms:
-            entities = create_entities_from_search(term, min_upload_date)
+            entities = create_entities_from_search(ds_client, term, min_upload_date=first_day_of_previous_month)
             if entities:
-                write_entities_to_datastore(entities)
+                write_entities_to_datastore(ds_client, entities)
         logger.info(f"Finished {filename}.")
     except Exception as e:
         logger.exception(e)
