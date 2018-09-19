@@ -52,7 +52,7 @@ def create_entities_from_search(search_terms, min_upload_date=None):
     logger.debug(f"Searching for photos of '{search_terms}' uploaded since {min_upload_date}...")
     flickr = FlickrAPI(FLICKR_PUBLIC, FLICKR_SECRET, format="etree")  # Walk requires ElementTree
     params = {"text": search_terms,
-              "license": "1,2,3,4,5,6,7,8,9,10",  # All licenses except All Rights Reserved
+              "license": "1,2,3,4,5,6,8,9,10",  # All licenses except All Rights Reserved & 'No known copyright restrictions' (poor quality results)
               "sort": "relevance",
               "media": "photos",
               "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
@@ -117,10 +117,11 @@ if __name__ == "__main__":
         first_day_of_current_month = datetime.datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         first_day_of_previous_month = first_day_of_current_month - relativedelta(months=1)
         min_upload_date = first_day_of_previous_month.strftime("%Y-%m-%d")
-        search_terms = "plover baby"
-        entities = create_entities_from_search(search_terms, min_upload_date)
-        if entities:
-            write_entities_to_datastore(entities)
+        search_terms = ["plover baby", "sandpiper baby"]
+        for term in search_terms:
+            entities = create_entities_from_search(term, min_upload_date)
+            if entities:
+                write_entities_to_datastore(entities)
         logger.info(f"Finished {filename}.")
     except Exception as e:
         logger.exception(e)
