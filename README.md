@@ -5,5 +5,7 @@ Birbybot is the code behind [@beachbirbys](https://www.twitter.com/beachbirbys),
 
 Birbybot is built with:
 
+* Python 3.7
 * Flickr and [flickrapi](https://pypi.org/project/flickrapi/)
 * [Cloud Firestore in Datastore mode](https://cloud.google.com/datastore/docs/quickstart)
+* [Cloud Vision API](https://cloud.google.com/vision/docs/detecting-labels)
