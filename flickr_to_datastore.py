@@ -2,11 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import errno
-import io
 import logging
 import os
-import pathlib
 import sys
 
 from dateutil.relativedelta import relativedelta
@@ -22,7 +19,7 @@ utils.configure_logger(logger, console_output=True)
 
 def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
     """Searches Flickr for non-copyrighted photos matching `search_terms` and
-    creates Cloud Datastore entities.
+    creates Cloud Datastore entities from search results.
 
     Args:
         search_terms (str): A free text search. Photos whose title, description
