@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+import errno
+import io
 import logging
 import os
+import pathlib
 import sys
 
 from dateutil.relativedelta import relativedelta
@@ -15,18 +18,11 @@ import utils
 ### LOGGING ####################################################################
 logger = logging.getLogger(__name__)
 utils.configure_logger(logger, console_output=True)
-### GLOBALS ####################################################################
-try:
-    FLICKR_PUBLIC = os.environ['FLICKR_KEY']
-    FLICKR_SECRET = os.environ['FLICKR_SECRET']
-except KeyError as e:
-    logger.exception(e)
-    sys.exit(1)
 ################################################################################
 
 def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
     """Searches Flickr for non-copyrighted photos matching `search_terms` and
-    creates Cloud Datastore entities from search results.
+    creates Cloud Datastore entities.
 
     Args:
         search_terms (str): A free text search. Photos whose title, description
@@ -49,13 +45,20 @@ def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
     # https://github.com/sybrenstuvel/flickrapi/blob/master/doc/7-util.rst#walking-through-a-search-result
     # https://github.com/GoogleCloudPlatform/python-docs-samples/tree/master/datastore/cloud-client
 
+    try:
+        FLICKR_PUBLIC = os.environ['FLICKR_KEY']
+        FLICKR_SECRET = os.environ['FLICKR_SECRET']
+    except KeyError as e:
+        logger.exception(e)
+        raise
+
     logger.debug(f"Searching for photos of '{search_terms}' uploaded since {min_upload_date}...")
     flickr = FlickrAPI(FLICKR_PUBLIC, FLICKR_SECRET, format="etree")  # Walk requires ElementTree
     params = {"text": search_terms,
-              "license": "1,2,3,4,5,6,8,9,10",  # All licenses except All Rights Reserved & 'No known copyright restrictions' (poor quality results)
+              "license": "1,2,3,4,5,6,8,9,10",  # All licenses except All Rights Reserved & 'No known copyright restrictions' (due to poor quality results)
               "sort": "relevance",
               "media": "photos",
-              "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
+              "extras": "license,date_upload,owner_name,tags,url_z,url_c,url_l,url_o",
               "min_upload_date": min_upload_date}
     entities = list()
     exclude_from_indexes = ["secret",
@@ -92,10 +95,25 @@ def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
                 entity.update({k: v})
             else:
                 entity.update({k: datetime.datetime.utcfromtimestamp(int(v))})
+        add_download_url(entity)
         entities.append(entity)
     logger.info(f"Found {len(entities)} photos of '{search_terms}' uploaded since {min_upload_date}.")
     logger.debug(entities)
     return entities
+
+
+def add_download_url(entity):
+    # Prefer url_l to url_c to url_z to url_o.
+    if entity.get("url_l"):
+        url = entity["url_l"]
+    elif entity.get("url_c"):
+        url = entity["url_c"]
+    elif entity.get("url_z"):
+        url = entity["url_z"]
+    else:
+        url = entity["url_o"]
+    entity.update({"download_url": url})
+    return entity
 
 
 def write_entities_to_datastore(ds_client, entities):
@@ -111,7 +129,8 @@ if __name__ == "__main__":
     logger.info(f"Starting {filename}...")
     try:
         ds_client = datastore.Client()
-        search_terms = ["plover baby", "sandpiper baby"]
+        search_terms = ["plover chick", "plover hatchling", "plover baby",
+                        "sandpiper chick", "sandpiper hatchling", "sandpiper baby"]
         first_day_of_previous_month = (datetime.datetime.utcnow().replace(day=1) - relativedelta(months=1)).strftime("%Y-%m-%d")
         for term in search_terms:
             entities = create_entities_from_search(ds_client, term, min_upload_date=first_day_of_previous_month)
