@@ -92,14 +92,14 @@ def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
                 entity.update({k: v})
             else:
                 entity.update({k: datetime.datetime.utcfromtimestamp(int(v))})
-        add_download_url(entity)
+        entity.update({"download_url": get_download_url(entity)})
         entities.append(entity)
     logger.info(f"Found {len(entities)} photos of '{search_terms}' uploaded since {min_upload_date}.")
     logger.debug(entities)
     return entities
 
 
-def add_download_url(entity):
+def get_download_url(entity):
     # Prefer url_l to url_c to url_z to url_o.
     if entity.get("url_l"):
         url = entity["url_l"]
@@ -109,8 +109,7 @@ def add_download_url(entity):
         url = entity["url_z"]
     else:
         url = entity["url_o"]
-    entity.update({"download_url": url})
-    return entity
+    return url
 
 
 def write_entities_to_datastore(ds_client, entities):
@@ -130,7 +129,8 @@ if __name__ == "__main__":
                         "sandpiper chick", "sandpiper hatchling", "sandpiper baby"]
         first_day_of_previous_month = (datetime.datetime.utcnow().replace(day=1) - relativedelta(months=1)).strftime("%Y-%m-%d")
         for term in search_terms:
-            entities = create_entities_from_search(ds_client, term, min_upload_date=first_day_of_previous_month)
+            # entities = create_entities_from_search(ds_client, term, min_upload_date=first_day_of_previous_month)
+            entities = create_entities_from_search(ds_client, term)
             if entities:
                 write_entities_to_datastore(ds_client, entities)
         logger.info(f"Finished {filename}.")
