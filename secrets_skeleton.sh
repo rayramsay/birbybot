@@ -5,3 +5,5 @@ export TWITTER_ACCESS_SECRET=""
 
 export FLICKR_KEY=""
 export FLICKR_SECRET=""
+
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account-private-key.json"

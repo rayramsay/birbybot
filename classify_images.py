@@ -84,10 +84,10 @@ def classify_entities(v_client, entities):
             logger.error(f"No labels for {entity.key.name}: {raw_labels}")
             raise Exception(f"No labels for {entity.key.name}.")
         entity.update({
-                "vision_labels": json.dumps(list(l.description for l in raw_labels)),
-                "is_bird": is_bird(set(l.description for l in raw_labels)),
-                "entity_updated": datetime.datetime.utcnow()
-            })
+            "vision_labels": json.dumps(list(l.description for l in raw_labels)),
+            "is_bird": is_bird(set(l.description for l in raw_labels)),
+            "entity_updated": datetime.datetime.utcnow()
+        })
     logger.info(f"Classified {len(entities)} entities.")
     logger.debug(entities)
     return

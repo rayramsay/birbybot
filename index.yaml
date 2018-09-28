@@ -1,0 +1,6 @@
+indexes:
+
+- kind: Photo
+  properties:
+  - name: is_bird
+  - name: last_tweeted
