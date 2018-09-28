@@ -88,8 +88,7 @@ def tweet_and_update(ds_client, entity):
     r = tweet_photo(message, filepath)
     # TODO: Parse r['created_at'] and use that for last tweeted?
     entity.update({
-        "last_tweeted": datetime.datetime.utcnow(),
-        "entity_updated": datetime.datetime.utcnow()
+        "last_tweeted": datetime.datetime.utcnow()
     })
     write_entities_to_datastore(ds_client, [entity])
     return
