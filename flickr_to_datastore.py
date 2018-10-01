@@ -22,6 +22,8 @@ def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
     Datastore Photo entities from search results.
 
     Args:
+        ds_client (google.cloud.datastore.client.Client)
+
         search_terms (str): A free text search. Photos whose title, description
         or tags contain the text will be returned. You can exclude results that
         match a term by prepending it with a - character.
