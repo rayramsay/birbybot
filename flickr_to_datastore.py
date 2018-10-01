@@ -89,8 +89,7 @@ def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
             "source": "Flickr",
             "search_terms": search_terms,
             "last_tweeted": datetime.datetime.utcfromtimestamp(1514764800),  # 1/1/18
-            "vision_labels": None,
-            "is_bird": None
+            "is_classified": False
         })
         for k, v in photo.items():
             if not k == "dateupload":
@@ -151,6 +150,10 @@ if __name__ == "__main__":
         # This script is designed to be run on the first of the month in order
         # to find photos uploaded to Flickr during the previous month.
         ds_client = datastore.Client()
+
+        write_entities_to_datastore(ds_client, create_entities_from_search(ds_client, "plover hatchling"))
+        exit()
+
         search_terms = ["plover chick", "plover hatchling", "plover baby",
                         "sandpiper chick", "sandpiper hatchling", "sandpiper baby"]
         first_day_of_previous_month = (datetime.datetime.utcnow().replace(day=1) - relativedelta(months=1)).strftime("%Y-%m-%d")
