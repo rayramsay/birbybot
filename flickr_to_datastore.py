@@ -79,7 +79,8 @@ def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
                             "width_z",
                             "width_c",
                             "width_l",
-                            "width_o"]
+                            "width_o",
+                            "download_url"]
     for photo in flickr.walk(**params):  # Creates a generator
         kind = "Photo"
         name = "Flickr-" + photo.get("id")
@@ -137,8 +138,18 @@ def get_download_url(entity):
 
 def write_entities_to_datastore(ds_client, entities):
     logger.debug(f"Writing {len(entities)} entities to Cloud Datastore for project beachbirbys...")
-    with ds_client.batch():
-        ds_client.put_multi(entities)
+    chunks = list(utils.chunks(entities, 500))
+    logger.debug(f"Split entities into {len(chunks)} chunks.")
+    for chunk in chunks:
+        try:
+            with ds_client.batch():
+                logger.debug("Writing chunk...")
+                ds_client.put_multi(chunk)
+        except Exception as e:
+            logger.exception(e)
+            logger.error(chunk)
+            logger.error(entities)
+            raise
     logger.info(f"Wrote {len(entities)} entities to Cloud Datastore for project beachbirbys.")
     return
 
@@ -150,10 +161,6 @@ if __name__ == "__main__":
         # This script is designed to be run on the first of the month in order
         # to find photos uploaded to Flickr during the previous month.
         ds_client = datastore.Client()
-
-        write_entities_to_datastore(ds_client, create_entities_from_search(ds_client, "plover hatchling"))
-        exit()
-
         search_terms = ["plover chick", "plover hatchling", "plover baby",
                         "sandpiper chick", "sandpiper hatchling", "sandpiper baby"]
         first_day_of_previous_month = (datetime.datetime.utcnow().replace(day=1) - relativedelta(months=1)).strftime("%Y-%m-%d")

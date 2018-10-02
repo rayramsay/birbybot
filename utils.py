@@ -1,6 +1,11 @@
 import logging
 import os
 
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
+
 def configure_logger(logger, console_output=False):
     logger.setLevel(logging.DEBUG)
     path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
