@@ -84,7 +84,7 @@ def tweet_and_update(ds_client, entity):
     filepath = os.path.join(os.path.dirname(__file__), f'assets/{entity.key.name}.jpg')
     if not pathlib.Path(filepath).exists():
         filepath = download_image(url=entity.get("download_url"),
-                                    filename=entity.key.name)
+                                  name=entity.key.name)
     r = tweet_photo(message, filepath)
     # TODO: Parse r['created_at'] and use that for last tweeted?
     entity.update({

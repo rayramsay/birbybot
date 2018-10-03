@@ -9,4 +9,4 @@ Birbybot is built with:
 * Flickr and [flickrapi](https://pypi.org/project/flickrapi/)
 * [Twython](https://pypi.org/project/twython/)
 * [Cloud Firestore in Datastore mode](https://cloud.google.com/datastore/docs/quickstart)
-* [Cloud Vision API](https://cloud.google.com/vision/docs/detecting-labels)
+* [Cloud Vision API](https://cloud.google.com/vision/docs/all-samples)

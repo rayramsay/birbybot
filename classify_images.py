@@ -1,23 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# TODO: Refactor to preserve access to image information (width)
-# Get vertexes from detect images
-
-import datetime
 import io
 import json
 import logging
 import os
 import pathlib
-import random
 import sys
 
 import requests
 from google.api_core import exceptions
 from google.cloud import datastore
 from google.cloud import vision
-from PIL import Image
+from PIL import Image, ImageDraw
 
 import utils
 from flickr_to_datastore import write_entities_to_datastore
@@ -97,6 +92,10 @@ def name_from_path(filepath):
     return filepath.split("/")[-1][:-4]
 
 
+def too_big(blob):
+    return sys.getsizeof(blob) > 1500
+
+
 def vision_img_from_path(v_client, filepath):
     # TODO: Docstring
     """
@@ -131,7 +130,7 @@ def get_safety_annotations(v_client, image):
     return safety_annotations
 
 
-def get_label_annotations(v_client, image):
+def get_label_annotations(v_client, filepath):
     # TODO: Improve docstring
     """Retrieve image's label annotations from Cloud Vision API.
 
@@ -142,6 +141,7 @@ def get_label_annotations(v_client, image):
         description: "ecosystem" score: 0.9368894100189209 topicality: 0.9368894100189209, ...]
         See https://cloud.google.com/vision/docs/reference/rest/v1/images/annotate#EntityAnnotation
     """
+    image = vision_img_from_path(v_client, filepath)
     response = v_client.label_detection(image=image)
     logger.debug(f"API response for label_detection: {response}")
     if not response.label_annotations:
@@ -161,26 +161,28 @@ def get_object_annotations(v_client, filepath):
     if not response.localized_object_annotations:
         logger.error(f"No object annotations for {filepath}.")
         raise exceptions.GoogleAPIError(f"No object annotations for {filepath}. Vision API response: {response}") 
-    # To convert normalized_verticies to verticies, multiply the x field of the
-    # normalized_vertex by the width of the picture to get the x field of the
-    # vertex, and multiply the y field of the normalized_vertex by the height of
-    # the image to get the y of the vertex.
-    pim = Image.open(filepath)
-    width, height = pim.size
+    width, height = Image.open(filepath).size
     object_annotations = list()
     for o in response.localized_object_annotations:
         oa = dict()
-        vects = o.bounding_poly.normalized_vertices
-        oa["name"] = o.name
-        oa["crop_box"] = [vects[0].x * width, vects[0].y * height,
-                          vects[2].x * width - 1, vects[2].y * height - 1]
+        verts = o.bounding_poly.normalized_vertices
+        oa["name"] = o.name.lower()
+        # https://pillow.readthedocs.io/en/5.3.x/reference/Image.html#PIL.Image.Image.crop
+        oa["crop_box"] = [round(verts[0].x * width),   # left
+                          round(verts[0].y * height),  # upper
+                          round(verts[2].x * width),   # right
+                          round(verts[2].y * height)]  # lower
+        # https://pillow.readthedocs.io/en/5.3.x/reference/ImageDraw.html#PIL.ImageDraw.PIL.ImageDraw.ImageDraw.polygon
+        oa["draw_box"] = [round(verts[0].x * width), round(verts[0].y * height),
+                          round(verts[1].x * width), round(verts[1].y * height),
+                          round(verts[2].x * width), round(verts[2].y * height),
+                          round(verts[3].x * width), round(verts[3].y * height)]
         object_annotations.append(oa)
     logger.debug(f"Returning object annotations: {object_annotations}")
     return object_annotations
 
 
 def get_crop_hints(v_client, filepath):
-    # TODO: Docstring
     # https://cloud.google.com/vision/docs/crop-hints
     image = vision_img_from_path(v_client, filepath)
     response = v_client.crop_hints(image=image)
@@ -195,11 +197,14 @@ def get_crop_hints(v_client, filepath):
 
 
 def is_safe(safety_annotations):
-    # TODO: Docstring
-    """
-    s_a dict
-    If it is likely or very likey that image contains adult, medical, spoofed,
-    violent, or racy content, return False.
+    """Returns False if it is likely or very likey that the image contains
+    questionable content.
+    
+    Args:
+        safety_annotations (dict)
+
+    Returns:
+        bool
     """
     return all(x not in safety_annotations.values() for x in ["LIKELY", "VERY_LIKELY"])
 
@@ -207,7 +212,7 @@ def is_safe(safety_annotations):
 def is_bird(labels):
     # TODO Docstring
     """l_a list"""
-    return any(x in labels for x in ["bird", "seabird", "beak"])
+    return any(x in labels for x in ["bird", "seabird", "beak", "egg"])
 
 
 def classify_entity(v_client, entity):
@@ -215,36 +220,49 @@ def classify_entity(v_client, entity):
     """
     """
     name = entity.key.name
+    # Download from URL.
     filepath = download_image(url=entity.get("download_url"),
                               name=name)
     # Find objects in image.
-    logger.debug(f"Requesting object detection for {entity.key.name}...")
+    logger.debug(f"Requesting object detection for {filepath}...")
+    obs = None
     try:
         obs = get_object_annotations(v_client, filepath)
-        return
-        ### UP TO DATE ^^^ NEED TO FIX vvv ###
+        object_names = list(o["name"].lower() for o in obs)
 
-        object_names = list(o.name.lower() for o in obs)
+        # TODO: Truncate smarter in order to prevent
+        # google.api_core.exceptions.InvalidArgument: 400 The value of property
+        # is longer than 1500 bytes.
+        if too_big(json.dumps(obs)):
+            logger.warn(f"Object annotation {obs} too long to save to datastore; truncating...")
+            obs = obs[:1]
         entity.update({
-            "object_labels": json.dumps(object_names),
+            "object_labels": json.dumps(obs),
             "is_bird": is_bird(object_names)
         })
-        logger.debug(f"First pass: {entity.key.name} is_bird = {entity.get('is_bird')}")
+        logger.debug(f"First pass: {name} is_bird = {entity.get('is_bird')}")
     except exceptions.GoogleAPIError as e:
         logger.exception(e)
 
     # Double check non-bird.
     if not entity.get("is_bird") == True:
-        # Crop and annotate.
         try:
-            crop_path = crop_to_hints(v_client, filepath)
-        except exceptions.GoogleAPIError:
-            crop_path = None
-        try:
-            if crop_path:
-                label_annotations = get_label_annotations(v_client, vision_img_from_path(v_client, crop_path))
+            # If we have crop_boxes, crop and annotate.
+            if obs:
+                label_annotations = list()
+                for o in obs:
+                    draw_box = o["draw_box"]
+                    draw_path = draw_on_box(box=draw_box, filepath=filepath)
+                    crop_box = o["crop_box"]
+                    crop_path = crop_to_box(box=crop_box, filepath=filepath)
+                    la = get_label_annotations(v_client, crop_path)
+                    label_annotations.extend(la)
+                    # If we've found a bird, stop iterating through objects.
+                    if is_bird(la):
+                        break
+            # If no boxes, annotate whole image.
             else:
-                label_annotations = get_label_annotations(v_client, img)
+                label_annotations = get_label_annotations(v_client, filepath)
             entity.update({
                 "vision_labels": json.dumps(label_annotations),
                 "is_bird": is_bird(label_annotations)
@@ -257,7 +275,7 @@ def classify_entity(v_client, entity):
     if entity.get("is_bird") == False:
         if not os.path.exists("assets/negative"):
             pathlib.Path("assets/negative").mkdir(parents=True)
-        neg_path = os.path.join(os.path.dirname(__file__), f'assets/negative/{entity.key.name}.jpg')
+        neg_path = os.path.join(os.path.dirname(__file__), f'assets/negative/{name}.jpg')
         logger.debug(f"Moving from {filepath} to {neg_path}")
         os.rename(filepath, neg_path)
 
@@ -267,17 +285,34 @@ def classify_entity(v_client, entity):
     return
 
 
-def crop_to_hints(v_client, filepath):
+def draw_on_box(box, filepath):
     # TODO: Docstring
-    # https://cloud.google.com/vision/docs/crop-hints 
-    vects = get_crop_hints(v_client, vision_img_from_path(v_client, filepath))
-    im = Image.open(filepath)
-    im2 = im.crop([vects[0].x, vects[0].y,
-                   vects[2].x - 1, vects[2].y - 1])
+    # https://cloud.google.com/vision/docs/crop-hints
+
     if not os.path.exists("assets/cropped"):
         pathlib.Path("assets/cropped").mkdir(parents=True)
-    # Recover entity.key.name -- e.g., `Flickr-1234` -- from filepath.
-    name = filepath.split("/")[-1][:-4]
+    name = name_from_path(filepath)
+    draw_path = os.path.join(os.path.dirname(__file__), f'assets/cropped/{name}_boxed.jpg')
+    
+    with Image.open(filepath) as im:
+        # Don't draw on original.
+        with im.copy() as im2:
+            draw = ImageDraw.Draw(im2)
+            draw.polygon(xy=box,
+                         fill=None,
+                         outline='red')
+            im2.save(draw_path, 'JPEG')
+
+    return draw_path
+
+
+def crop_to_box(box, filepath):
+    # TODO: Docstring
+    im = Image.open(filepath)
+    im2 = im.crop(box=box)
+    if not os.path.exists("assets/cropped"):
+        pathlib.Path("assets/cropped").mkdir(parents=True)
+    name = name_from_path(filepath)
     crop_path = os.path.join(os.path.dirname(__file__), f'assets/cropped/{name}_cropped.jpg')
     im2.save(crop_path, 'JPEG')
     return crop_path
@@ -307,22 +342,7 @@ if __name__ == "__main__":
     try:
         ds_client = datastore.Client()
         v_client = vision.ImageAnnotatorClient()
-
-        entities = pull_unclassified_entities(ds_client)
-        entity = random.choice(entities)
-        filepath = download_image(url=entity.get("download_url"),
-                                  name=entity.key.name)
-        obs = get_object_annotations(v_client, filepath)
-        im = Image.open(filepath)
-        im2 = im.crop(obs[0]["crop_box"])
-        if not os.path.exists("assets/cropped"):
-            pathlib.Path("assets/cropped").mkdir(parents=True)
-        crop_path = os.path.join(os.path.dirname(__file__), f'assets/cropped/{entity.key.name}_cropped.jpg')
-        im2.save(crop_path, 'JPEG')
-        im.show()
-        im2.show()
-
-        # classify_unclassified_entities(ds_client, v_client)
+        classify_unclassified_entities(ds_client, v_client)
         logger.info(f"Finished {filename}.")
     except Exception as e:
         logger.exception(e)
