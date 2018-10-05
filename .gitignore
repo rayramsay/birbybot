@@ -3,5 +3,6 @@ start.sh
 .DS_Store
 *.log
 *.pyc
+.env
 /env
 /assets
