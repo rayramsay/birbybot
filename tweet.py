@@ -37,7 +37,6 @@ def pull_entities_from_datastore(ds_client, tweeted_before=None):
     query.add_filter("is_bird", "=", True)
     if tweeted_before:
         query.add_filter("last_tweeted", "<=", tweeted_before)
-    logger.debug(query)
     entities = list(query.fetch())
     logger.info(f"Retrieved {len(entities)} entities.")
     logger.debug(entities)
@@ -82,6 +81,7 @@ def tweet_and_update(ds_client, entity):
     logger.debug(entity)
     message = create_message(entity)
     filepath = os.path.join(os.path.dirname(__file__), f'assets/{entity.key.name}.jpg')
+    logger.debug(filepath)
     if not pathlib.Path(filepath).exists():
         filepath = download_image(url=entity.get("download_url"),
                                   name=entity.key.name)

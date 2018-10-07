@@ -69,6 +69,7 @@ def download_image(url, name):
     if not os.path.exists("assets"):
         pathlib.Path("assets").mkdir(parents=True)
     filepath = os.path.join(os.path.dirname(__file__), f'assets/{name}.jpg')
+    logger.debug(filepath)
     
     # If we've already downloaded an image, just return.
     if os.path.exists(filepath):
