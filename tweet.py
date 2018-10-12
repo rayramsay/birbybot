@@ -43,6 +43,27 @@ def pull_entities_from_datastore(ds_client, tweeted_before=None):
     return entities
 
 
+def pull_keyonly_entites_from_datastore(ds_client, tweeted_before=None):
+    """Retrieve bird photos that haven't been tweeted recently.
+
+    Args:
+        tweeted_before (datetime.datetime)
+
+    Returns:
+        list of key-only google.cloud.datastore.entity.Entity
+    """
+    logger.info(f"Retrieving is_bird entities tweeted before {tweeted_before:%Y-%m-%d}...")
+    query = ds_client.query(kind="Photo")
+    query.add_filter("is_bird", "=", True)
+    if tweeted_before:
+        query.add_filter("last_tweeted", "<=", tweeted_before)
+    query.keys_only()
+    keyonly_entities = list(query.fetch())
+    logger.info(f"Retrieved {len(keyonly_entities)} entities.")
+    logger.debug(keyonly_entities)
+    return keyonly_entities
+
+
 def create_message(entity):
     """Takes Photo entity and returns message string."""
     title = entity.get("title")

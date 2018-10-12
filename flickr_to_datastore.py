@@ -144,6 +144,7 @@ def write_entities_to_datastore(ds_client, entities):
         try:
             with ds_client.batch():
                 logger.debug("Writing chunk...")
+                logger.debug(chunk)
                 ds_client.put_multi(chunk)
         except Exception as e:
             logger.exception(e)
@@ -165,8 +166,7 @@ if __name__ == "__main__":
                         "sandpiper chick", "sandpiper hatchling", "sandpiper baby"]
         first_day_of_previous_month = (datetime.datetime.utcnow().replace(day=1) - relativedelta(months=1)).strftime("%Y-%m-%d")
         for term in search_terms:
-            entities = create_entities_from_search(ds_client, term)
-            # entities = create_entities_from_search(ds_client, term, min_upload_date=first_day_of_previous_month)
+            entities = create_entities_from_search(ds_client, term, min_upload_date=first_day_of_previous_month)
             if entities:
                 write_entities_to_datastore(ds_client, entities)
         logger.info(f"Finished {filename}.")
