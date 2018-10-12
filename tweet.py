@@ -43,7 +43,7 @@ def pull_entities_from_datastore(ds_client, tweeted_before=None):
     return entities
 
 
-def pull_keyonly_entites_from_datastore(ds_client, tweeted_before=None):
+def pull_keyonly_entities_from_datastore(ds_client, tweeted_before=None):
     """Retrieve bird photos that haven't been tweeted recently.
 
     Args:
@@ -120,7 +120,8 @@ if __name__ == "__main__":
     try:
         ds_client = datastore.Client()
         one_month_ago = datetime.datetime.utcnow() - relativedelta(months=1)
-        entities = pull_entities_from_datastore(ds_client, tweeted_before=one_month_ago)
-        tweet_and_update(ds_client, random.choice(entities))
+        keyonly_entities = pull_keyonly_entities_from_datastore(ds_client, tweeted_before=one_month_ago)
+        entity = ds_client.get(random.choice(keyonly_entities).key)
+        tweet_and_update(ds_client, entity)
     except Exception as e:
         logger.exception(e)
