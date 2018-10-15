@@ -11,16 +11,21 @@ import random
 import sys
 
 import requests
-from flickrapi import FlickrAPI
+from dateutil import parser
+from flickrapi import FlickrAPI, shorturl
 from google.api_core import exceptions
 from google.cloud import datastore, vision
 from PIL import Image
-
-import utils
+from twython import Twython
 
 ### LOGGING ####################################################################
 logger = logging.getLogger(__name__)
-utils.configure_logger(logger, console_output=True)
+logger.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 ### HELPERS ####################################################################
 def pick_download_url(entity):
     """Returns large image size (1024 on longest side) url if available. Falls
@@ -84,9 +89,26 @@ def download_image(url, name):
 ################################################################################
 
 # Create Flickr API client.
-FLICKR_PUBLIC = os.environ['FLICKR_KEY']
-FLICKR_SECRET = os.environ['FLICKR_SECRET']
-flickr = FlickrAPI(FLICKR_PUBLIC, FLICKR_SECRET, format="parsed-json")
+try:
+    flickr = FlickrAPI(
+        os.environ['FLICKR_KEY'],
+        os.environ['FLICKR_SECRET'],
+        format="parsed-json")
+except KeyError as e:
+    logger.exception(e)
+    sys.exit()
+
+# Create Twitter API client.
+try:
+    twitter = Twython(
+        os.environ['TWITTER_CONSUMER_KEY'],
+        os.environ['TWITTER_CONSUMER_SECRET'],
+        os.environ['TWITTER_ACCESS_TOKEN'],
+        os.environ['TWITTER_ACCESS_SECRET']
+    )
+except KeyError as e:
+    logger.exception(e)
+    sys.exit()
 
 # Create Cloud Datastore and Vision clients.
 ds_client = datastore.Client()
@@ -100,7 +122,7 @@ params = {"text": search_terms,
           "safe_search": "1",
           "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
           "sort": "relevance",
-          "per_page": "10"}
+          "per_page": "5"}
 try:
     resp = flickr.photos.search(**params)
     photos = resp["photos"]["photo"]
@@ -143,8 +165,12 @@ for photo in photos:
     
     # Load image.
     logger.debug(f"Opening {name}...")
-    with io.open(filepath, 'rb') as image_file:
-        content = image_file.read()
+    try:
+        with io.open(filepath, 'rb') as image_file:
+            content = image_file.read()
+    except Exception as e:
+        logger.exception(e)
+        continue
     image = vision.types.Image(content=content)
 
     # Label image as a whole and find objects in image.
@@ -153,7 +179,7 @@ for photo in photos:
         response = v_client.annotate_image({
             "image": image,
             "features": [{'type': vision.enums.Feature.Type.OBJECT_LOCALIZATION},
-                        {'type': vision.enums.Feature.Type.LABEL_DETECTION}]
+                         {'type': vision.enums.Feature.Type.LABEL_DETECTION}]
         })
         logger.debug(f"Response for {name} annotation request: {response}")
     except exceptions.GoogleAPIError as e:
@@ -177,9 +203,9 @@ for photo in photos:
                              round(verts[2].y * height) ))
 
     # Are you a bat?
-    def is_a(col, labels):
-        return any(x in labels for x in col)
-   
+    def is_a(lst, labels):
+        return any(x in labels for x in lst)
+
     # If it's not a bat but there are crop boxes, let's crop and get new labels.
     if not is_a(["bat"], labels) and crop_boxes:
         logger.debug(f"Cropping {name}...")
@@ -204,7 +230,7 @@ for photo in photos:
                     # We found a bat, let's stop cropping and labeling.
                     break
         im.close()
-        logger.debug("Done cropping {name}.")
+        logger.debug(f"Done cropping {name}.")
     
     logger.debug(f"{name}'s labels: {labels}")
     entity.update({
@@ -239,5 +265,45 @@ except exceptions.GoogleAPIError as e:
 # We made a list of entities up above, so even if retrieving them from Cloud
 # Datastore failed, they're still in memory.
 entity = random.choice(entities)
+name = entity.key.name
 
-# I can't believe it's finally time to tweet.
+# Time to tweet!
+logger.info(f"Tweeting {name}...")
+logger.debug(entity)
+
+# Write a message.
+title = entity.get("title")
+photographer = entity.get("ownername")
+shortlink = shorturl.url(entity.get("id"))
+message = f"{title} by {photographer} {shortlink} #HappyHalloween"
+logger.debug(message)
+
+# Download image if we somehow don't already have it.
+filepath = os.path.join(os.path.dirname(__file__), f'assets/{name}.jpg')
+if not pathlib.Path(filepath).exists():
+    filepath = download_image(url=entity.get("download_url"),
+                              name=name)
+
+# Load image and tweet.
+try:
+    with open(filepath, 'rb') as img:
+        upload_resp = twitter.upload_media(media=img)
+        logger.debug(upload_resp)
+    tweet_resp = twitter.update_status(status=message,
+                                       media_ids=[upload_resp["media_id"]])
+    logger.debug(tweet_resp)
+except Exception as e:
+    logger.exception(e)
+    sys.exit()
+
+# Finally, let's remember when we tweeted. We could add a composite index so
+# that we'd only pull bat photos that we hadn't tweeted recently.
+try:
+    entity.update({
+        "last_tweeted": parser.parse(tweet_resp.get("created_at"))
+    })
+    ds_client.put(entity)
+except Exception as e:
+    logger.exception(e)
+
+# THE END
