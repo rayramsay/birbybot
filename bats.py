@@ -1,11 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import datetime
 import io
+import json
 import logging
 import os
 import pathlib
 
 import requests
 from flickrapi import FlickrAPI
+from google.api_core import exceptions
 from google.cloud import datastore, vision
 from PIL import Image
 
@@ -116,15 +121,9 @@ for photo in photos:
             entity.update({k: datetime.datetime.utcfromtimestamp(int(v))})
     entity.update({"download_url": pick_download_url(entity)})
     logger.debug(entity)
-    # Upsert that entity! (We could also batch these, or use a transaction if we
-    # need to perform get and update operations in a single atomical transaction.)
-    
-    # TODO Uncomment below TODO
-    # ds_client.put(entity)
 
-    # At this point, we could loop over the images and then come back later to
-    # get the unclassified entities from Cloud Datastore, but we are going to
-    # boldly continue into classification.
+    # Rather than upserting the entity now and later retrieving the unclassified
+    # entities from Cloud Datastore, let's boldly continue into classification.
 
     # Download image. (You can use Cloud Vision API with a remote image, but
     # it's flaky.)
@@ -138,39 +137,67 @@ for photo in photos:
         content = image_file.read()
     image = vision.types.Image(content=content)
 
-    # We're going to figure out what's in this image!
-    labels = list()
-    def is_a(lst, labels):
-        return any(x in labels for x in lst)
+    # Label image as a whole and find objects in image.
+    logger.debug(f"Requesting image annotation for {filepath}...")
+    response = v_client.annotate_image({
+        "image": image,
+        "features": [{'type': vision.enums.Feature.Type.OBJECT_LOCALIZATION},
+                     {'type': vision.enums.Feature.Type.LABEL_DETECTION}]
+    })
+    logger.debug(f"Response for {filepath} annotation request: {response}")
 
-    # Find objects in image.
-    logger.debug(f"Requesting object detection for {filepath}...")
-    response = v_client.object_localization(image=image)
-    logger.debug(f"Response for {filepath} object_localization request: {response}")
-
-    # Sometimes, the API cannot detect any objects, in which case we'll try
-    # labeling the image as a whole.
-    if not response.localized_object_annotations:
-        # TODO
-        pass
-    else:
-        crop_boxes = list()
-        for o in response.localized_object_annotations:
-            labels.append(o.name.lower())
-            # If we've found a bat, stop iterating.
-            if is_a(["bat"], labels):
-                break
-
-            # If we haven't found a bat yet, make crop box.
-            with Image.open(filepath) as im:
-                width, height = im.size
-            verts = o.bounding_poly.normalized_vertices
-            crop_boxes.append([round(verts[0].x * width),
-                               round(verts[0].y * height),
-                               round(verts[2].x * width),
-                               round(verts[2].y * height)])
+    labels = set()
+    crop_boxes = set()
+    if response.label_annotations:
+        labels.update([a.description for a in response.label_annotations])
+    if response.localized_object_annotations:
+        labels.update([a.name.lower() for a in response.localized_object_annotations])
+        # While we're here, let's save crop boxes.
+        with Image.open(filepath) as im:
+            width, height = im.size
+        for a in response.localized_object_annotations:
+            verts = a.bounding_poly.normalized_vertices
+            crop_boxes.add(( round(verts[0].x * width),
+                             round(verts[0].y * height),
+                             round(verts[2].x * width),
+                             round(verts[2].y * height) ))
 
     # Are you a bat?
+    def is_a(col, labels):
+        return any(x in labels for x in col)
+   
+    # If it's not a bat but there are crop boxes, let's crop and get new labels.
+    if not is_a(["bat"], labels) and crop_boxes:
+        logger.debug(f"Cropping {name}...")
+        im = Image.open(filepath)
+        logger.debug(crop_boxes)
+        for cb in crop_boxes:
+            with im.crop(box=cb) as im2:
+                # Convert PIL.Image.Image to bytes.
+                with io.BytesIO() as buffer:
+                    im2.save(buffer, format='JPEG')
+                    byts = buffer.getvalue()
+                    img = vision.types.Image(content=byts)
+            logger.debug(f"Requesting label detection for crop...")
+            response = v_client.label_detection(image=img)
+            logger.debug(f"Response for crop label detection request: {response}")
+            if response.label_annotations:
+                labels.update([a.description for a in response.label_annotations])
+                if is_a(["bat"], labels):
+                    # We found a bat, let's stop cropping and labeling.
+                    break
+        im.close()
+        logger.debug("Done cropping {name}.")
+       
     logger.debug(f"{name}'s labels: {labels}")
-    entity.update({"is_bat": is_a(["bat"], labels)})
-    logger.info(f"{name} is_bat = {entity.get('is_bat')}!")
+    entity.update({"is_bat": is_a(["bat"], labels),
+                   "vision_labels": json.dumps(list(labels))})
+    logger.info(f"\n\n{name} is_bat = {entity.get('is_bat')}!\n\n")
+    
+    # We've done what we can -- upsert that entitity! (We could also batch
+    # these, or use a transaction if we needed to perform get and update
+    # operations in a single atomical transaction.)
+    try:
+        ds_client.put(entity)
+    except exceptions.GoogleAPIError as e:
+        logger.exception(e)
