@@ -238,33 +238,31 @@ _[Cmd+tab to switch to Visual Studio Code.]_
 
 ## Demo
 
-Let's see...we're using flickrapi, the Google Cloud client library, Pillow (the Python Image Library), and Twython.
+_[Control+g 116 Enter]_
 
-Got some helper functions...
-
-And the first thing we're doing is instantiating our clients and searching Flickr for bats.
-
-Our search string will be `"bats"`.
+The first thing we're doing is instantiating our clients and searching Flickr for bats.
 
 The license parameter is selecting various Creative Commons licenses.
 
-We've got safe_search turned on.
+We've got safe_search turned on...
 
-And we're going to grab five interesting cases.
-
-And to these results, we'll add a few additional properties.
+Then we'll take these results and use them to create entities for our datastore.
 
 Cloud Datastore Entities have Keys made up of a Kind and a Name. We're going to call this kind of entity Photos, and we're going to make the keys their source API &mdash; in this case, Flickr &mdash; plus the UUID from that API.
 
+We'll add a few extra properties to our Flickr results.
+
+...convert this timestamp string into a Python datetime...
+
 Flickr has a few different image sizes, but they were introduced at different times, so not all photos come in all sizes &mdash; that's why we have a helper function to pick the best download url available.
 
-_[Control+g 304 Enter]_
+_[Control+g 303 Enter]_
 
-So, we'll get our search results for the word "bat," and turn those results into entities.
+So, we'll get our search results for the word "bat," then we'll turn those results into entities.
 
 We're also going to open our photos so that we know what we have to classify.
 
-We _could_ write these entities to the datastore and then come back later to retrieve entities where is_classified is False, but we'll classify them first and write them after that.
+Once we have our entities, we _could_ write them to the datastore, then come back later and ask the datastore for entities where is_classified is False, but we'll just classify them first and write them after that.
 
 _[Your code block should look like]_
 
@@ -273,8 +271,8 @@ _[Your code block should look like]_
     
     photos = search_flickr("bat")
     entities = photos_to_entities(photos)
-    pp.pprint(entities)
     
+    pp.pprint(entities)
     show_photos(entities)
 ```
 
@@ -284,7 +282,7 @@ _[Control+backtick to switch focus to terminal: `python bats.py`]_
 
 Here are our lovely entities.
 
-Flickr gave us some cute bats in trees, but it also gave us some monks! Time for Cloud Vision API to get to work.
+Flickr gave us some cute bats, but it also gave us the wrong kind of bat! That's why we need Cloud Vision API.
 
 _[Control+backtick to switch focus to editor.]_
 
@@ -301,11 +299,11 @@ _[Your code block should look like]_
 
     photos = search_flickr("bat")
     entities = photos_to_entities(photos)
+    
     # pp.pprint(entities)
-
     # show_photos(entities)
 
-    classify_as_resp_only(["bat"], entities[3:6])
+    classify_as_resp_only(["bat"], entities)
 ```
 
 _[Command+s to save.]_
@@ -324,44 +322,35 @@ _[Uncomment `classify as`]_
 
 _[Control+g 169 Enter]_
 
-Okay, so this function, `classify as` iterates over the entities. For each entity, it:
+Okay, so this function, `classify as`, iterates over the entities. For each entity, it creates a Vision API Image object _[line 189]_ and puts that image on a request to detect labels and localize objects _[line 197]_.
 
-* downloads the image locally
-* loads it into memory and creates it as a Vision Image
+Hopefully, we get back label annotations, like what's in the terminal, and we also get back object localizations.
 
-_[line 197]_ We put that image on a request to the Vision API to detect labels and localize objects.
+Sometimes the response does not include the features we asked for &mdash; this is particuarly common when we ask for object localizations because sometimes the API can't detect any objects in the image &mdash; hence the if blocks _[line 209]_.
 
-We get back label annotations, like what's in the terminal. At this point, we haven't gotten a "bat" label.
+We take any labels and object names that we get and put them in a set, and we also transform those normalized verticies into coordinates that we can crop to later.
 
-We also get back our object localizations. Again, Cloud Vision doesn't know we've got a bat.
-
-Sometimes the response does not include the features we ask for &mdash; this is particuarly common when we ask for object localization, hence the if blocks _[line 209]_.
-
-We take all those labels and object names and put them in a set, and we also transform those normalized verticies into coordinates we can crop to.
-
-(We're storing the coordinates as tuples in a set because sometimes we'll get back the same coordinates identified with multiple names, and we don't want to crop the same object multiple times.)
-
-Now we come to our helper function, `is_a` _[line 224]_. This takes a list of terms &mdash; in our case, we'll pass a list with only one element, the word `"bat"` &mdash; as well as a collection of labels. `is_a` checks if "bat" is in that collection of labels.
+Now we come to our helper function, `is_a` _[line 224]_. This takes a list of terms &mdash; in our case, we'll pass a list with only one element, the word "bat" &mdash; as well as a collection of labels. `is_a` checks if "bat" is in that collection of labels.
 
 So, if it's not a bat, but we did get back crop coordinates, we're going to:
 
 * crop the image to just that object _[line 228]_
-* convert the crop from a Pillow Image to a Vision Image _[line 233]_
-* and ask the API to detect labels again.
+* convert the cropped image from a Pillow Image to a Vision Image _[line 233]_
+* and then make a new request to the API to identify our cropped image.
 
-Now that we have new labels _[line 241]_:
+Hopefully, we get back new labels _[line 241]_. Then we:
 
-* we'll add them to our set
+* add them to our set
 * check if we've found a bat yet
-* and if we have found a bat, we won't crop to the rest of the objects. Let's not call the API if we don't have to.
+* and if we have found a bat, we won't crop to the rest of the objects. We don't want to call the API if we don't have to.
 
-Now we've done what we can to sort the image as bat or non-bat, so we update the entity _[line 250]_ and mark it as having been classified.
+Now that we've done what we can to identify the image as bat or non-bat, we update the entity _[line 250]_ and mark it as having been classified.
 
-_[Control+g 313 Enter]_
+_[Control+g 312 Enter]_
 
 During this step, we're also going to write the entities to the datastore.
 
-_[Arrow down and uncomment `with ds client` block.]_
+_[Uncomment `with ds client` block.]_
 
 _[Your code block should look like]_
 
@@ -370,14 +359,13 @@ _[Your code block should look like]_
 
     photos = search_flickr("bat")
     entities = photos_to_entities(photos)
+    
     # pp.pprint(entities)
-
     # show_photos(entities)
 
     # classify_as_resp_only(["bat"], entities[3:6])
 
     classify_as(["bat"], entities)
-
     with ds_client.batch():
         ds_client.put_multi(entities)
 ```
@@ -407,14 +395,13 @@ _[Your code block should look like this]_
 
     # photos = search_flickr("bat")
     # entities = photos_to_entities(photos)
+    
     # pp.pprint(entities)
-
     # show_photos(entities)
 
     # classify_as_resp_only(["bat"], entities[3:6])
 
     # classify_as(["bat"], entities)
-
     # with ds_client.batch():
         # ds_client.put_multi(entities)
 

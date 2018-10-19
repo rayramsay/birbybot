@@ -135,10 +135,10 @@ def search_flickr(search_string):
               "media": "photos",
               "safe_search": "1",
               "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
-              "min_upload_date": "2018-01-01",
-              "max_upload_date": "2018-01-07",
+              "min_upload_date": "2017-12-27",
+              "max_upload_date": "2017-12-28",
               "sort": "date-posted-asc",
-              "per_page": "10"}
+              "per_page": "5"}
     resp = flickr.photos.search(**params)
     photos = resp["photos"]["photo"]
     return photos
@@ -219,7 +219,6 @@ def classify_as(terms, entities):
                                  round(verts[0].y * height),
                                  round(verts[2].x * width),
                                  round(verts[2].y * height) ))
-
         # If it's not a bat but there are crop boxes, let's crop and get new labels.
         if not is_a(terms, labels) and crop_boxes:
             logger.debug(f"Cropping {name}...")
@@ -303,14 +302,13 @@ if __name__ == "__main__":
 
     photos = search_flickr("bat")
     entities = photos_to_entities(photos)
+
     pp.pprint(entities)
+    show_photos(entities)
 
-    # show_photos(entities)
-
-    # classify_as_resp_only(["bat"], entities[3:6])  # TODO Comment out
+    # classify_as_resp_only(["bat"], entities)
 
     # classify_as(["bat"], entities)
-
     # with ds_client.batch():
         # ds_client.put_multi(entities)
 
