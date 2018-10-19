@@ -15,7 +15,7 @@ revealOptions:
 
 ### What do you want to see more often?
 
-----
+---
 
 "What if I made a bot that exclusively posted pictures of plovers and their babies?"
 
@@ -23,7 +23,7 @@ revealOptions:
 
 ### Working with Intellectual Property
 
-----
+---
 
 Crediting photographers and not reposting copyrighted images were priorities for me.
 
@@ -50,15 +50,15 @@ resp = flickr.photos.search({"text": "plover baby"})
 
 ![that's a turtle](assets/turtle.png)
 
-----
+---
 
 Flickr returns photos that contain the search term in their title, description, or tags.
 
-----
+---
 
 > ...threatened and endangered species that occur in Connecticut, including the threatened bog turtle, piping `plover`, and Puritan tiger beetle...
 
-----
+---
 
 I can sort Flickr results by relevance, but how do I know when results stop being relevant?
 
@@ -68,7 +68,7 @@ I can sort Flickr results by relevance, but how do I know when results stop bein
 
 > ...easily integrate vision detection features within applications, including image labeling, face and landmark detection, optical character recognition (OCR), and tagging of explicit content.
 
-----
+---
 
 ### Features
 
@@ -84,7 +84,7 @@ I can sort Flickr results by relevance, but how do I know when results stop bein
 * Label Detection
 * Object Localization
 
-----
+---
 
 ### Client Libraries
 
@@ -102,7 +102,7 @@ I can sort Flickr results by relevance, but how do I know when results stop bein
 
 > detects broad sets of categories within an image
 
-----
+---
 
 ### Definitely not a bird
 ```
@@ -134,7 +134,7 @@ sand 0.78
 
 > detects and extracts multiple objects in an image
 
-----
+---
 
 ### Well, it's definitely something...
 
@@ -161,7 +161,7 @@ bounding_poly {
 }
 ```
 
-----
+---
 
 ### Crop to object and detect labels again
 
@@ -183,7 +183,7 @@ wildlife 0.54
 
 ### Detecting and labeling objects is not bulletproof.
 
-----
+---
 
 ### Doesn't look like anything to me
 
@@ -195,7 +195,7 @@ grass 0.79
 soil 0.65
 ```
 
-----
+---
 
 ### After cropping
 
@@ -213,7 +213,7 @@ tree 0.53
 
 > train custom machine learning models
 
-----
+---
 
 I have not trained a model to distinguish camouflaged fauna from flora
 
@@ -224,7 +224,7 @@ I have not trained a model to distinguish camouflaged fauna from flora
 ### Cloud Datastore
 ###### (technically Cloud Firestore in Datastore mode)
 
-----
+---
 
 Cloud Datastore is a NoSQL database.
 
@@ -232,13 +232,13 @@ Now that it's built on top of Firestore, it's strongly consistent.
 
 But because Firestore is in Datastore mode, real-time updates are not supported.
 
-----
+---
 
 ### Data Model
 
 > Data objects are known as entities. An entity has one or more named properties, each of which can have one or more values. Entities of the same kind do not need to have the same properties, and an entity's values for a given property do not all need to be of the same data type.
 
-----
+---
 
 ### Composite Indexes
 
@@ -265,6 +265,34 @@ index found. recommended index is:
 
 ---
 
+### Further GCP Integration
+
+* Cloud Storage
+* App Engine 
+* Cloud Functions
+
+---
+
+### Alternatives
+
+#### [PythonAnywhere](https://www.pythonanywhere.com/)
+
+---
+
+### Twitter Changes
+
+> All new developers must apply for a developer account to access Twitter APIs.
+
+---
+
+### Mastodon
+
+* [API documentation](https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md)
+* [Client Libraries](https://github.com/tootsuite/documentation/blob/master/Using-the-API/Libraries.md)
+* [BotsIn.Space](https://botsin.space/) &ndash; an instance just for bots!
+
+---
+
 ### Photo Credits
 * [Threatened baby bog turtle (Clemmys muhlenbergii)](https://www.flickr.com/photos/usfwsendsp/5039503186) by Rosie Walunas/USFWS (CC BY 2.0)
 * [Piping Plover Chicks](https://www.flickr.com/photos/joeshlabotnik/29025989546/) by Joe Shlabotnik (CC BY-NC-SA 2.0)
@@ -281,4 +309,4 @@ _cares about birds the normal amount_
 
 [@rachelbuilds](https://www.twitter.com/rachelbuilds)
 
-Find today's code at [github.com/rayramsay/birbybot/](https://github.com/rayramsay/birbybot/)
+Find today's slides and code at [github.com/rayramsay/birbybot/](https://github.com/rayramsay/birbybot/)

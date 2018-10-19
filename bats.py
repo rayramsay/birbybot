@@ -15,7 +15,8 @@ import requests
 from dateutil import parser
 from flickrapi import FlickrAPI, shorturl
 from google.api_core import exceptions
-from google.cloud import datastore, vision
+from google.cloud import datastore
+from google.cloud import vision
 from PIL import Image
 from twython import Twython
 
@@ -134,9 +135,10 @@ def search_flickr(search_string):
               "media": "photos",
               "safe_search": "1",
               "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
-              "min_upload_date": "2018-01-01",  # Surface interesting cases
+              "min_upload_date": "2018-01-01",
+              "max_upload_date": "2018-01-07",
               "sort": "date-posted-asc",
-              "per_page": "5"}
+              "per_page": "10"}
     resp = flickr.photos.search(**params)
     photos = resp["photos"]["photo"]
     return photos
@@ -165,6 +167,7 @@ def photos_to_entities(photos):
 
 # Classify photos!
 def classify_as(terms, entities):
+    bat_counter = 0
     for entity in entities:
         logger.debug(entity)
         name = entity.key.name
@@ -249,8 +252,10 @@ def classify_as(terms, entities):
             "vision_labels": json.dumps(list(labels)),
             "is_classified": True
         })
+        if entity.get("is_bat"):
+            bat_counter += 1
         logger.info(f"{name} is_bat = {entity.get('is_bat')}!\n")
-    logger.debug(f"Processed {len(entities)} entities.")
+    logger.debug(f"Processed {len(entities)} entities. Found {bat_counter} bats.")
     return
 
 def tweet_photo_entity(entity):
@@ -283,8 +288,7 @@ def tweet_photo_entity(entity):
         logger.exception(e)
         sys.exit()
 
-    # Finally, let's remember when we tweeted. We could add a composite index so
-    # that we'd only pull bat photos that we hadn't tweeted recently.
+    # Finally, let's remember when we tweeted.
     try:
         entity.update({
             "last_tweeted": parser.parse(tweet_resp.get("created_at"))
@@ -294,38 +298,25 @@ def tweet_photo_entity(entity):
         logger.exception(e)
 
 ################################################################################
-if __name__ == "__main__":
+if __name__ == "__main__": 
     pp = pprint.PrettyPrinter()
 
     photos = search_flickr("bat")
-    pp.pprint(photos)
+    entities = photos_to_entities(photos)
+    pp.pprint(entities)
 
-    # entities = photos_to_entities(photos)
-    # pp.pprint(entities)
+    # show_photos(entities)
 
-    # At this point, we could write the entities to Cloud Datastore, and then
-    # retrieve entities where is_classified is False. But let's just boldly
-    # continue!
-
-    # show_photos(entities)  # TODO Comment out
-
-    # Before we discuss classify_as, let's look at the Vision API response.
-    # classify_as_resp_only(["bat"], [entities[-1]])  # TODO Comment out
+    # classify_as_resp_only(["bat"], entities[3:6])  # TODO Comment out
 
     # classify_as(["bat"], entities)
-    # pp.pprint(entities)
 
-    # Now that our entities are classified, let's add them to Cloud Datastore.
-    # We could also batch these, or use a transaction if we needed to perform
-    # get and update operations in a single atomical transaction.
-    # for entity in entities:
-    #     ds_client.put(entity)
+    # with ds_client.batch():
+        # ds_client.put_multi(entities)
 
     # Get bats from Cloud Datastore.
     # query = ds_client.query(kind="Photo")
     # query.add_filter("is_bat", "=", True)
-    # If you don't want to load a potentially huge number of entities into memory,
-    # you can make the query keys_only and then get a single entitity by key.
     # bats = list(query.fetch())
     # pp.pprint(bats)
 
