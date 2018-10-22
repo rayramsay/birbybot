@@ -16,7 +16,7 @@
 ## Slide 0
 ### Building a Twitter Image Bot with Flickr and Google Cloud Platform
 
-Hello, what's up GDG San Francisco? How's everyone's DevFest going?
+Hello, what's up GDG San Francisco? How's everyone's DevFest going so far?
 
 My name is Rachel Ramsay, and today I'll be showing you how to build a Twitter image bot with the Flickr API and Google Cloud Platform, particularly the Cloud Vision API.
 
@@ -42,12 +42,12 @@ Which inspired me to tweet,
 
 Thus beginning my journey into bot making.
 
-Also, what you build doesn't have to post to Twitter! Twitter recently introduced a vetting process for apps, and I'll cover that, plus alternatives to Twitter, later in the presentation.
+Also, what you build doesn't have to post to Twitter! Twitter recently introduced a vetting process for apps, and I'll cover that, plus alternatives to Twitter, later in this presentation.
 
 ## Slide 3
 ### Working with Intellectual Property
 
-When I started this project, I had to think about how I would approach copyrighted material. Some people's approach is more blase &ndash; they figure they'll get some DMCA takedowns and maybe their bot will be suspended; whatever happens, happens.
+When I started this project, I had to decide how I would approach copyrighted material. Some people's approach is more blase &mdash; they figure they'll get some DMCA takedowns and maybe their bot will be suspended; whatever happens, happens.
 
 But, for me,
 
@@ -83,7 +83,7 @@ And Flickr said...
 
 Flickr's API _did_ return baby plovers, but it also returned this turtle. As cute as this turtle is, I don't want my bot to post it.
 
-Why did it appear in my results?
+So, why did it appear in my results?
 
 ## Slide 8
 ### _[Read]_ Flickr returns photos that contain the search term in their title, description, or tags
@@ -124,7 +124,7 @@ Think about what you can build with this feature set:
 * Or if you have a photo of a storefront, you can read the name of the store from its sign.
 * There's a more robust OCR endpoint for documents.
 * Safe Search Detection is crucial for making sure that your bot doesn't tweet anything gory or racy.
-* Image Properties can tell you the dominant colors in an image, which would come in handy if you wanted to build something centered around a particular color aesthetic.
+* Image Properties can tell you the dominant colors in an image, which would come in handy if you were building something centered around a particular color aesthetic.
 * Crop Hints can help you format images for different aspect ratios suited to different social media platforms.
 * Web Detection can do things like find websites that use an image, or give you URLs to visually similar images. So, it's like reverse image search.
 * Label Detection and Object Localization are the features that my bot uses, so we'll dig into those in a second.
@@ -225,7 +225,7 @@ Later on, I can add results from a different API as Photo entities, which will h
 ## Slide 28
 ### Composite Indexes
 
-Since I want to ask the datastore for photos of birds that I haven't tweeted recently, I need to create a composite index. Adding composite indexes to your datastore is easy: you define your indexes in a YAML file and deploy it with the gcloud tool. My YAML file looks like what this helpful error message suggested!
+Since I want to ask the datastore for photos of birds that I haven't tweeted recently, I need to create a composite index. Adding composite indexes to your datastore is easy: you define your indexes in a YAML file and deploy it with the gcloud tool. My YAML file looks like what this helpful error message suggested! (Shoutout to the engineers who wrote an error message that tells you how to fix itself.)
 
 ## Slide 29
 ### Birds, But Make It Spooky
@@ -238,33 +238,37 @@ _[Cmd+tab to switch to Visual Studio Code.]_
 
 ## Demo
 
-_[Control+g 116 Enter]_
+_[Control+g **116** Enter]_
 
 The first thing we're doing is instantiating our clients and searching Flickr for bats.
 
 The license parameter is selecting various Creative Commons licenses.
 
-We've got safe_search turned on...
+We've got safe search turned on...
+
+...dates that I hope will surface some good cases...
 
 Then we'll take these results and use them to create entities for our datastore.
 
-Cloud Datastore Entities have Keys made up of a Kind and a Name. We're going to call this kind of entity Photos, and we're going to make the keys their source API &mdash; in this case, Flickr &mdash; plus the UUID from that API.
+Cloud Datastore entities have Keys made up of a Kind and a Name. We're going to call this kind of entity Photos, and we're going to make the name part of the key their source API &mdash; in this case, Flickr &mdash; plus the UUID from that API.
 
-We'll add a few extra properties to our Flickr results.
+We'll add a few extra properties to our Flickr results...
 
-...convert this timestamp string into a Python datetime...
+Update the entity with everything returned by the Flickr API...
 
-Flickr has a few different image sizes, but they were introduced at different times, so not all photos come in all sizes &mdash; that's why we have a helper function to pick the best download url available.
+Convert this timestamp string into a Python datetime...
 
-_[Control+g 303 Enter]_
+Finally, Flickr has a few different image sizes, but they were introduced at different times, so not all photos come in all sizes &mdash; that's why we have a helper function to pick the best download url available.
+
+_[Control+g **303** Enter]_
 
 So, we'll get our search results for the word "bat," then we'll turn those results into entities.
 
-We're also going to open our photos so that we know what we have to classify.
+We're also going to open our photos so that we know what it is we have to classify.
 
 Once we have our entities, we _could_ write them to the datastore, then come back later and ask the datastore for entities where is_classified is False, but we'll just classify them first and write them after that.
 
-_[Your code block should look like]_
+####_Your code block should look like_
 
 ```
     pp = pprint.PrettyPrinter()
@@ -280,19 +284,17 @@ _[Command+s to save.]_
 
 _[Control+backtick to switch focus to terminal: `python bats.py`]_
 
-Here are our lovely entities.
-
 Flickr gave us some cute bats, but it also gave us the wrong kind of bat! That's why we need Cloud Vision API.
 
 _[Control+backtick to switch focus to editor.]_
 
 _[Arrow down and command+/ to comment out `pp.pprint(entities)` and `show photos`.]_
 
-Before we go over how we'll classify our photos as bat or non-bat, let's look at a our response from the Vision API.
+Before we go over how we'll classify our photos as bat or non-bat, let's look at the response from the Vision API.
 
 _[Arrow down and uncomment `classify as resp only`.]_
 
-_[Your code block should look like]_
+####_Your code block should look like_
 
 ```
     pp = pprint.PrettyPrinter()
@@ -310,9 +312,9 @@ _[Command+s to save.]_
 
 _[Control+backtick to switch focus to terminal: `python bats.py`]_
 
-So, we've got our label annotations: _[read labels]_.
+So, we have our label annotations: _[read labels]_.
 
-(_[If possible]_ And our localized object annotations: _[read names]_.)
+(_[If possible]_ And we have our localized object annotations: _[read names]_.)
 
 _[Control+backtick to switch focus to editor.]_
 
@@ -320,39 +322,39 @@ _[Comment out `classify as resp only`]_
 
 _[Uncomment `classify as`]_
 
-_[Control+g 169 Enter]_
+_[Control+g **169** Enter]_
 
-Okay, so this function, `classify as`, iterates over the entities. For each entity, it creates a Vision API Image object _[line 189]_ and puts that image on a request to detect labels and localize objects _[line 197]_.
+This function, `classify as`, iterates over the entities. For each entity, it creates a Vision API Image object _[line 189]_ and puts that image on a request to detect labels and localize objects _[line 197]_.
 
-Hopefully, we get back label annotations, like what's in the terminal, and we also get back object localizations.
+Hopefully, we get back label annotations and object localizations.
 
-Sometimes the response does not include the features we asked for &mdash; this is particuarly common when we ask for object localizations because sometimes the API can't detect any objects in the image &mdash; hence the if blocks _[line 209]_.
+Sometimes the response does not include the features we asked for &mdash; especially object localizations because sometimes the API can't detect any objects in the image &mdash; hence the if blocks _[line 209]_.
 
 We take any labels and object names that we get and put them in a set, and we also transform those normalized verticies into coordinates that we can crop to later.
 
-Now we come to our helper function, `is_a` _[line 224]_. This takes a list of terms &mdash; in our case, we'll pass a list with only one element, the word "bat" &mdash; as well as a collection of labels. `is_a` checks if "bat" is in that collection of labels.
+Now we come to our helper function, `is_a` _[line 224]_. It takes a list of terms &mdash; in our case, we'll pass a list with only one element, the word "bat" &mdash; as well as a collection of labels. `is_a` checks if "bat" is in that collection of labels and returns a boolean.
 
 So, if it's not a bat, but we did get back crop coordinates, we're going to:
 
 * crop the image to just that object _[line 228]_
-* convert the cropped image from a Pillow Image to a Vision Image _[line 233]_
-* and then make a new request to the API to identify our cropped image.
+* convert the cropped image from a Pillow Image to a Vision Image _[line 233]_ (Pillow is a fork of Python Image Library)
+* and then make a new request to the Vision API to label our cropped image.
 
 Hopefully, we get back new labels _[line 241]_. Then we:
 
 * add them to our set
 * check if we've found a bat yet
-* and if we have found a bat, we won't crop to the rest of the objects. We don't want to call the API if we don't have to.
+* if we have found a bat, we won't crop to the rest of the objects. We don't want to call the API if we don't have to.
 
-Now that we've done what we can to identify the image as bat or non-bat, we update the entity _[line 250]_ and mark it as having been classified.
+Now that we've done what we can to identify the image as either bat or non-bat, we update the entity _[line 250]_ and mark it as having been classified.
 
-_[Control+g 312 Enter]_
+_[Control+g **312** Enter]_
 
 During this step, we're also going to write the entities to the datastore.
 
 _[Uncomment `with ds client` block.]_
 
-_[Your code block should look like]_
+####_Your code block should look like_
 
 ```
     pp = pprint.PrettyPrinter()
@@ -384,11 +386,11 @@ _[Comment out **everything** except initial `pp = pprint.PrettyPrinter()`]_
 
 _[Arrow down and uncomment `query =`, `query.add`, `bats =`, `pp.print`]_
 
-We're going to ask the datastore for all the bat photos. Then we're going to choose one and tweet it. For us, pulling a few entities is not a big deal, but we could also make the query keys-only, then randomly choose the key and get just that entitity.
+We're going to ask the datastore for all the bat photos. Then we're going to choose one and tweet it. For this case, loading a few entities into memory is not a big deal, but we could also make the query keys-only, then randomly choose the key and get just that entitity.
 
 _[Uncomment `tweet photo entity`]_
 
-_[Your code block should look like this]_
+####_Your code block should look like this_
 
 ```
     pp = pprint.PrettyPrinter()
@@ -415,13 +417,13 @@ _[Your code block should look like this]_
     tweet_photo_entity(random.choice(bats))
 ```
 
-_[Control+g 266 Enter]_
+_[Control+g **266** Enter]_
 
 First, we're gonna write a message. What's the hashtag for this event? _[If possible, add after `#HappyHalloween`.]_
 
-Then we're gonna upload the photo to Twitter _[line 282]_, and then attach it and our message to our tweet.
+Then we're gonna upload the photo to Twitter _[line 282]_, and attach it and our message to our tweet.
 
-Finally, we'll record our tweet in the datastore _[line 294]_. We can use this with a composite index to only pull bat photos that we haven't tweeted recently.
+Finally, we'll record when we tweeted in the datastore _[line 294]_. We can use this with a composite index to only pull bat photos that haven't been tweeted recently.
 
 _[Command+s to save.]_
 
@@ -437,3 +439,63 @@ Let's see how it looks...
 _[Command-click link to open in new tab, command-2 to switch to that tab.]_
 
 Awesome!
+
+_[Estimated elapsed time: 20 minutes.]_
+
+## Slide 31
+### Additional GCP ML APIs
+
+Flickr can return not just photos but also video. If you are dedicated to tweeting only the choicest cute animal _videos_, there are Google Cloud Platform APIs to help with that, too!
+
+(One of the challenges of working with video is programatically detecting "good clips" &mdash; you know, interesting, not too long. Cloud Video Intelligence has a Shot Change Detection feature, which can help you roll your own clipping strategy.)
+
+## Slide 32
+### Further GCP Services
+
+You may have noticed that our bats-to-Twitter script downloaded photos locally. That's not strictly required, but it may be part of your workflow, and you can always store images with Cloud Storage.
+
+You have to host your bot somewhere. App Engine has a cron service, while Cloud Scheduler was announced back in July and is currently in alpha.
+
+## Slide 33
+### Alternatives to GCP
+
+Or, disentangling from Google Cloud Platform's all-encompassing embrace for a moment, I'm currently hosting my bot at PythonAnyhwere, which is a great online IDE and web hosting service. If you like Python, check it out.
+
+## Slide 34
+### Twitter Changes
+
+At the end of July, Twitter started requiring developers to answer a questionnaire about how they plan to use Twitter's API and its data before permitting developers to create an API key.
+
+This _is_ a hoop to jump through, but you can do it.
+
+(Also, Flickr already had a similar requirement, so I had my "Please just let me post cute animal photos" spiel ready.)
+
+But maybe you're done with Twitter...
+
+## Slide 35
+### Mastodon
+
+Mastodon is an open source, decentralized social network. It has a few nice design features &mdash; for example, you can't search arbitrary strings, so while you can still find posts via hashtags, it's harder for people to search something they want to fight about.
+
+Plus, there's a Mastodon instance just for bots, BotsIn.Spaaaace!
+
+My next mini-project will probably be updating @BeachBirbys to crosspost to Mastodon.
+
+## Slide 36
+### What do you want to see?
+
+Thank you for listening. I hope that you feel inspired to mash together some APIs to create something that makes you smile.
+
+## Slide 37
+### Photo Credits
+
+Thanks to the photographers who took these turtle, bird, and bat photos!
+
+## Slide 37
+### Rachel Ramsay
+
+I am Rachel Ramsay, and I care about birds the normal amount.
+
+You can find me on Twitter at rachelbuilds, and you can find today's slides and code on my GitHub.
+
+Thank you.

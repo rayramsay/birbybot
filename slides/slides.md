@@ -265,7 +265,16 @@ index found. recommended index is:
 
 ---
 
-### Further GCP Integration
+### Additional GCP ML APIs
+
+* Cloud Video Intelligence API
+* Cloud Speech-to-Text
+* Cloud Natural Language API
+* Cloud Translation API
+
+---
+
+### Further GCP Services
 
 * Cloud Storage
 * App Engine 
@@ -273,7 +282,7 @@ index found. recommended index is:
 
 ---
 
-### Alternatives
+### Alternatives 🐙
 
 #### [PythonAnywhere](https://www.pythonanywhere.com/)
 
@@ -290,6 +299,10 @@ index found. recommended index is:
 * [API documentation](https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md)
 * [Client Libraries](https://github.com/tootsuite/documentation/blob/master/Using-the-API/Libraries.md)
 * [BotsIn.Space](https://botsin.space/) &ndash; an instance just for bots!
+
+---
+
+### What do you want to see?
 
 ---
 
