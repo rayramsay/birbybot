@@ -14,72 +14,66 @@
 * Maximize Chrome and `cmd+shift+f` to hide address bar.
 
 ## Slide 0
-### Building a Twitter Image Bot with Flickr and Google Cloud Platform
+### Building a Twitter Bot with Flickr and GCP
 
 Hello, what's up GDG San Francisco? How's everyone's DevFest going so far?
 
-My name is Rachel Ramsay, and today I'll be showing you how to build a Twitter image bot with the Flickr API and Google Cloud Platform, particularly the Cloud Vision API.
+My name is Rachel Ramsay, and today I'll be sharing what I learned while building a Twitter image bot with the Flickr API and Google Cloud Platform, particularly the Cloud Vision API.
 
-I hope that you come away from this talk with the inspiration to build something that makes you feel good.
+I should warn you that I'm on call right now, so apologies in advance if I get paged.
 
-Twitter is a site that can be a conduit for upsetting news, hard conversations, and harassment.
-
-Yet I have not logged off.
-
-But I do try to make my timeline a happier place by interleaving positive content.
+I love birdwatching, and my journey into bot-making began when I tweeted a simple question.
 
 ## Slide 1
-### What do you want to see more often?
+### A Simple Question
 
-Think about what would make the good chemical spray in your brain, and then build it.
+"What if I made a bot that exclusively posted pictures of plovers and their babies?"
 
-One account I love, @BirdPerHour, tweeted a few photos of plovers and their babies.
-
-Which inspired me to tweet,
+(If you don't know what a plover is, it's a shorebird, and its babies are adorable.)
 
 ## Slide 2
-### _[Read]_ "What if I made a bot that exclusively posted pictures of plovers and their babies?"
+### @beachbirbys
 
-Thus beginning my journey into bot making.
+I ended up making beachbirbys, for all your beach bird baby needs.
 
-Also, what you build doesn't have to post to Twitter! Twitter recently introduced a vetting process for apps, and I'll cover that, plus alternatives to Twitter, later in this presentation.
+Today, I'm going to tell you what I learned while building beachbirbys, and share some resources for building your own bot.
+
+I hope that you come away with the inspiration and guidance to build something that makes you feel good.
 
 ## Slide 3
-### Working with Intellectual Property
+### A Simple Plan
 
-When I started this project, I had to decide how I would approach copyrighted material. Some people's approach is more blase &mdash; they figure they'll get some DMCA takedowns and maybe their bot will be suspended; whatever happens, happens.
+My goals for this bot were simple:
 
-But, for me,
+1. Get pictures of plover babies from Flickr.
+2. Post those pictures to Twitter.
+3. Feel the good chemical spraying everywhere in my brain.
 
 ## Slide 4
-### _[Read]_ Crediting photographers and not reposting copyrighted images were priorities
+### Problem #1
+
+When I started this project, I had to decide how I would approach copyrighted material. Some people's approach is more blasé &mdash; they figure they'll get some DMCA takedowns and maybe their bot will be suspended; whatever happens, happens.
+
+But, for me, crediting photographers and not reposting copyrighted images were priorities.
 
 As a follower of image bots, I'm often frustrated by not knowing how to find more work by whoever created what I'm seeing, so I wanted my bot to link back to its sources.
 
 ## Slide 5
-### How will you find images?
+### Solution #1
 
-This is a non-exhaustive list of APIs that you can use to find Creative Commons-licensed images.
-
-I started with Flickr because I was familiar with it as an end-user. In the future, I may add more sources for my bot to pull from.
-
-(Unsplash is a particularly good source for aesthetic photos. Their license is incredibly permissive: you can use Unsplash photos in commercial projects without credit; you just can't scrape their photos to create your own Unsplash.)
+I chose Flickr as my image source because of its strong support for attribution and Creative Commons licenses.
 
 ## Slide 6
 ### Searching Flickr
 
-So, with the goal of seeing more pictures of baby plovers on my timeline, I turned to Flickr.
+So, with the goal of seeing more pictures of baby plovers on my timeline, I said to Flickr, "Show me baby plovers."
 
-This is a simplified code snippet that uses the flickrapi Python module by Sybren Stuvel; we'll see a bit more of this in the demo, but of course you don't have to write in Python or use Flickr in your own project.
-
-"Flickr," I said, "show me baby plovers."
-
-And Flickr said...
+And I got back...
 
 ## Slide 7
 ### That's not a bird...
 
-"How about a baby turtle?"
+A baby turtle.
 
 Flickr's API _did_ return baby plovers, but it also returned this turtle. As cute as this turtle is, I don't want my bot to post it.
 
@@ -88,7 +82,7 @@ So, why did it appear in my results?
 ## Slide 8
 ### _[Read]_ Flickr returns photos that contain the search term in their title, description, or tags
 
-and this image is titled "Baby bog turtle," and its description includes the word "plover".
+This image is titled "_Baby_ bog turtle," and its description includes the word "plover".
 
 ## Slide 9
 ### ...threatened and endangered species that occur in Connecticut, including the threatened bog turtle, piping plover, and Puritan tiger beetle...
@@ -98,11 +92,11 @@ If you were building a tiger image bot, this turtle might appear in those search
 So, now we have a problem.
 
 ## Slide 10
-### I can sort Flickr results by relevance, but how do I know when results stop being relevant?
+### Problem #2
 
 There wasn't a good solution within the Flickr API to make sure that my bot never tweeted a non-bird photo by accident.
 
-Now, there weren't _that_ many search results. I _could_ have sorted the birds from the non-birds with my human eyes.
+Now, there weren't _that_ many search results. I _could_ have sorted the birds from the non-birds by hand.
 
 But I didn't do that, because when given a choice between doing the thing myself and spending many hours making the computer do the thing, I will always choose the latter.
 
@@ -114,125 +108,82 @@ Ultimately, I decided to take all of the results returned by Flickr and run them
 Cloud Vision API is great because it already knows what a bird is; it already knows what a lot of things are because its image recognition models are already trained.
 
 ## Slide 12
-### Features
-
-Think about what you can build with this feature set:
-
-* You can detect &ndash; but not _recognize_ &ndash; faces, including the emotions displayed on those faces. So it can tell you, "That's a face, and it looks nervous," but not, "That's Rachel's face."
-* You can detect landmarks in an image, such as the Golden Gate Bridge.
-* There's also logo detection.
-* Or if you have a photo of a storefront, you can read the name of the store from its sign.
-* There's a more robust OCR endpoint for documents.
-* Safe Search Detection is crucial for making sure that your bot doesn't tweet anything gory or racy.
-* Image Properties can tell you the dominant colors in an image, which would come in handy if you were building something centered around a particular color aesthetic.
-* Crop Hints can help you format images for different aspect ratios suited to different social media platforms.
-* Web Detection can do things like find websites that use an image, or give you URLs to visually similar images. So, it's like reverse image search.
-* Label Detection and Object Localization are the features that my bot uses, so we'll dig into those in a second.
-
-## Slide 13
-### Client Libraries
-
-Cloud Vision API has client libraries for a variety of languages, or you can call the REST API directly.
-
-## Slide 14
-### Label Detection
+### Approach #1
 
 Label detection evaluates the image as a whole.
 
 When we run our baby box turtle through label detection, we know it's not a bird.
 
-## Slide 15
+## Slide 13
 ### Definitely not a bird
 
 (Those numbers are confidence scores.)
 
 But because label detection evaluates the image as a whole, it can miss things.
 
-## Slide 16
-### But this _is_ a bird
+## Slide 14
+### But this is a bird
 
 For this image, label detection only sees sand; it misses the adorable piping plover chick that I can plainly see with my human eyes.
 
 In order for Cloud Vision API to see the plover, I turned to Object Localization.
 
-## Slide 17
-### Object Localization
+## Slide 15
+### Approach #2
 
 In addition to detecting objects, object localization does some rudimentary categorization.
 
-Sometimes it _does_ recognize the object as a bird, but for our photo of a baby plover on the beach, it was like, "Eh, I think we got an animal here."
-
-## Slide 18
+## Slide 16
 ### Well, it's definitely something...
+
+Sometimes object localization _does_ recognize an object as a bird, but for our photo of a baby plover on the beach, it was like, "Eh, I think we got an animal here."
 
 But I can use that bounding poly to crop the image and run it through label detection again.
 
-## Slide 19
-### Crop to object and detect labels again
+## Slide 17
+### Solution #2
 
 When I do _that_, label detection recognizes the plover as a bird, which is good enough for my bot to use it.
 
 That said,
 
-## Slide 20
-### _[Read]_ Detecting and labeling objects is not bulletproof.
+## Slide 18
+### Problem #3
+
+Detecting and labeling objects is not bulletproof.
 
 It's a good strategy, but it can still fail.
 
-## Slide 21
+## Slide 19
 ### Doesn't look like anything to me
 
 Nature has this thing called camouflage.
 
 While my human eyes can pick out the spotted sandpiper hatchlings, Cloud Vision API is only vaguely sensing the presence of fauna.
 
-## Slide 22
+## Slide 20
 ### After cropping
 
 When I crop this time, I actually get further away from correct classification: now Cloud Vision API detects no animal presence at all; we've lost that fauna label.
 
-## Slide 23
+## Slide 21
 ### Cloud AutoML Vision
 
 Enter Cloud AutoML for Vision, which is designed to simplify training your own image classification models.
 
-## Slide 24
-### _[Read]_ I have not trained a model to distinguish camouflaged fauna from flora...yet.
+## Slide 22
+### Solution #3?
 
-But side projects do make for great excuses to start learning the technologies that you're interested in, so maybe I will in the future!
+I have not trained a model to distinguish camouflaged fauna from flora...yet.
 
-## Slide 25
-### Cloud Datastore
+I turned to Cloud Vision precisely because I didn't want to train my own models.
 
-In addition to being able to programmatically differentiate bird from non-bird, I needed a way to keep track of the images' metadata, their location, and when I last tweeted them, so that my bot doesn't repeat itself too often.
+How deep does this rabbit hole go?
 
-Using Cloud Datastore for a Twitter bot is like hitting a fly with a sledge hammer, but I chose it because I wanted to learn it.
-
-## Slide 26
-### _[Read]_ Cloud Datastore is a NoSQL database.
-
-Now that it's built on top of Firestore, it's strongly consistent.
-
-But because Firestore is in Datastore mode, real-time updates are not supported &ndash; which is fine for this project.
-
-## Slide 27
-### Data Model
-
-When I create Photo entities, I store Flickr's API results plus a few additional properties like `is_bird` and `last_tweeted`.
-
-Later on, I can add results from a different API as Photo entities, which will have different properties, and that's fine.
-
-## Slide 28
-### Composite Indexes
-
-Since I want to ask the datastore for photos of birds that I haven't tweeted recently, I need to create a composite index. Adding composite indexes to your datastore is easy: you define your indexes in a YAML file and deploy it with the gcloud tool. My YAML file looks like what this helpful error message suggested! (Shoutout to the engineers who wrote an error message that tells you how to fix itself.)
-
-## Slide 29
+## Slide 23
 ### Birds, But Make It Spooky
 
 In this demo, we're going to build up a simple script that will find and tweet photos of bats because it's almost Halloween!
-
-_[Estimated elapsed time: 10 minutes.]_
 
 _[Cmd+tab to switch to Visual Studio Code.]_
 

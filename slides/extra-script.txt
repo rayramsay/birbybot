@@ -1,0 +1,54 @@
+### How will you find images?
+
+* [Bing Image Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/) &ndash; filter by [license](http://help.bing.microsoft.com/#apex/18/en-us/10006/0)
+* [Google Custom Search API](https://developers.google.com/custom-search/) &ndash; filter by [rights](https://developers.google.com/custom-search/json-api/v1/reference/cse/list#parameters)
+* [Flickr API](https://www.flickr.com/services/api/) &ndash; filter by [license](https://www.flickr.com/services/api/flickr.photos.search.html)
+* [Unsplash API](https://unsplash.com/developers) &ndash; all images are licensed [similar](https://medium.com/unsplash/the-unsplash-license-f6fb7de5c95a) to CC-0
+
+## Slide 12
+### Features
+
+Think about what you can build with this feature set:
+
+* You can detect &ndash; but not _recognize_ &ndash; faces, including the emotions displayed on those faces. So it can tell you, "That's a face, and it looks nervous," but not, "That's Rachel's face."
+* You can detect landmarks in an image, such as the Golden Gate Bridge.
+* There's also logo detection.
+* Or if you have a photo of a storefront, you can read the name of the store from its sign.
+* There's a more robust OCR endpoint for documents.
+* Safe Search Detection is crucial for making sure that your bot doesn't tweet anything gory or racy.
+* Image Properties can tell you the dominant colors in an image, which would come in handy if you were building something centered around a particular color aesthetic.
+* Crop Hints can help you format images for different aspect ratios suited to different social media platforms.
+* Web Detection can do things like find websites that use an image, or give you URLs to visually similar images. So, it's like reverse image search.
+* Label Detection and Object Localization are the features that my bot uses, so we'll dig into those in a second.
+
+## Slide 13
+### Client Libraries
+
+Cloud Vision API has client libraries for a variety of languages, or you can call the REST API directly.
+
+
+## Slide 25
+### Cloud Datastore
+
+In addition to being able to programmatically differentiate bird from non-bird, I needed a way to keep track of the images' metadata, their location, and when I last tweeted them, so that my bot doesn't repeat itself too often.
+
+Using Cloud Datastore for a Twitter bot is like hitting a fly with a sledge hammer, but I chose it because I wanted to learn it.
+
+## Slide 26
+### _[Read]_ Cloud Datastore is a NoSQL database.
+
+Now that it's built on top of Firestore, it's strongly consistent.
+
+But because Firestore is in Datastore mode, real-time updates are not supported &ndash; which is fine for this project.
+
+## Slide 27
+### Data Model
+
+When I create Photo entities, I store Flickr's API results plus a few additional properties like `is_bird` and `last_tweeted`.
+
+Later on, I can add results from a different API as Photo entities, which will have different properties, and that's fine.
+
+## Slide 28
+### Composite Indexes
+
+Since I want to ask the datastore for photos of birds that I haven't tweeted recently, I need to create a composite index. Adding composite indexes to your datastore is easy: you define your indexes in a YAML file and deploy it with the gcloud tool. My YAML file looks like what this helpful error message suggested! (Shoutout to the engineers who wrote an error message that tells you how to fix itself.)

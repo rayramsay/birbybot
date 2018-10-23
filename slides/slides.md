@@ -9,32 +9,37 @@ revealOptions:
 
 ---
 
-## Building a Twitter Image Bot with Flickr and Google Cloud Platform
+## Building a Twitter Bot with Flickr and GCP
 
 ---
 
-### What do you want to see more often?
-
----
+### A Simple Question
 
 "What if I made a bot that exclusively posted pictures of plovers and their babies?"
 
 ---
 
-### Working with Intellectual Property
+![twitter](assets/twitter.jpg)
 
 ---
+
+### A Simple Plan
+
+1. Get pictures of plover babies from Flickr.
+2. Post those pictures to Twitter.
+3. Feel dopamine flood my brain.
+
+---
+
+### Problem #1
 
 Crediting photographers and not reposting copyrighted images were priorities for me.
 
 ---
 
-### How will you find images?
+### Solution #1
 
-* [Bing Image Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/) &ndash; filter by [license](http://help.bing.microsoft.com/#apex/18/en-us/10006/0)
-* [Google Custom Search API](https://developers.google.com/custom-search/) &ndash; filter by [rights](https://developers.google.com/custom-search/json-api/v1/reference/cse/list#parameters)
-* [Flickr API](https://www.flickr.com/services/api/) &ndash; filter by [license](https://www.flickr.com/services/api/flickr.photos.search.html)
-* [Unsplash API](https://unsplash.com/developers) &ndash; all images are licensed [similar](https://medium.com/unsplash/the-unsplash-license-f6fb7de5c95a) to CC-0
+<img src="assets/combined.png" style="background:none; border:none;">
 
 ---
 
@@ -60,7 +65,9 @@ Flickr returns photos that contain the search term in their title, description, 
 
 ---
 
-I can sort Flickr results by relevance, but how do I know when results stop being relevant?
+### Problem #2
+
+How do I make sure that my bot only tweets bird photos?
 
 ---
 
@@ -70,34 +77,7 @@ I can sort Flickr results by relevance, but how do I know when results stop bein
 
 ---
 
-### Features
-
-* Face Detection
-* Landmark Detection
-* Logo Detection
-* Text Detection
-* Document Text Detection
-* Safe Search Detection
-* Image Properties
-* Crop Hints
-* Web Detection
-* Label Detection
-* Object Localization
-
----
-
-### Client Libraries
-
-* C#
-* Go
-* Java
-* Node.js
-* PHP
-* Python 🐍
-* Ruby
-
----
-
+#### Approach #1
 ### Label Detection
 
 > detects broad sets of categories within an image
@@ -120,7 +100,7 @@ box turtle 0.53
 
 ---
 
-### But this _is_ a bird
+### But this is a bird
 
 ![beach birby](assets/beachbirby_box.png)
 
@@ -130,6 +110,7 @@ sand 0.78
 
 ---
 
+#### Approach #2
 ### Object Localization
 
 > detects and extracts multiple objects in an image
@@ -163,7 +144,8 @@ bounding_poly {
 
 ---
 
-### Crop to object and detect labels again
+#### Solution #2
+### Crop Object and Label
 
 ![cropped beach birby](assets/beachbirby_cropped.jpg)
 
@@ -181,6 +163,7 @@ wildlife 0.54
 
 ---
 
+#### Problem #3
 ### Detecting and labeling objects is not bulletproof.
 
 ---
@@ -215,47 +198,17 @@ tree 0.53
 
 ---
 
+### Solution #3?
+
 I have not trained a model to distinguish camouflaged fauna from flora
 
 ...yet.
 
 ---
 
-### Cloud Datastore
-###### (technically Cloud Firestore in Datastore mode)
+## Demo
 
----
-
-Cloud Datastore is a NoSQL database.
-
-Now that it's built on top of Firestore, it's strongly consistent.
-
-But because Firestore is in Datastore mode, real-time updates are not supported.
-
----
-
-### Data Model
-
-> Data objects are known as entities. An entity has one or more named properties, each of which can have one or more values. Entities of the same kind do not need to have the same properties, and an entity's values for a given property do not all need to be of the same data type.
-
----
-
-### Composite Indexes
-
-(And helpful error messages!)
-
-```
-google.api_core.exceptions.FailedPrecondition: 400 no matching
-index found. recommended index is:
-- kind: Photo
-  properties:
-  - name: is_bird
-  - name: last_tweeted
-```
-
----
-
-## Birds, But Make It Spooky
+### Birds, But Make It Spooky
 
 ![bat](assets/bat.jpg)
 
