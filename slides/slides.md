@@ -19,13 +19,13 @@ revealOptions:
 
 ---
 
-![twitter](assets/twitter.jpg)
+![twitter](assets/twitter.png)
 
 ---
 
 ### A Simple Plan
 
-1. Get pictures of plover babies from Flickr.
+1. Get pictures of plover babies.
 2. Post those pictures to Twitter.
 3. Feel dopamine flood my brain.
 
@@ -218,40 +218,30 @@ I have not trained a model to distinguish camouflaged fauna from flora
 
 ---
 
-### Additional GCP ML APIs
+### Composite Indexes
 
-* Cloud Video Intelligence API
-* Cloud Speech-to-Text
-* Cloud Natural Language API
-* Cloud Translation API
+(And helpful error messages!)
 
----
-
-### Further GCP Services
-
-* Cloud Storage
-* App Engine 
-* Cloud Functions
+```
+google.api_core.exceptions.FailedPrecondition: 400 no matching
+index found. recommended index is:
+- kind: Photo
+  properties:
+  - name: is_bird
+  - name: last_tweeted
+```
 
 ---
 
-### Alternatives 🐙
+### Problem #4
 
-#### [PythonAnywhere](https://www.pythonanywhere.com/)
-
----
-
-### Twitter Changes
-
-> All new developers must apply for a developer account to access Twitter APIs.
+Where can I host my scripts?
 
 ---
 
-### Mastodon
+### Solution #4
 
-* [API documentation](https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md)
-* [Client Libraries](https://github.com/tootsuite/documentation/blob/master/Using-the-API/Libraries.md)
-* [BotsIn.Space](https://botsin.space/) &ndash; an instance just for bots!
+[PythonAnywhere](https://www.pythonanywhere.com/)
 
 ---
 
@@ -259,7 +249,71 @@ I have not trained a model to distinguish camouflaged fauna from flora
 
 ---
 
+### Image Sources
+
+* [Bing Image Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/) &ndash; filter by [license](http://help.bing.microsoft.com/#apex/18/en-us/10006/0)
+* [Google Custom Search API](https://developers.google.com/custom-search/) &ndash; filter by [rights](https://developers.google.com/custom-search/json-api/v1/reference/cse/list#parameters)
+* [Flickr API](https://www.flickr.com/services/api/) &ndash; filter by [license](https://www.flickr.com/services/api/flickr.photos.search.html)
+* [Unsplash API](https://unsplash.com/developers) &ndash; all images are licensed [similar](https://medium.com/unsplash/the-unsplash-license-f6fb7de5c95a) to CC-0
+
+---
+
+### Cloud Vision API Features
+
+* Face Detection
+* Landmark Detection
+* Logo Detection
+* Text Detection
+* Document Text Detection
+* Safe Search Detection
+* Image Properties
+* Crop Hints
+* Web Detection
+* Label Detection
+* Object Localization
+
+---
+
+### What about video?
+
+* Cloud Video Intelligence API
+  * Label Detection
+  * Explicit Content Detection
+  * Shot Change Detection
+  * Speech Transcription
+* Cloud Natural Language API
+* Cloud Translation API
+
+---
+
+### More ☁️
+
+* Cloud Storage
+* App Engine 
+* Cloud Functions
+
+---
+
+### Twitter
+
+> All new developers must apply for a developer account to access Twitter APIs.
+
+---
+
+### Mastodon
+
+* [API Documentation](https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md)
+* [Client Libraries](https://github.com/tootsuite/documentation/blob/master/Using-the-API/Libraries.md)
+* [BotsIn.Space](https://botsin.space/) &ndash; an instance just for bots!
+
+---
+
+### What are you going to build?
+
+---
+
 ### Photo Credits
+* [Spotted Sandpiper Chick](https://www.flickr.com/photos/maxibaker/35854534516/) by Claude Bélanger (CC BY 2.0)
 * [Threatened baby bog turtle (Clemmys muhlenbergii)](https://www.flickr.com/photos/usfwsendsp/5039503186) by Rosie Walunas/USFWS (CC BY 2.0)
 * [Piping Plover Chicks](https://www.flickr.com/photos/joeshlabotnik/29025989546/) by Joe Shlabotnik (CC BY-NC-SA 2.0)
 * [Spotted Sandpiper Hatchlings](https://www.flickr.com/photos/guylmonty/15811119800) by Guy Monty (CC BY-NC-SA 2.0)

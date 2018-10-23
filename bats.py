@@ -136,7 +136,7 @@ def search_flickr(search_string):
               "safe_search": "1",
               "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
               "min_upload_date": "2017-12-27",
-              "max_upload_date": "2017-12-28",
+              "max_upload_date": "2017-12-30",
               "sort": "date-posted-asc",
               "per_page": "5"}
     resp = flickr.photos.search(**params)
@@ -151,17 +151,17 @@ def photos_to_entities(photos):
         name = "Flickr-" + photo.get("id")
         key = ds_client.key(kind, name)
         entity = datastore.Entity(key=key)
-        entity.update({
-            "source": "Flickr",
-            "search_terms": "bat",
-            "is_classified": False
-        })
         for k, v in photo.items():
             if not k == "dateupload":
                 entity.update({k: v})
             else:
                 entity.update({k: datetime.datetime.utcfromtimestamp(int(v))})
-        entity.update({"download_url": pick_download_url(entity)})
+        entity.update({
+            "source": "Flickr",
+            "search_terms": "bat",
+            "is_classified": False,
+            "download_url": pick_download_url(entity)
+        })
         entities.append(entity)
     return entities
 
@@ -319,4 +319,5 @@ if __name__ == "__main__":
     # pp.pprint(bats)
 
     # Time to tweet!
-    # tweet_photo_entity(random.choice(bats))
+    # bat = random.choice(bats)
+    # tweet_photo_entity(bat)
