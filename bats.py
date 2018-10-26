@@ -7,7 +7,6 @@ import json
 import logging
 import os
 import pathlib
-import pprint
 import random
 import sys
 
@@ -133,12 +132,13 @@ def search_flickr(search_string):
     params = {"text": search_string,
               "license": "1,2,3,4,5,6,8,9,10",
               "media": "photos",
+              "content_type": "1",  # Photos only
               "safe_search": "1",
-              "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
-              "min_upload_date": "2017-12-27",
-              "max_upload_date": "2017-12-30",
-              "sort": "date-posted-asc",
-              "per_page": "5"}
+              "extras": "tags,license,date_upload,owner_name,url_z,url_c,url_l,url_o",
+              "min_upload_date": "2018-10-01",
+              "max_upload_date": "2018-10-07",
+              "sort": "relevance",
+              "per_page": "8"}
     resp = flickr.photos.search(**params)
     photos = resp["photos"]["photo"]
     return photos
@@ -220,7 +220,7 @@ def classify_as(terms, entities):
                                  round(verts[2].x * width),
                                  round(verts[2].y * height) ))
         # If it's not a bat but there are crop boxes, let's crop and get new labels.
-        if not is_a(terms, labels) and crop_boxes:
+        if not is_a(["bat"], labels) and crop_boxes:
             logger.debug(f"Cropping {name}...")
             im = Image.open(filepath)
             for cb in crop_boxes:
@@ -298,15 +298,11 @@ def tweet_photo_entity(entity):
 
 ################################################################################
 if __name__ == "__main__": 
-    pp = pprint.PrettyPrinter()
-
     photos = search_flickr("bat")
     entities = photos_to_entities(photos)
 
-    pp.pprint(entities)
     show_photos(entities)
-
-    # classify_as_resp_only(["bat"], entities)
+    classify_as_resp_only(["bat"], entities)
 
     # classify_as(["bat"], entities)
     # with ds_client.batch():
@@ -316,7 +312,6 @@ if __name__ == "__main__":
     # query = ds_client.query(kind="Photo")
     # query.add_filter("is_bat", "=", True)
     # bats = list(query.fetch())
-    # pp.pprint(bats)
 
     # Time to tweet!
     # bat = random.choice(bats)

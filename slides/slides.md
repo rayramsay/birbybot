@@ -13,13 +13,23 @@ revealOptions:
 
 ---
 
+### Meet your bird nerd
+
+<img src="assets/twitter_profile.png" style="background:none; border:none;">
+
+**[@rachelbuilds](https://www.twitter.com/rachelbuilds)**
+
+---
+
 ### A Simple Question
 
 "What if I made a bot that exclusively posted pictures of plovers and their babies?"
 
 ---
 
-![twitter](assets/twitter.png)
+<img src="assets/twitter.png" style="background:none; border:none;">
+
+**[@beachbirbys](https://www.twitter.com/beachbirbys)**
 
 ---
 
@@ -33,7 +43,7 @@ revealOptions:
 
 ### Problem #1
 
-Crediting photographers and not reposting copyrighted images were priorities for me.
+Where am I gonna get my plover pictures?
 
 ---
 
@@ -235,7 +245,7 @@ index found. recommended index is:
 
 ### Problem #4
 
-Where can I host my scripts?
+Where am I gonna host my scripts?
 
 ---
 
@@ -245,7 +255,15 @@ Where can I host my scripts?
 
 ---
 
+### What do you care about the normal amount?
+
+---
+
 ### What do you want to see?
+
+---
+
+### What are you going to build?
 
 ---
 
@@ -286,7 +304,7 @@ Where can I host my scripts?
 
 ---
 
-### More ☁️
+### ️☁️ ☁️ ☁️
 
 * Cloud Storage
 * App Engine 
@@ -308,7 +326,7 @@ Where can I host my scripts?
 
 ---
 
-### What are you going to build?
+### Build what makes you smile.
 
 ---
 
@@ -323,10 +341,6 @@ Where can I host my scripts?
 
 ### Rachel Ramsay
 
-Developer Avocado, Clover Network
-
-_cares about birds the normal amount_
-
-[@rachelbuilds](https://www.twitter.com/rachelbuilds)
+Developer Avocado<br>[@CloverPlatform](https://www.twitter.com/CloverPlatform)
 
 Find today's slides and code at [github.com/rayramsay/birbybot/](https://github.com/rayramsay/birbybot/)
