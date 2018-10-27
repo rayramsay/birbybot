@@ -1,0 +1,1304 @@
+2018-10-26 16:57:24,709 | DEBUG | <Entity('Photo', 'Flickr-45045687372') {'id': '45045687372', 'owner': '58478677@N03', 'secret': '2f3a77251a', 'server': '1977', 'farm': 2, 'title': 'Bats 3', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '3', 'dateupload': datetime.datetime(2018, 10, 4, 11, 52, 57), 'ownername': 'orientalizing', 'tags': 'animals bats cyclades desktop featured greece horseshoebat islands kostosquarries lesserhorseshoebat mammals marblequarry paros quarries', 'url_z': 'https://farm2.staticflickr.com/1977/45045687372_2f3a77251a_z.jpg', 'height_z': '400', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1977/45045687372_2f3a77251a_c.jpg', 'height_c': 500, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1977/45045687372_2f3a77251a_b.jpg', 'height_l': '640', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1977/45045687372_699dc15904_o.jpg', 'height_o': '1800', 'width_o': '2880', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1977/45045687372_2f3a77251a_b.jpg'}>
+2018-10-26 16:57:24,710 | DEBUG | Opening Flickr-45045687372...
+2018-10-26 16:57:24,710 | INFO | Starting classification for Flickr-45045687372...
+2018-10-26 16:57:26,508 | DEBUG | Response for Flickr-45045687372 annotation request: label_annotations {
+  mid: "/m/01cbzq"
+  description: "rock"
+  score: 0.570975661277771
+  topicality: 0.570975661277771
+}
+label_annotations {
+  mid: "/m/03qnfyd"
+  description: "animal source foods"
+  score: 0.531757116317749
+  topicality: 0.531757116317749
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.5185058116912842
+  bounding_poly {
+    normalized_vertices {
+      x: 0.00685553252696991
+      y: 0.33730238676071167
+    }
+    normalized_vertices {
+      x: 0.10962743312120438
+      y: 0.33730238676071167
+    }
+    normalized_vertices {
+      x: 0.10962743312120438
+      y: 0.5376697182655334
+    }
+    normalized_vertices {
+      x: 0.00685553252696991
+      y: 0.5376697182655334
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.5185058116912842
+  bounding_poly {
+    normalized_vertices {
+      x: 0.11729516088962555
+      y: 0.3993457555770874
+    }
+    normalized_vertices {
+      x: 0.21394939720630646
+      y: 0.3993457555770874
+    }
+    normalized_vertices {
+      x: 0.21394939720630646
+      y: 0.6133601665496826
+    }
+    normalized_vertices {
+      x: 0.11729516088962555
+      y: 0.6133601665496826
+    }
+  }
+}
+
+2018-10-26 16:57:26,518 | DEBUG | Cropping Flickr-45045687372...
+2018-10-26 16:57:26,554 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:27,484 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/0dzct"
+  description: "face"
+  score: 0.955082893371582
+  topicality: 0.955082893371582
+}
+label_annotations {
+  mid: "/m/04rky"
+  description: "mammal"
+  score: 0.9262003302574158
+  topicality: 0.9262003302574158
+}
+label_annotations {
+  mid: "/m/0k0pj"
+  description: "nose"
+  score: 0.8783326148986816
+  topicality: 0.8783326148986816
+}
+label_annotations {
+  mid: "/m/04hgtk"
+  description: "head"
+  score: 0.8606485724449158
+  topicality: 0.8606485724449158
+}
+label_annotations {
+  mid: "/m/035qhg"
+  description: "fauna"
+  score: 0.8217965364456177
+  topicality: 0.8217965364456177
+}
+label_annotations {
+  mid: "/m/0283dt1"
+  description: "mouth"
+  score: 0.7929614186286926
+  topicality: 0.7929614186286926
+}
+label_annotations {
+  mid: "/m/05mqq3"
+  description: "snout"
+  score: 0.7186830639839172
+  topicality: 0.7186830639839172
+}
+label_annotations {
+  mid: "/m/039xj_"
+  description: "ear"
+  score: 0.6569047570228577
+  topicality: 0.6569047570228577
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.6104767322540283
+  topicality: 0.6104767322540283
+}
+label_annotations {
+  mid: "/m/0ds5b"
+  description: "facial hair"
+  score: 0.57014000415802
+  topicality: 0.57014000415802
+}
+
+2018-10-26 16:57:27,486 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:28,981 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/04rky"
+  description: "mammal"
+  score: 0.9260464906692505
+  topicality: 0.9260464906692505
+}
+label_annotations {
+  mid: "/m/035qhg"
+  description: "fauna"
+  score: 0.8102462887763977
+  topicality: 0.8102462887763977
+}
+label_annotations {
+  mid: "/m/05mqq3"
+  description: "snout"
+  score: 0.7382718920707703
+  topicality: 0.7382718920707703
+}
+label_annotations {
+  mid: "/m/0283dt1"
+  description: "mouth"
+  score: 0.7194182872772217
+  topicality: 0.7194182872772217
+}
+label_annotations {
+  mid: "/m/01h44"
+  description: "bat"
+  score: 0.529259443283081
+  topicality: 0.529259443283081
+}
+
+2018-10-26 16:57:28,981 | DEBUG | Done cropping Flickr-45045687372.
+2018-10-26 16:57:28,982 | DEBUG | Flickr-45045687372's labels: {'ear', 'animal', 'bat', 'mouth', 'rock', 'face', 'fauna', 'mammal', 'snout', 'nose', 'animal source foods', 'organism', 'head', 'facial hair'}
+2018-10-26 16:57:28,982 | INFO | Flickr-45045687372 is_bat = True!
+
+2018-10-26 16:57:28,982 | DEBUG | <Entity('Photo', 'Flickr-31182608978') {'id': '31182608978', 'owner': '112981124@N07', 'secret': '9ffb817b05', 'server': '1953', 'farm': 2, 'title': 'Updated Bat Manuel and Robin', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '3', 'dateupload': datetime.datetime(2018, 10, 2, 15, 34, 33), 'ownername': 'bjcoving', 'tags': 'skeleton halloween bat costume', 'url_z': 'https://farm2.staticflickr.com/1953/31182608978_9ffb817b05_z.jpg', 'height_z': '404', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1953/31182608978_9ffb817b05_c.jpg', 'height_c': 505, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1953/31182608978_9ffb817b05_b.jpg', 'height_l': '647', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1953/31182608978_6d4bb6c771_o.jpg', 'height_o': '1719', 'width_o': '2722', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1953/31182608978_9ffb817b05_b.jpg'}>
+2018-10-26 16:57:28,982 | DEBUG | Opening Flickr-31182608978...
+2018-10-26 16:57:28,982 | INFO | Starting classification for Flickr-31182608978...
+2018-10-26 16:57:32,939 | DEBUG | Response for Flickr-31182608978 annotation request: label_annotations {
+  mid: "/m/01jwgf"
+  description: "product"
+  score: 0.6917290091514587
+  topicality: 0.6917290091514587
+}
+label_annotations {
+  mid: "/m/07c1v"
+  description: "technology"
+  score: 0.6820319294929504
+  topicality: 0.6820319294929504
+}
+label_annotations {
+  mid: "/m/02h7lkt"
+  description: "fictional character"
+  score: 0.6096221804618835
+  topicality: 0.6096221804618835
+}
+label_annotations {
+  mid: "/m/0250x"
+  description: "costume"
+  score: 0.5952417850494385
+  topicality: 0.5952417850494385
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.7980318069458008
+  bounding_poly {
+    normalized_vertices {
+      x: 0.3940516412258148
+      y: 0.37763264775276184
+    }
+    normalized_vertices {
+      x: 0.5779483914375305
+      y: 0.37763264775276184
+    }
+    normalized_vertices {
+      x: 0.5779483914375305
+      y: 0.7811909317970276
+    }
+    normalized_vertices {
+      x: 0.3940516412258148
+      y: 0.7811909317970276
+    }
+  }
+}
+
+2018-10-26 16:57:32,940 | DEBUG | Cropping Flickr-31182608978...
+2018-10-26 16:57:32,982 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:34,672 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/088fh"
+  description: "yellow"
+  score: 0.9508737921714783
+  topicality: 0.9508737921714783
+}
+label_annotations {
+  mid: "/m/02h7lkt"
+  description: "fictional character"
+  score: 0.6092568635940552
+  topicality: 0.6092568635940552
+}
+label_annotations {
+  mid: "/m/01jwgf"
+  description: "product"
+  score: 0.5433446168899536
+  topicality: 0.5433446168899536
+}
+label_annotations {
+  mid: "/m/0250x"
+  description: "costume"
+  score: 0.5253729820251465
+  topicality: 0.5253729820251465
+}
+
+2018-10-26 16:57:34,673 | DEBUG | Done cropping Flickr-31182608978.
+2018-10-26 16:57:34,673 | DEBUG | Flickr-31182608978's labels: {'costume', 'person', 'product', 'technology', 'fictional character', 'yellow'}
+2018-10-26 16:57:34,673 | INFO | Flickr-31182608978 is_bat = False!
+
+2018-10-26 16:57:34,673 | DEBUG | <Entity('Photo', 'Flickr-30189937747') {'id': '30189937747', 'owner': '99357189@N00', 'secret': 'b8bab506f6', 'server': '1957', 'farm': 2, 'title': 'monterey bay aquarium', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '1', 'dateupload': datetime.datetime(2018, 10, 6, 4, 19, 15), 'ownername': 'dolanh', 'tags': 'rays touchtank batrays montereybayaquarium monterey', 'url_z': 'https://farm2.staticflickr.com/1957/30189937747_b8bab506f6_z.jpg', 'height_z': '427', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1957/30189937747_b8bab506f6_c.jpg', 'height_c': 534, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1957/30189937747_b8bab506f6_b.jpg', 'height_l': '683', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1957/30189937747_8e70bbd4d6_o.jpg', 'height_o': '2000', 'width_o': '3000', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1957/30189937747_b8bab506f6_b.jpg'}>
+2018-10-26 16:57:34,674 | DEBUG | Opening Flickr-30189937747...
+2018-10-26 16:57:34,675 | INFO | Starting classification for Flickr-30189937747...
+2018-10-26 16:57:37,831 | DEBUG | Response for Flickr-30189937747 annotation request: label_annotations {
+  mid: "/m/035qhg"
+  description: "fauna"
+  score: 0.9099498987197876
+  topicality: 0.9099498987197876
+}
+label_annotations {
+  mid: "/m/0838f"
+  description: "water"
+  score: 0.7521987557411194
+  topicality: 0.7521987557411194
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.6768767833709717
+  topicality: 0.6768767833709717
+}
+label_annotations {
+  mid: "/m/07pbfj"
+  description: "fish"
+  score: 0.5717560052871704
+  topicality: 0.5717560052871704
+}
+label_annotations {
+  mid: "/m/0ch_cf"
+  description: "fish"
+  score: 0.5701428651809692
+  topicality: 0.5701428651809692
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.8799765110015869
+  bounding_poly {
+    normalized_vertices {
+      x: 0.0004169940948486328
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 0.4387986958026886
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 0.4387986958026886
+      y: 0.9781464338302612
+    }
+    normalized_vertices {
+      x: 0.0004169940948486328
+      y: 0.9781464338302612
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.5888925790786743
+  bounding_poly {
+    normalized_vertices {
+      x: 0.5134117603302002
+      y: 0.4280000329017639
+    }
+    normalized_vertices {
+      x: 0.7837647795677185
+      y: 0.4280000329017639
+    }
+    normalized_vertices {
+      x: 0.7837647795677185
+      y: 0.7505882978439331
+    }
+    normalized_vertices {
+      x: 0.5134117603302002
+      y: 0.7505882978439331
+    }
+  }
+}
+
+2018-10-26 16:57:37,832 | DEBUG | Cropping Flickr-30189937747...
+2018-10-26 16:57:37,886 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:39,180 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/035qhg"
+  description: "fauna"
+  score: 0.9041712880134583
+  topicality: 0.9041712880134583
+}
+label_annotations {
+  mid: "/m/0ch_cf"
+  description: "fish"
+  score: 0.844158947467804
+  topicality: 0.844158947467804
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.69849693775177
+  topicality: 0.69849693775177
+}
+label_annotations {
+  mid: "/m/07pbfj"
+  description: "fish"
+  score: 0.5557258129119873
+  topicality: 0.5557258129119873
+}
+label_annotations {
+  mid: "/m/050vn"
+  description: "marine biology"
+  score: 0.507086992263794
+  topicality: 0.507086992263794
+}
+
+2018-10-26 16:57:39,206 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:41,086 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/01g5v"
+  description: "blue"
+  score: 0.9681119918823242
+  topicality: 0.9681119918823242
+}
+label_annotations {
+  mid: "/m/04rky"
+  description: "mammal"
+  score: 0.9243764281272888
+  topicality: 0.9243764281272888
+}
+label_annotations {
+  mid: "/m/0fly7"
+  description: "jeans"
+  score: 0.8046426773071289
+  topicality: 0.8046426773071289
+}
+label_annotations {
+  mid: "/m/05wkw"
+  description: "photography"
+  score: 0.7987114787101746
+  topicality: 0.7987114787101746
+}
+label_annotations {
+  mid: "/m/014sv8"
+  description: "eye"
+  score: 0.7909698486328125
+  topicality: 0.7909698486328125
+}
+label_annotations {
+  mid: "/m/0hgr6"
+  description: "denim"
+  score: 0.7870827913284302
+  topicality: 0.7870827913284302
+}
+label_annotations {
+  mid: "/m/01ssh5"
+  description: "shoulder"
+  score: 0.7657954692840576
+  topicality: 0.7657954692840576
+}
+label_annotations {
+  mid: "/m/047vlmn"
+  description: "outerwear"
+  score: 0.746977686882019
+  topicality: 0.746977686882019
+}
+label_annotations {
+  mid: "/m/015c4z"
+  description: "sitting"
+  score: 0.7409186959266663
+  topicality: 0.7409186959266663
+}
+label_annotations {
+  mid: "/m/0dgw9r"
+  description: "human"
+  score: 0.709259569644928
+  topicality: 0.709259569644928
+}
+
+2018-10-26 16:57:41,087 | DEBUG | Done cropping Flickr-30189937747.
+2018-10-26 16:57:41,087 | DEBUG | Flickr-30189937747's labels: {'photography', 'eye', 'fish', 'person', 'outerwear', 'blue', 'animal', 'marine biology', 'mammal', 'denim', 'water', 'fauna', 'organism', 'sitting', 'jeans', 'human', 'shoulder'}
+2018-10-26 16:57:41,088 | INFO | Flickr-30189937747 is_bat = False!
+
+2018-10-26 16:57:41,088 | DEBUG | <Entity('Photo', 'Flickr-43314440130') {'id': '43314440130', 'owner': '99357189@N00', 'secret': '2a48833843', 'server': '1919', 'farm': 2, 'title': 'monterey bay aquarium', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '1', 'dateupload': datetime.datetime(2018, 10, 6, 4, 19, 27), 'ownername': 'dolanh', 'tags': 'rays touchtank batrays montereybayaquarium monterey', 'url_z': 'https://farm2.staticflickr.com/1919/43314440130_2a48833843_z.jpg', 'height_z': '427', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1919/43314440130_2a48833843_c.jpg', 'height_c': 534, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1919/43314440130_2a48833843_b.jpg', 'height_l': '683', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1919/43314440130_0d77c3744e_o.jpg', 'height_o': '2000', 'width_o': '3000', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1919/43314440130_2a48833843_b.jpg'}>
+2018-10-26 16:57:41,088 | DEBUG | Opening Flickr-43314440130...
+2018-10-26 16:57:41,089 | INFO | Starting classification for Flickr-43314440130...
+2018-10-26 16:57:43,920 | DEBUG | Response for Flickr-43314440130 annotation request: label_annotations {
+  mid: "/m/035qhg"
+  description: "fauna"
+  score: 0.9140902757644653
+  topicality: 0.9140902757644653
+}
+label_annotations {
+  mid: "/m/0838f"
+  description: "water"
+  score: 0.865439772605896
+  topicality: 0.865439772605896
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.6747699975967407
+  topicality: 0.6747699975967407
+}
+label_annotations {
+  mid: "/m/09dzg"
+  description: "turtle"
+  score: 0.6090852618217468
+  topicality: 0.6090852618217468
+}
+label_annotations {
+  mid: "/m/0ch_cf"
+  description: "fish"
+  score: 0.5882150530815125
+  topicality: 0.5882150530815125
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.9255284070968628
+  bounding_poly {
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.044912368059158325
+    }
+    normalized_vertices {
+      x: 0.9977007508277893
+      y: 0.044912368059158325
+    }
+    normalized_vertices {
+      x: 0.9977007508277893
+      y: 0.984264075756073
+    }
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.984264075756073
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.5544652342796326
+  bounding_poly {
+    normalized_vertices {
+      x: 0.36000001430511475
+      y: 0.3752940893173218
+    }
+    normalized_vertices {
+      x: 0.6157647371292114
+      y: 0.3752940893173218
+    }
+    normalized_vertices {
+      x: 0.6157647371292114
+      y: 0.7044706344604492
+    }
+    normalized_vertices {
+      x: 0.36000001430511475
+      y: 0.7044706344604492
+    }
+  }
+}
+
+2018-10-26 16:57:43,921 | DEBUG | Cropping Flickr-43314440130...
+2018-10-26 16:57:43,967 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:45,939 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/035qhg"
+  description: "fauna"
+  score: 0.8996239900588989
+  topicality: 0.8996239900588989
+}
+label_annotations {
+  mid: "/m/0ch_cf"
+  description: "fish"
+  score: 0.8807546496391296
+  topicality: 0.8807546496391296
+}
+label_annotations {
+  mid: "/m/0m53l"
+  description: "rays and skates"
+  score: 0.7537147998809814
+  topicality: 0.7537147998809814
+}
+label_annotations {
+  mid: "/m/028jd8"
+  description: "electric ray"
+  score: 0.7467073798179626
+  topicality: 0.7467073798179626
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.6793588995933533
+  topicality: 0.6793588995933533
+}
+label_annotations {
+  mid: "/m/05mqq3"
+  description: "snout"
+  score: 0.6328688263893127
+  topicality: 0.6328688263893127
+}
+label_annotations {
+  mid: "/m/050vn"
+  description: "marine biology"
+  score: 0.571375846862793
+  topicality: 0.571375846862793
+}
+label_annotations {
+  mid: "/m/07pbfj"
+  description: "fish"
+  score: 0.569787323474884
+  topicality: 0.569787323474884
+}
+label_annotations {
+  mid: "/m/0cjt2"
+  description: "flatfish"
+  score: 0.560276985168457
+  topicality: 0.560276985168457
+}
+
+2018-10-26 16:57:45,966 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:47,288 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/09686"
+  description: "vertebrate"
+  score: 0.9037036895751953
+  topicality: 0.9037036895751953
+}
+label_annotations {
+  mid: "/m/0838f"
+  description: "water"
+  score: 0.8570361733436584
+  topicality: 0.8570361733436584
+}
+label_annotations {
+  mid: "/m/05r655"
+  description: "girl"
+  score: 0.7949239611625671
+  topicality: 0.7949239611625671
+}
+label_annotations {
+  mid: "/m/0ds99lh"
+  description: "fun"
+  score: 0.6604681015014648
+  topicality: 0.6604681015014648
+}
+label_annotations {
+  mid: "/m/02jwqh"
+  description: "vacation"
+  score: 0.5587965846061707
+  topicality: 0.5587965846061707
+}
+
+2018-10-26 16:57:47,288 | DEBUG | Done cropping Flickr-43314440130.
+2018-10-26 16:57:47,288 | DEBUG | Flickr-43314440130's labels: {'fish', 'rays and skates', 'person', 'turtle', 'animal', 'flatfish', 'electric ray', 'snout', 'marine biology', 'girl', 'water', 'fauna', 'organism', 'vertebrate', 'vacation', 'fun'}
+2018-10-26 16:57:47,288 | INFO | Flickr-43314440130 is_bat = False!
+
+2018-10-26 16:57:47,288 | DEBUG | <Entity('Photo', 'Flickr-44407060014') {'id': '44407060014', 'owner': '99357189@N00', 'secret': '355d27c8a2', 'server': '1979', 'farm': 2, 'title': 'monterey bay aquarium', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '1', 'dateupload': datetime.datetime(2018, 10, 6, 4, 19, 4), 'ownername': 'dolanh', 'tags': 'zooey touchtank batrays montereybayaquarium monterey', 'url_z': 'https://farm2.staticflickr.com/1979/44407060014_355d27c8a2_z.jpg', 'height_z': '427', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1979/44407060014_355d27c8a2_c.jpg', 'height_c': 534, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1979/44407060014_355d27c8a2_b.jpg', 'height_l': '683', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1979/44407060014_15d81f82be_o.jpg', 'height_o': '2000', 'width_o': '3000', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1979/44407060014_355d27c8a2_b.jpg'}>
+2018-10-26 16:57:47,288 | DEBUG | Opening Flickr-44407060014...
+2018-10-26 16:57:47,289 | INFO | Starting classification for Flickr-44407060014...
+2018-10-26 16:57:50,782 | DEBUG | Response for Flickr-44407060014 annotation request: label_annotations {
+  mid: "/m/04rky"
+  description: "mammal"
+  score: 0.9256877303123474
+  topicality: 0.9256877303123474
+}
+label_annotations {
+  mid: "/m/09686"
+  description: "vertebrate"
+  score: 0.9037036895751953
+  topicality: 0.9037036895751953
+}
+label_annotations {
+  mid: "/m/05r655"
+  description: "girl"
+  score: 0.6646054983139038
+  topicality: 0.6646054983139038
+}
+label_annotations {
+  mid: "/m/0ds99lh"
+  description: "fun"
+  score: 0.6195079684257507
+  topicality: 0.6195079684257507
+}
+label_annotations {
+  mid: "/m/06bm2"
+  description: "recreation"
+  score: 0.5588899850845337
+  topicality: 0.5588899850845337
+}
+label_annotations {
+  mid: "/m/089v3"
+  description: "zoo"
+  score: 0.5576520562171936
+  topicality: 0.5576520562171936
+}
+label_annotations {
+  mid: "/m/02jwqh"
+  description: "vacation"
+  score: 0.5179257988929749
+  topicality: 0.5179257988929749
+}
+label_annotations {
+  mid: "/m/05s2s"
+  description: "plant"
+  score: 0.5035416483879089
+  topicality: 0.5035416483879089
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.9821546077728271
+  bounding_poly {
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 1.0
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 1.0
+      y: 0.9249699711799622
+    }
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.9249699711799622
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.696210503578186
+  bounding_poly {
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 1.0
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 1.0
+      y: 0.9249699711799622
+    }
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.9249699711799622
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.631234347820282
+  bounding_poly {
+    normalized_vertices {
+      x: 0.2575194537639618
+      y: 0.2720617651939392
+    }
+    normalized_vertices {
+      x: 0.4965982437133789
+      y: 0.2720617651939392
+    }
+    normalized_vertices {
+      x: 0.4965982437133789
+      y: 0.8392324447631836
+    }
+    normalized_vertices {
+      x: 0.2575194537639618
+      y: 0.8392324447631836
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/05s2s"
+  name: "Plant"
+  score: 0.5693028569221497
+  bounding_poly {
+    normalized_vertices {
+      x: 0.0036986919585615396
+      y: 0.3173973858356476
+    }
+    normalized_vertices {
+      x: 0.2247719168663025
+      y: 0.3173973858356476
+    }
+    normalized_vertices {
+      x: 0.2247719168663025
+      y: 0.724720299243927
+    }
+    normalized_vertices {
+      x: 0.0036986919585615396
+      y: 0.724720299243927
+    }
+  }
+}
+
+2018-10-26 16:57:50,783 | DEBUG | Cropping Flickr-44407060014...
+2018-10-26 16:57:50,820 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:51,683 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/035qhg"
+  description: "fauna"
+  score: 0.9205947518348694
+  topicality: 0.9205947518348694
+}
+label_annotations {
+  mid: "/m/01280g"
+  description: "wildlife"
+  score: 0.753485381603241
+  topicality: 0.753485381603241
+}
+label_annotations {
+  mid: "/m/083vt"
+  description: "wood"
+  score: 0.6555968523025513
+  topicality: 0.6555968523025513
+}
+label_annotations {
+  mid: "/m/0fbf1m"
+  description: "terrestrial animal"
+  score: 0.6402040123939514
+  topicality: 0.6402040123939514
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.6220777034759521
+  topicality: 0.6220777034759521
+}
+label_annotations {
+  mid: "/m/05mqq3"
+  description: "snout"
+  score: 0.528989851474762
+  topicality: 0.528989851474762
+}
+label_annotations {
+  mid: "/m/04lmyz"
+  description: "horn"
+  score: 0.5085646510124207
+  topicality: 0.5085646510124207
+}
+
+2018-10-26 16:57:51,691 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:52,579 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/02mhj"
+  description: "ecosystem"
+  score: 0.9462940692901611
+  topicality: 0.9462940692901611
+}
+label_annotations {
+  mid: "/m/08t9c_"
+  description: "grass"
+  score: 0.9090386033058167
+  topicality: 0.9090386033058167
+}
+label_annotations {
+  mid: "/m/01fnns"
+  description: "vegetation"
+  score: 0.8942922949790955
+  topicality: 0.8942922949790955
+}
+label_annotations {
+  mid: "/m/0fkrk"
+  description: "grass family"
+  score: 0.844266951084137
+  topicality: 0.844266951084137
+}
+label_annotations {
+  mid: "/m/05s2s"
+  description: "plant"
+  score: 0.8195236325263977
+  topicality: 0.8195236325263977
+}
+label_annotations {
+  mid: "/m/0cblv"
+  description: "ecoregion"
+  score: 0.7295916080474854
+  topicality: 0.7295916080474854
+}
+label_annotations {
+  mid: "/m/06w1j5"
+  description: "shrubland"
+  score: 0.5957759022712708
+  topicality: 0.5957759022712708
+}
+label_annotations {
+  mid: "/m/0f45l"
+  description: "steppe"
+  score: 0.5685310363769531
+  topicality: 0.5685310363769531
+}
+label_annotations {
+  mid: "/m/0263lr1"
+  description: "crop"
+  score: 0.5412006974220276
+  topicality: 0.5412006974220276
+}
+label_annotations {
+  mid: "/m/06600f2"
+  description: "plant community"
+  score: 0.5355830788612366
+  topicality: 0.5355830788612366
+}
+
+2018-10-26 16:57:52,599 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:53,610 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/03q69"
+  description: "hair"
+  score: 0.9734228849411011
+  topicality: 0.9734228849411011
+}
+label_annotations {
+  mid: "/m/05r655"
+  description: "girl"
+  score: 0.8359999656677246
+  topicality: 0.8359999656677246
+}
+label_annotations {
+  mid: "/m/0ytgt"
+  description: "child"
+  score: 0.7593033909797668
+  topicality: 0.7593033909797668
+}
+label_annotations {
+  mid: "/m/0dnr7"
+  description: "textile"
+  score: 0.6633658409118652
+  topicality: 0.6633658409118652
+}
+label_annotations {
+  mid: "/m/0ds99lh"
+  description: "fun"
+  score: 0.6547624468803406
+  topicality: 0.6547624468803406
+}
+label_annotations {
+  mid: "/m/028mzr"
+  description: "hair coloring"
+  score: 0.5353655815124512
+  topicality: 0.5353655815124512
+}
+
+2018-10-26 16:57:53,610 | DEBUG | Done cropping Flickr-44407060014.
+2018-10-26 16:57:53,610 | DEBUG | Flickr-44407060014's labels: {'hair', 'ecosystem', 'child', 'mammal', 'grass family', 'grass', 'organism', 'terrestrial animal', 'wood', 'fun', 'recreation', 'vegetation', 'zoo', 'plant community', 'hair coloring', 'person', 'snout', 'fauna', 'vertebrate', 'shrubland', 'animal', 'plant', 'textile', 'horn', 'girl', 'ecoregion', 'wildlife', 'steppe', 'crop', 'vacation'}
+2018-10-26 16:57:53,611 | INFO | Flickr-44407060014 is_bat = False!
+
+2018-10-26 16:57:53,611 | DEBUG | <Entity('Photo', 'Flickr-30119374017') {'id': '30119374017', 'owner': '112981124@N07', 'secret': 'b0d41a02d9', 'server': '1916', 'farm': 2, 'title': 'Bat Manuel and Robin Ready for Halloween', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '3', 'dateupload': datetime.datetime(2018, 10, 2, 15, 34, 31), 'ownername': 'bjcoving', 'tags': 'skeleton bat halloween costume batman robin', 'url_z': 'https://farm2.staticflickr.com/1916/30119374017_b0d41a02d9_z.jpg', 'height_z': '410', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1916/30119374017_b0d41a02d9_c.jpg', 'height_c': 513, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1916/30119374017_b0d41a02d9_b.jpg', 'height_l': '656', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1916/30119374017_80cf84e89e_o.jpg', 'height_o': '1674', 'width_o': '2612', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1916/30119374017_b0d41a02d9_b.jpg'}>
+2018-10-26 16:57:53,611 | DEBUG | Opening Flickr-30119374017...
+2018-10-26 16:57:53,611 | INFO | Starting classification for Flickr-30119374017...
+2018-10-26 16:57:55,154 | DEBUG | Response for Flickr-30119374017 annotation request: label_annotations {
+  mid: "/m/02h7lkt"
+  description: "fictional character"
+  score: 0.589353084564209
+  topicality: 0.589353084564209
+}
+localized_object_annotations {
+  mid: "/m/07c52"
+  name: "Television"
+  score: 0.6204008460044861
+  bounding_poly {
+    normalized_vertices {
+      x: 0.19635602831840515
+      y: 0.760244607925415
+    }
+    normalized_vertices {
+      x: 0.36612075567245483
+      y: 0.760244607925415
+    }
+    normalized_vertices {
+      x: 0.36612075567245483
+      y: 0.9394211173057556
+    }
+    normalized_vertices {
+      x: 0.19635602831840515
+      y: 0.9394211173057556
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.5158693790435791
+  bounding_poly {
+    normalized_vertices {
+      x: 0.35339683294296265
+      y: 0.10391616076231003
+    }
+    normalized_vertices {
+      x: 0.5698972940444946
+      y: 0.10391616076231003
+    }
+    normalized_vertices {
+      x: 0.5698972940444946
+      y: 0.874907374382019
+    }
+    normalized_vertices {
+      x: 0.35339683294296265
+      y: 0.874907374382019
+    }
+  }
+}
+
+2018-10-26 16:57:55,155 | DEBUG | Cropping Flickr-30119374017...
+2018-10-26 16:57:55,189 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:56,169 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/029zz6"
+  description: "display device"
+  score: 0.8980703949928284
+  topicality: 0.8980703949928284
+}
+label_annotations {
+  mid: "/m/07c1v"
+  description: "technology"
+  score: 0.8949625492095947
+  topicality: 0.8949625492095947
+}
+label_annotations {
+  mid: "/m/0bs7_0t"
+  description: "electronic device"
+  score: 0.8750364184379578
+  topicality: 0.8750364184379578
+}
+label_annotations {
+  mid: "/m/0403lcy"
+  description: "netbook"
+  score: 0.8643366098403931
+  topicality: 0.8643366098403931
+}
+label_annotations {
+  mid: "/m/01mf0"
+  description: "software"
+  score: 0.8080340623855591
+  topicality: 0.8080340623855591
+}
+label_annotations {
+  mid: "/m/02522"
+  description: "computer monitor"
+  score: 0.7968664169311523
+  topicality: 0.7968664169311523
+}
+label_annotations {
+  mid: "/m/0541p"
+  description: "multimedia"
+  score: 0.7788760662078857
+  topicality: 0.7788760662078857
+}
+label_annotations {
+  mid: "/m/01c648"
+  description: "laptop"
+  score: 0.7157938480377197
+  topicality: 0.7157938480377197
+}
+label_annotations {
+  mid: "/m/03qh03g"
+  description: "media"
+  score: 0.6867879033088684
+  topicality: 0.6867879033088684
+}
+label_annotations {
+  mid: "/m/01m3v"
+  description: "computer"
+  score: 0.6730356216430664
+  topicality: 0.6730356216430664
+}
+
+2018-10-26 16:57:56,177 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:56,848 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/02h7lkt"
+  description: "fictional character"
+  score: 0.7148097157478333
+  topicality: 0.7148097157478333
+}
+label_annotations {
+  mid: "/m/01kyr8"
+  description: "darkness"
+  score: 0.565956175327301
+  topicality: 0.565956175327301
+}
+label_annotations {
+  mid: "/m/01jwgf"
+  description: "product"
+  score: 0.5443930625915527
+  topicality: 0.5443930625915527
+}
+
+2018-10-26 16:57:56,848 | DEBUG | Done cropping Flickr-30119374017.
+2018-10-26 16:57:56,848 | DEBUG | Flickr-30119374017's labels: {'display device', 'media', 'person', 'television', 'computer monitor', 'darkness', 'electronic device', 'technology', 'computer', 'product', 'fictional character', 'laptop', 'multimedia', 'software', 'netbook'}
+2018-10-26 16:57:56,849 | INFO | Flickr-30119374017 is_bat = False!
+
+2018-10-26 16:57:56,849 | DEBUG | <Entity('Photo', 'Flickr-45042059922') {'id': '45042059922', 'owner': '33277524@N00', 'secret': '4f916d7f90', 'server': '1940', 'farm': 2, 'title': 'gwb | bat', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '2', 'dateupload': datetime.datetime(2018, 10, 4, 6, 46, 31), 'ownername': 'stoha', 'tags': 'bat guessewhereberlin berlin germany germania deutschland gwb stoha soh', 'url_z': 'https://farm2.staticflickr.com/1940/45042059922_4f916d7f90_z.jpg', 'height_z': '360', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1940/45042059922_4f916d7f90_c.jpg', 'height_c': 450, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1940/45042059922_4f916d7f90_b.jpg', 'height_l': '576', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1940/45042059922_d60da25e4c_o.jpg', 'height_o': '1080', 'width_o': '1920', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1940/45042059922_4f916d7f90_b.jpg'}>
+2018-10-26 16:57:56,850 | DEBUG | Opening Flickr-45042059922...
+2018-10-26 16:57:56,851 | INFO | Starting classification for Flickr-45042059922...
+2018-10-26 16:57:58,308 | DEBUG | Response for Flickr-45042059922 annotation request: label_annotations {
+  mid: "/m/038hg"
+  description: "green"
+  score: 0.9723944067955017
+  topicality: 0.9723944067955017
+}
+label_annotations {
+  mid: "/m/04k84"
+  description: "light"
+  score: 0.8374660611152649
+  topicality: 0.8374660611152649
+}
+label_annotations {
+  mid: "/m/03w43x"
+  description: "computer wallpaper"
+  score: 0.6799917221069336
+  topicality: 0.6799917221069336
+}
+label_annotations {
+  mid: "/m/01kyr8"
+  description: "darkness"
+  score: 0.6290448307991028
+  topicality: 0.6290448307991028
+}
+label_annotations {
+  mid: "/m/03gq5hm"
+  description: "font"
+  score: 0.6011305451393127
+  topicality: 0.6011305451393127
+}
+label_annotations {
+  mid: "/m/021sdg"
+  description: "graphics"
+  score: 0.550032377243042
+  topicality: 0.550032377243042
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.7217524647712708
+  bounding_poly {
+    normalized_vertices {
+      x: 0.08135296404361725
+      y: 0.2535882294178009
+    }
+    normalized_vertices {
+      x: 0.4649999737739563
+      y: 0.2535882294178009
+    }
+    normalized_vertices {
+      x: 0.4649999737739563
+      y: 0.7609999775886536
+    }
+    normalized_vertices {
+      x: 0.08135296404361725
+      y: 0.7609999775886536
+    }
+  }
+}
+
+2018-10-26 16:57:58,309 | DEBUG | Cropping Flickr-45042059922...
+2018-10-26 16:57:58,350 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:57:59,222 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/038hg"
+  description: "green"
+  score: 0.9756393432617188
+  topicality: 0.9756393432617188
+}
+label_annotations {
+  mid: "/m/02qdwbp"
+  description: "net"
+  score: 0.7027488946914673
+  topicality: 0.7027488946914673
+}
+label_annotations {
+  mid: "/m/02cwm"
+  description: "design"
+  score: 0.6567544341087341
+  topicality: 0.6567544341087341
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.6399468779563904
+  topicality: 0.6399468779563904
+}
+label_annotations {
+  mid: "/m/03gq5hm"
+  description: "font"
+  score: 0.5747970342636108
+  topicality: 0.5747970342636108
+}
+label_annotations {
+  mid: "/m/0mwc"
+  description: "angle"
+  score: 0.5695010423660278
+  topicality: 0.5695010423660278
+}
+label_annotations {
+  mid: "/m/08t9c_"
+  description: "grass"
+  score: 0.5679241418838501
+  topicality: 0.5679241418838501
+}
+label_annotations {
+  mid: "/m/021sdg"
+  description: "graphics"
+  score: 0.5516809225082397
+  topicality: 0.5516809225082397
+}
+
+2018-10-26 16:57:59,223 | DEBUG | Done cropping Flickr-45042059922.
+2018-10-26 16:57:59,224 | DEBUG | Flickr-45042059922's labels: {'design', 'darkness', 'light', 'animal', 'net', 'graphics', 'computer wallpaper', 'font', 'organism', 'angle', 'green', 'grass'}
+2018-10-26 16:57:59,224 | INFO | Flickr-45042059922 is_bat = False!
+
+2018-10-26 16:57:59,225 | DEBUG | <Entity('Photo', 'Flickr-44335634244') {'id': '44335634244', 'owner': '164740607@N08', 'secret': '808888b637', 'server': '1967', 'farm': 2, 'title': 'Seed dispersal 1', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '1', 'dateupload': datetime.datetime(2018, 10, 2, 15, 39, 56), 'ownername': 'marmello-77', 'tags': 'bats fruits seeds dispersal diet inter interactions mammals chiroptera', 'url_z': 'https://farm2.staticflickr.com/1967/44335634244_808888b637_z.jpg', 'height_z': '427', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1967/44335634244_808888b637_c.jpg', 'height_c': 534, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1967/44335634244_808888b637_b.jpg', 'height_l': '683', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1967/44335634244_a79e5e3242_o.jpg', 'height_o': '1296', 'width_o': '1944', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1967/44335634244_808888b637_b.jpg'}>
+2018-10-26 16:57:59,226 | DEBUG | Opening Flickr-44335634244...
+2018-10-26 16:57:59,226 | INFO | Starting classification for Flickr-44335634244...
+2018-10-26 16:58:00,245 | DEBUG | Response for Flickr-44335634244 annotation request: label_annotations {
+  mid: "/m/03bmqb"
+  description: "flora"
+  score: 0.8407461047172546
+  topicality: 0.8407461047172546
+}
+label_annotations {
+  mid: "/m/03vt0"
+  description: "insect"
+  score: 0.8323773741722107
+  topicality: 0.8323773741722107
+}
+label_annotations {
+  mid: "/m/03rbf6"
+  description: "macro photography"
+  score: 0.8310677409172058
+  topicality: 0.8310677409172058
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.7455649971961975
+  topicality: 0.7455649971961975
+}
+label_annotations {
+  mid: "/m/02cqfm"
+  description: "close up"
+  score: 0.7231028079986572
+  topicality: 0.7231028079986572
+}
+label_annotations {
+  mid: "/m/03mp1"
+  description: "membrane winged insect"
+  score: 0.720174252986908
+  topicality: 0.720174252986908
+}
+label_annotations {
+  mid: "/m/01280g"
+  description: "wildlife"
+  score: 0.6892784237861633
+  topicality: 0.6892784237861633
+}
+label_annotations {
+  mid: "/m/01dqkc"
+  description: "pest"
+  score: 0.6390952467918396
+  topicality: 0.6390952467918396
+}
+label_annotations {
+  mid: "/m/01h4v9"
+  description: "hornet"
+  score: 0.6371034979820251
+  topicality: 0.6371034979820251
+}
+label_annotations {
+  mid: "/m/05mqq3"
+  description: "snout"
+  score: 0.5947429537773132
+  topicality: 0.5947429537773132
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.7506403923034668
+  bounding_poly {
+    normalized_vertices {
+      x: 0.031411781907081604
+      y: 0.004117660224437714
+    }
+    normalized_vertices {
+      x: 0.8899999856948853
+      y: 0.004117660224437714
+    }
+    normalized_vertices {
+      x: 0.8899999856948853
+      y: 0.9634117484092712
+    }
+    normalized_vertices {
+      x: 0.031411781907081604
+      y: 0.9634117484092712
+    }
+  }
+}
+
+2018-10-26 16:58:00,246 | DEBUG | Cropping Flickr-44335634244...
+2018-10-26 16:58:00,338 | DEBUG | Requesting label detection for crop...
+2018-10-26 16:58:01,335 | DEBUG | Response for crop label detection request: label_annotations {
+  mid: "/m/03rbf6"
+  description: "macro photography"
+  score: 0.8252866864204407
+  topicality: 0.8252866864204407
+}
+label_annotations {
+  mid: "/m/03vt0"
+  description: "insect"
+  score: 0.8137242794036865
+  topicality: 0.8137242794036865
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.776871383190155
+  topicality: 0.776871383190155
+}
+label_annotations {
+  mid: "/m/01280g"
+  description: "wildlife"
+  score: 0.6985785961151123
+  topicality: 0.6985785961151123
+}
+label_annotations {
+  mid: "/m/01dqkc"
+  description: "pest"
+  score: 0.6871199607849121
+  topicality: 0.6871199607849121
+}
+label_annotations {
+  mid: "/m/03mp1"
+  description: "membrane winged insect"
+  score: 0.6391633152961731
+  topicality: 0.6391633152961731
+}
+label_annotations {
+  mid: "/m/05mqq3"
+  description: "snout"
+  score: 0.6149462461471558
+  topicality: 0.6149462461471558
+}
+label_annotations {
+  mid: "/m/01h4v9"
+  description: "hornet"
+  score: 0.5658336281776428
+  topicality: 0.5658336281776428
+}
+label_annotations {
+  mid: "/m/01dgwv"
+  description: "true bugs"
+  score: 0.5133914947509766
+  topicality: 0.5133914947509766
+}
+label_annotations {
+  mid: "/m/01h44"
+  description: "bat"
+  score: 0.5104949474334717
+  topicality: 0.5104949474334717
+}
+
+2018-10-26 16:58:01,336 | DEBUG | Done cropping Flickr-44335634244.
+2018-10-26 16:58:01,336 | DEBUG | Flickr-44335634244's labels: {'wildlife', 'true bugs', 'close up', 'macro photography', 'animal', 'bat', 'insect', 'snout', 'hornet', 'flora', 'organism', 'membrane winged insect', 'pest'}
+2018-10-26 16:58:01,337 | INFO | Flickr-44335634244 is_bat = True!
+
+2018-10-26 16:58:01,337 | DEBUG | Processed 8 entities. Found 2 bats.

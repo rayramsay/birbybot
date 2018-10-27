@@ -1,0 +1,623 @@
+2018-10-26 16:53:13,036 | DEBUG | <Entity('Photo', 'Flickr-45045687372') {'id': '45045687372', 'owner': '58478677@N03', 'secret': '2f3a77251a', 'server': '1977', 'farm': 2, 'title': 'Bats 3', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '3', 'dateupload': datetime.datetime(2018, 10, 4, 11, 52, 57), 'ownername': 'orientalizing', 'tags': 'animals bats cyclades desktop featured greece horseshoebat islands kostosquarries lesserhorseshoebat mammals marblequarry paros quarries', 'url_z': 'https://farm2.staticflickr.com/1977/45045687372_2f3a77251a_z.jpg', 'height_z': '400', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1977/45045687372_2f3a77251a_c.jpg', 'height_c': 500, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1977/45045687372_2f3a77251a_b.jpg', 'height_l': '640', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1977/45045687372_699dc15904_o.jpg', 'height_o': '1800', 'width_o': '2880', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1977/45045687372_2f3a77251a_b.jpg'}>
+2018-10-26 16:53:13,038 | DEBUG | Opening Flickr-45045687372...
+2018-10-26 16:53:13,056 | INFO | Starting classification for Flickr-45045687372...
+2018-10-26 16:53:14,331 | DEBUG | Response for Flickr-45045687372 annotation request: label_annotations {
+  mid: "/m/01cbzq"
+  description: "rock"
+  score: 0.570975661277771
+  topicality: 0.570975661277771
+}
+label_annotations {
+  mid: "/m/03qnfyd"
+  description: "animal source foods"
+  score: 0.531757116317749
+  topicality: 0.531757116317749
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.5185058116912842
+  bounding_poly {
+    normalized_vertices {
+      x: 0.00685553252696991
+      y: 0.33730238676071167
+    }
+    normalized_vertices {
+      x: 0.10962743312120438
+      y: 0.33730238676071167
+    }
+    normalized_vertices {
+      x: 0.10962743312120438
+      y: 0.5376697182655334
+    }
+    normalized_vertices {
+      x: 0.00685553252696991
+      y: 0.5376697182655334
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.5185058116912842
+  bounding_poly {
+    normalized_vertices {
+      x: 0.11729516088962555
+      y: 0.3993457555770874
+    }
+    normalized_vertices {
+      x: 0.21394939720630646
+      y: 0.3993457555770874
+    }
+    normalized_vertices {
+      x: 0.21394939720630646
+      y: 0.6133601665496826
+    }
+    normalized_vertices {
+      x: 0.11729516088962555
+      y: 0.6133601665496826
+    }
+  }
+}
+
+2018-10-26 16:53:14,332 | DEBUG | <Entity('Photo', 'Flickr-31182608978') {'id': '31182608978', 'owner': '112981124@N07', 'secret': '9ffb817b05', 'server': '1953', 'farm': 2, 'title': 'Updated Bat Manuel and Robin', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '3', 'dateupload': datetime.datetime(2018, 10, 2, 15, 34, 33), 'ownername': 'bjcoving', 'tags': 'skeleton halloween bat costume', 'url_z': 'https://farm2.staticflickr.com/1953/31182608978_9ffb817b05_z.jpg', 'height_z': '404', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1953/31182608978_9ffb817b05_c.jpg', 'height_c': 505, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1953/31182608978_9ffb817b05_b.jpg', 'height_l': '647', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1953/31182608978_6d4bb6c771_o.jpg', 'height_o': '1719', 'width_o': '2722', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1953/31182608978_9ffb817b05_b.jpg'}>
+2018-10-26 16:53:14,332 | DEBUG | Opening Flickr-31182608978...
+2018-10-26 16:53:14,333 | INFO | Starting classification for Flickr-31182608978...
+2018-10-26 16:53:15,559 | DEBUG | Response for Flickr-31182608978 annotation request: label_annotations {
+  mid: "/m/01jwgf"
+  description: "product"
+  score: 0.6917290687561035
+  topicality: 0.6917290687561035
+}
+label_annotations {
+  mid: "/m/07c1v"
+  description: "technology"
+  score: 0.6820321083068848
+  topicality: 0.6820321083068848
+}
+label_annotations {
+  mid: "/m/02h7lkt"
+  description: "fictional character"
+  score: 0.6096223592758179
+  topicality: 0.6096223592758179
+}
+label_annotations {
+  mid: "/m/0250x"
+  description: "costume"
+  score: 0.5952414274215698
+  topicality: 0.5952414274215698
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.7980318069458008
+  bounding_poly {
+    normalized_vertices {
+      x: 0.3940516412258148
+      y: 0.37763264775276184
+    }
+    normalized_vertices {
+      x: 0.5779483914375305
+      y: 0.37763264775276184
+    }
+    normalized_vertices {
+      x: 0.5779483914375305
+      y: 0.7811909317970276
+    }
+    normalized_vertices {
+      x: 0.3940516412258148
+      y: 0.7811909317970276
+    }
+  }
+}
+
+2018-10-26 16:53:15,560 | DEBUG | <Entity('Photo', 'Flickr-30189937747') {'id': '30189937747', 'owner': '99357189@N00', 'secret': 'b8bab506f6', 'server': '1957', 'farm': 2, 'title': 'monterey bay aquarium', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '1', 'dateupload': datetime.datetime(2018, 10, 6, 4, 19, 15), 'ownername': 'dolanh', 'tags': 'rays touchtank batrays montereybayaquarium monterey', 'url_z': 'https://farm2.staticflickr.com/1957/30189937747_b8bab506f6_z.jpg', 'height_z': '427', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1957/30189937747_b8bab506f6_c.jpg', 'height_c': 534, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1957/30189937747_b8bab506f6_b.jpg', 'height_l': '683', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1957/30189937747_8e70bbd4d6_o.jpg', 'height_o': '2000', 'width_o': '3000', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1957/30189937747_b8bab506f6_b.jpg'}>
+2018-10-26 16:53:15,561 | DEBUG | Opening Flickr-30189937747...
+2018-10-26 16:53:15,561 | INFO | Starting classification for Flickr-30189937747...
+2018-10-26 16:53:16,879 | DEBUG | Response for Flickr-30189937747 annotation request: label_annotations {
+  mid: "/m/035qhg"
+  description: "fauna"
+  score: 0.9099498987197876
+  topicality: 0.9099498987197876
+}
+label_annotations {
+  mid: "/m/0838f"
+  description: "water"
+  score: 0.7521987557411194
+  topicality: 0.7521987557411194
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.6768767833709717
+  topicality: 0.6768767833709717
+}
+label_annotations {
+  mid: "/m/07pbfj"
+  description: "fish"
+  score: 0.5717560052871704
+  topicality: 0.5717560052871704
+}
+label_annotations {
+  mid: "/m/0ch_cf"
+  description: "fish"
+  score: 0.5701428651809692
+  topicality: 0.5701428651809692
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.8799765110015869
+  bounding_poly {
+    normalized_vertices {
+      x: 0.0004169940948486328
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 0.4387986958026886
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 0.4387986958026886
+      y: 0.9781464338302612
+    }
+    normalized_vertices {
+      x: 0.0004169940948486328
+      y: 0.9781464338302612
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.5888925790786743
+  bounding_poly {
+    normalized_vertices {
+      x: 0.5134117603302002
+      y: 0.4280000329017639
+    }
+    normalized_vertices {
+      x: 0.7837647795677185
+      y: 0.4280000329017639
+    }
+    normalized_vertices {
+      x: 0.7837647795677185
+      y: 0.7505882978439331
+    }
+    normalized_vertices {
+      x: 0.5134117603302002
+      y: 0.7505882978439331
+    }
+  }
+}
+
+2018-10-26 16:53:16,879 | DEBUG | <Entity('Photo', 'Flickr-43314440130') {'id': '43314440130', 'owner': '99357189@N00', 'secret': '2a48833843', 'server': '1919', 'farm': 2, 'title': 'monterey bay aquarium', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '1', 'dateupload': datetime.datetime(2018, 10, 6, 4, 19, 27), 'ownername': 'dolanh', 'tags': 'rays touchtank batrays montereybayaquarium monterey', 'url_z': 'https://farm2.staticflickr.com/1919/43314440130_2a48833843_z.jpg', 'height_z': '427', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1919/43314440130_2a48833843_c.jpg', 'height_c': 534, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1919/43314440130_2a48833843_b.jpg', 'height_l': '683', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1919/43314440130_0d77c3744e_o.jpg', 'height_o': '2000', 'width_o': '3000', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1919/43314440130_2a48833843_b.jpg'}>
+2018-10-26 16:53:16,880 | DEBUG | Opening Flickr-43314440130...
+2018-10-26 16:53:16,881 | INFO | Starting classification for Flickr-43314440130...
+2018-10-26 16:53:18,367 | DEBUG | Response for Flickr-43314440130 annotation request: label_annotations {
+  mid: "/m/035qhg"
+  description: "fauna"
+  score: 0.9140902757644653
+  topicality: 0.9140902757644653
+}
+label_annotations {
+  mid: "/m/0838f"
+  description: "water"
+  score: 0.865439772605896
+  topicality: 0.865439772605896
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.6747699975967407
+  topicality: 0.6747699975967407
+}
+label_annotations {
+  mid: "/m/09dzg"
+  description: "turtle"
+  score: 0.6090852618217468
+  topicality: 0.6090852618217468
+}
+label_annotations {
+  mid: "/m/0ch_cf"
+  description: "fish"
+  score: 0.5882150530815125
+  topicality: 0.5882150530815125
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.9255284070968628
+  bounding_poly {
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.044912368059158325
+    }
+    normalized_vertices {
+      x: 0.9977007508277893
+      y: 0.044912368059158325
+    }
+    normalized_vertices {
+      x: 0.9977007508277893
+      y: 0.984264075756073
+    }
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.984264075756073
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.5544652342796326
+  bounding_poly {
+    normalized_vertices {
+      x: 0.36000001430511475
+      y: 0.3752940893173218
+    }
+    normalized_vertices {
+      x: 0.6157647371292114
+      y: 0.3752940893173218
+    }
+    normalized_vertices {
+      x: 0.6157647371292114
+      y: 0.7044706344604492
+    }
+    normalized_vertices {
+      x: 0.36000001430511475
+      y: 0.7044706344604492
+    }
+  }
+}
+
+2018-10-26 16:53:18,367 | DEBUG | <Entity('Photo', 'Flickr-44407060014') {'id': '44407060014', 'owner': '99357189@N00', 'secret': '355d27c8a2', 'server': '1979', 'farm': 2, 'title': 'monterey bay aquarium', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '1', 'dateupload': datetime.datetime(2018, 10, 6, 4, 19, 4), 'ownername': 'dolanh', 'tags': 'zooey touchtank batrays montereybayaquarium monterey', 'url_z': 'https://farm2.staticflickr.com/1979/44407060014_355d27c8a2_z.jpg', 'height_z': '427', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1979/44407060014_355d27c8a2_c.jpg', 'height_c': 534, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1979/44407060014_355d27c8a2_b.jpg', 'height_l': '683', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1979/44407060014_15d81f82be_o.jpg', 'height_o': '2000', 'width_o': '3000', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1979/44407060014_355d27c8a2_b.jpg'}>
+2018-10-26 16:53:18,368 | DEBUG | Opening Flickr-44407060014...
+2018-10-26 16:53:18,369 | INFO | Starting classification for Flickr-44407060014...
+2018-10-26 16:53:19,710 | DEBUG | Response for Flickr-44407060014 annotation request: label_annotations {
+  mid: "/m/04rky"
+  description: "mammal"
+  score: 0.9256877303123474
+  topicality: 0.9256877303123474
+}
+label_annotations {
+  mid: "/m/09686"
+  description: "vertebrate"
+  score: 0.9037036895751953
+  topicality: 0.9037036895751953
+}
+label_annotations {
+  mid: "/m/05r655"
+  description: "girl"
+  score: 0.6646056175231934
+  topicality: 0.6646056175231934
+}
+label_annotations {
+  mid: "/m/0ds99lh"
+  description: "fun"
+  score: 0.6195079684257507
+  topicality: 0.6195079684257507
+}
+label_annotations {
+  mid: "/m/06bm2"
+  description: "recreation"
+  score: 0.5588901042938232
+  topicality: 0.5588901042938232
+}
+label_annotations {
+  mid: "/m/089v3"
+  description: "zoo"
+  score: 0.5576521158218384
+  topicality: 0.5576521158218384
+}
+label_annotations {
+  mid: "/m/02jwqh"
+  description: "vacation"
+  score: 0.5179257988929749
+  topicality: 0.5179257988929749
+}
+label_annotations {
+  mid: "/m/05s2s"
+  description: "plant"
+  score: 0.5035414695739746
+  topicality: 0.5035414695739746
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.9821546077728271
+  bounding_poly {
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 1.0
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 1.0
+      y: 0.9249699711799622
+    }
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.9249699711799622
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.696210503578186
+  bounding_poly {
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 1.0
+      y: 0.015735898166894913
+    }
+    normalized_vertices {
+      x: 1.0
+      y: 0.9249699711799622
+    }
+    normalized_vertices {
+      x: 0.5612013339996338
+      y: 0.9249699711799622
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.631234347820282
+  bounding_poly {
+    normalized_vertices {
+      x: 0.2575194537639618
+      y: 0.2720617651939392
+    }
+    normalized_vertices {
+      x: 0.4965982437133789
+      y: 0.2720617651939392
+    }
+    normalized_vertices {
+      x: 0.4965982437133789
+      y: 0.8392324447631836
+    }
+    normalized_vertices {
+      x: 0.2575194537639618
+      y: 0.8392324447631836
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/05s2s"
+  name: "Plant"
+  score: 0.5693028569221497
+  bounding_poly {
+    normalized_vertices {
+      x: 0.0036986919585615396
+      y: 0.3173973858356476
+    }
+    normalized_vertices {
+      x: 0.2247719168663025
+      y: 0.3173973858356476
+    }
+    normalized_vertices {
+      x: 0.2247719168663025
+      y: 0.724720299243927
+    }
+    normalized_vertices {
+      x: 0.0036986919585615396
+      y: 0.724720299243927
+    }
+  }
+}
+
+2018-10-26 16:53:19,711 | DEBUG | <Entity('Photo', 'Flickr-30119374017') {'id': '30119374017', 'owner': '112981124@N07', 'secret': 'b0d41a02d9', 'server': '1916', 'farm': 2, 'title': 'Bat Manuel and Robin Ready for Halloween', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '3', 'dateupload': datetime.datetime(2018, 10, 2, 15, 34, 31), 'ownername': 'bjcoving', 'tags': 'skeleton bat halloween costume batman robin', 'url_z': 'https://farm2.staticflickr.com/1916/30119374017_b0d41a02d9_z.jpg', 'height_z': '410', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1916/30119374017_b0d41a02d9_c.jpg', 'height_c': 513, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1916/30119374017_b0d41a02d9_b.jpg', 'height_l': '656', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1916/30119374017_80cf84e89e_o.jpg', 'height_o': '1674', 'width_o': '2612', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1916/30119374017_b0d41a02d9_b.jpg'}>
+2018-10-26 16:53:19,712 | DEBUG | Opening Flickr-30119374017...
+2018-10-26 16:53:19,713 | INFO | Starting classification for Flickr-30119374017...
+2018-10-26 16:53:20,857 | DEBUG | Response for Flickr-30119374017 annotation request: label_annotations {
+  mid: "/m/02h7lkt"
+  description: "fictional character"
+  score: 0.5893531441688538
+  topicality: 0.5893531441688538
+}
+localized_object_annotations {
+  mid: "/m/07c52"
+  name: "Television"
+  score: 0.6204008460044861
+  bounding_poly {
+    normalized_vertices {
+      x: 0.19635602831840515
+      y: 0.760244607925415
+    }
+    normalized_vertices {
+      x: 0.36612075567245483
+      y: 0.760244607925415
+    }
+    normalized_vertices {
+      x: 0.36612075567245483
+      y: 0.9394211173057556
+    }
+    normalized_vertices {
+      x: 0.19635602831840515
+      y: 0.9394211173057556
+    }
+  }
+}
+localized_object_annotations {
+  mid: "/m/01g317"
+  name: "Person"
+  score: 0.5158693790435791
+  bounding_poly {
+    normalized_vertices {
+      x: 0.35339683294296265
+      y: 0.10391616076231003
+    }
+    normalized_vertices {
+      x: 0.5698972940444946
+      y: 0.10391616076231003
+    }
+    normalized_vertices {
+      x: 0.5698972940444946
+      y: 0.874907374382019
+    }
+    normalized_vertices {
+      x: 0.35339683294296265
+      y: 0.874907374382019
+    }
+  }
+}
+
+2018-10-26 16:53:20,857 | DEBUG | <Entity('Photo', 'Flickr-45042059922') {'id': '45042059922', 'owner': '33277524@N00', 'secret': '4f916d7f90', 'server': '1940', 'farm': 2, 'title': 'gwb | bat', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '2', 'dateupload': datetime.datetime(2018, 10, 4, 6, 46, 31), 'ownername': 'stoha', 'tags': 'bat guessewhereberlin berlin germany germania deutschland gwb stoha soh', 'url_z': 'https://farm2.staticflickr.com/1940/45042059922_4f916d7f90_z.jpg', 'height_z': '360', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1940/45042059922_4f916d7f90_c.jpg', 'height_c': 450, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1940/45042059922_4f916d7f90_b.jpg', 'height_l': '576', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1940/45042059922_d60da25e4c_o.jpg', 'height_o': '1080', 'width_o': '1920', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1940/45042059922_4f916d7f90_b.jpg'}>
+2018-10-26 16:53:20,858 | DEBUG | Opening Flickr-45042059922...
+2018-10-26 16:53:20,859 | INFO | Starting classification for Flickr-45042059922...
+2018-10-26 16:53:22,041 | DEBUG | Response for Flickr-45042059922 annotation request: label_annotations {
+  mid: "/m/038hg"
+  description: "green"
+  score: 0.9723944067955017
+  topicality: 0.9723944067955017
+}
+label_annotations {
+  mid: "/m/04k84"
+  description: "light"
+  score: 0.8374660611152649
+  topicality: 0.8374660611152649
+}
+label_annotations {
+  mid: "/m/03w43x"
+  description: "computer wallpaper"
+  score: 0.6799917221069336
+  topicality: 0.6799917221069336
+}
+label_annotations {
+  mid: "/m/01kyr8"
+  description: "darkness"
+  score: 0.6290448307991028
+  topicality: 0.6290448307991028
+}
+label_annotations {
+  mid: "/m/03gq5hm"
+  description: "font"
+  score: 0.6011305451393127
+  topicality: 0.6011305451393127
+}
+label_annotations {
+  mid: "/m/021sdg"
+  description: "graphics"
+  score: 0.550032377243042
+  topicality: 0.550032377243042
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.7217524647712708
+  bounding_poly {
+    normalized_vertices {
+      x: 0.08135296404361725
+      y: 0.2535882294178009
+    }
+    normalized_vertices {
+      x: 0.4649999737739563
+      y: 0.2535882294178009
+    }
+    normalized_vertices {
+      x: 0.4649999737739563
+      y: 0.7609999775886536
+    }
+    normalized_vertices {
+      x: 0.08135296404361725
+      y: 0.7609999775886536
+    }
+  }
+}
+
+2018-10-26 16:53:22,042 | DEBUG | <Entity('Photo', 'Flickr-44335634244') {'id': '44335634244', 'owner': '164740607@N08', 'secret': '808888b637', 'server': '1967', 'farm': 2, 'title': 'Seed dispersal 1', 'ispublic': 1, 'isfriend': 0, 'isfamily': 0, 'license': '1', 'dateupload': datetime.datetime(2018, 10, 2, 15, 39, 56), 'ownername': 'marmello-77', 'tags': 'bats fruits seeds dispersal diet inter interactions mammals chiroptera', 'url_z': 'https://farm2.staticflickr.com/1967/44335634244_808888b637_z.jpg', 'height_z': '427', 'width_z': '640', 'url_c': 'https://farm2.staticflickr.com/1967/44335634244_808888b637_c.jpg', 'height_c': 534, 'width_c': '800', 'url_l': 'https://farm2.staticflickr.com/1967/44335634244_808888b637_b.jpg', 'height_l': '683', 'width_l': '1024', 'url_o': 'https://farm2.staticflickr.com/1967/44335634244_a79e5e3242_o.jpg', 'height_o': '1296', 'width_o': '1944', 'source': 'Flickr', 'search_terms': 'bat', 'is_classified': False, 'download_url': 'https://farm2.staticflickr.com/1967/44335634244_808888b637_b.jpg'}>
+2018-10-26 16:53:22,045 | DEBUG | Opening Flickr-44335634244...
+2018-10-26 16:53:22,046 | INFO | Starting classification for Flickr-44335634244...
+2018-10-26 16:53:23,230 | DEBUG | Response for Flickr-44335634244 annotation request: label_annotations {
+  mid: "/m/03bmqb"
+  description: "flora"
+  score: 0.8407461047172546
+  topicality: 0.8407461047172546
+}
+label_annotations {
+  mid: "/m/03vt0"
+  description: "insect"
+  score: 0.8323773741722107
+  topicality: 0.8323773741722107
+}
+label_annotations {
+  mid: "/m/03rbf6"
+  description: "macro photography"
+  score: 0.8310677409172058
+  topicality: 0.8310677409172058
+}
+label_annotations {
+  mid: "/m/05nnm"
+  description: "organism"
+  score: 0.7455649971961975
+  topicality: 0.7455649971961975
+}
+label_annotations {
+  mid: "/m/02cqfm"
+  description: "close up"
+  score: 0.7231028079986572
+  topicality: 0.7231028079986572
+}
+label_annotations {
+  mid: "/m/03mp1"
+  description: "membrane winged insect"
+  score: 0.720174252986908
+  topicality: 0.720174252986908
+}
+label_annotations {
+  mid: "/m/01280g"
+  description: "wildlife"
+  score: 0.6892784237861633
+  topicality: 0.6892784237861633
+}
+label_annotations {
+  mid: "/m/01dqkc"
+  description: "pest"
+  score: 0.6390952467918396
+  topicality: 0.6390952467918396
+}
+label_annotations {
+  mid: "/m/01h4v9"
+  description: "hornet"
+  score: 0.6371034979820251
+  topicality: 0.6371034979820251
+}
+label_annotations {
+  mid: "/m/05mqq3"
+  description: "snout"
+  score: 0.5947429537773132
+  topicality: 0.5947429537773132
+}
+localized_object_annotations {
+  mid: "/m/0jbk"
+  name: "Animal"
+  score: 0.7506403923034668
+  bounding_poly {
+    normalized_vertices {
+      x: 0.031411781907081604
+      y: 0.004117660224437714
+    }
+    normalized_vertices {
+      x: 0.8899999856948853
+      y: 0.004117660224437714
+    }
+    normalized_vertices {
+      x: 0.8899999856948853
+      y: 0.9634117484092712
+    }
+    normalized_vertices {
+      x: 0.031411781907081604
+      y: 0.9634117484092712
+    }
+  }
+}
+

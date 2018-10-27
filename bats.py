@@ -22,9 +22,14 @@ from twython import Twython
 ### LOGGING ####################################################################
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
+path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+fh = logging.FileHandler(os.path.join(path, "birbybot.log"))
+fh.setLevel(logging.DEBUG)
+fh.setFormatter(formatter)
+# logger.addHandler(fh)
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 ### HELPERS ####################################################################
