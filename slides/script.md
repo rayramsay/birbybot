@@ -2,8 +2,10 @@
 
 * Turn on Caffeine.
 * Turn on Do Not Disturb.
+* Open Finder window with `rachel-src/birbybot/assets` in case you need to show pictures.
 * Open Chrome Guest Window from user portrait.
-* In Visual Studio Code, open `bats.py` and navigate to line 116.
+* In Visual Studio Code, open `bats.py.`
+* Navigate to line 116 in `bats.py`.
 * Open integrated terminal with `control+backtick`.
 * `cd rachel-src/birbybot/slides`
 * `reveal-md slides.md`
@@ -19,7 +21,7 @@
 ## Slide 0
 ### Building a Twitter Bot with Flickr and GCP
 
-Hello, what's up GDG San Francisco? How's everyone's DevFest going so far?
+Good morning, GDG San Francisco!
 
 My name is Rachel Ramsay, and today I'll be sharing what I learned while building a Twitter image bot with the Flickr API and Google Cloud Platform, particularly the Cloud Vision API.
 
@@ -483,16 +485,15 @@ Speech Transcription is currently in beta.
 
 You can combine those transcripts with the Natual Language API, or the Translation API.
 
-## Slide 35
-### More GCP
+What about the rest of what Google has to offer?
 
-One of the reasons why I used Cloud Datastore was that I was already on Google Cloud Platform due to Cloud Vision. It's worth exploring the rest of what Google has to offer.
+One of the reasons why I used Cloud Datastore was that I was already on Google Cloud Platform due to Cloud Vision &mdash; you too may end up katamari-ing your way through GCP.
 
 You may have noticed that our bats-to-Twitter script downloaded photos locally. That's not required -- you could get the image from its URL every time you wanted to work with it, or you can always store images with Cloud Storage.
 
 As for hosting your scripts, App Engine has a cron service, while Cloud Scheduler was announced back in July and is currently in alpha.
 
-## Slide 36
+## Slide 35
 ### Twitter
 
 At the end of July, Twitter started requiring developers to answer a questionnaire about how they plan to use Twitter's API and its data before permitting developers to create an API key.
@@ -507,6 +508,13 @@ Currently, Twitter asks four questions:
 This _is_ a hoop to jump through, but you can do it.
 
 (Also, Flickr already had a similar requirement, so I had my "Please just let me post cute animal photos" spiel ready to go.)
+
+## Slide 36
+### Twitter 403
+
+The other problem you might run into is, because your script runs at the same time every day, you might start running into 403s.
+
+Twitter does have a grievance process for this, or something I've started experimenting with is putting a small random sleep into my script.
 
 But maybe you're done with Twitter...
 
@@ -526,18 +534,21 @@ In addition to Twitter and Mastodon, Tumblr is a visually-focused social network
 
 Thank you for listening. I hope that you feel inspired to mash together some APIs to create something that makes you smile.
 
-One of my favorite parts of being on Twitter is seeing what other people are making. sailorhg led a technical zine&ndash;making workshop at Write/Speak/Code, and I absolutely loved seeing everyone post their efforts to Twitter.
-
-So, if you do build a Twitter bot, please at me and let me know!
+If you do build a Twitter bot, please at me and let me know!
 
 ## Slide 39
+### Inspirations
+
+Shoutout to a few of my favorite bots!
+
+## Slide 40
 ### Rachel Ramsay
 
 I am Rachel Ramsay, and I care about birds the normal amount.
 
 You can find me on Twitter at rachelbuilds, and you can find today's slides and code on my GitHub.
 
-## Slide 40
+## Slide 41
 ### Photo Credits
 
 Thanks to the photographers who took these turtle, bird, and bat photos!

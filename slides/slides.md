@@ -304,17 +304,15 @@ Where am I gonna host my scripts?
 
 ---
 
-### ️☁️ ☁️ ☁️
+### Twitter
 
-* Cloud Storage
-* App Engine 
-* Cloud Functions
+> All new developers must apply for a developer account to access Twitter APIs.
 
 ---
 
 ### Twitter
 
-> All new developers must apply for a developer account to access Twitter APIs.
+> This request looks like it might be automated. To protect our users from spam and other malicious activity, we can't complete this action right now.
 
 ---
 
@@ -330,12 +328,13 @@ Where am I gonna host my scripts?
 
 ---
 
-### Photo Credits
-* [Spotted Sandpiper Chick](https://www.flickr.com/photos/maxibaker/35854534516/) by Claude Bélanger (CC BY 2.0)
-* [Threatened baby bog turtle (Clemmys muhlenbergii)](https://www.flickr.com/photos/usfwsendsp/5039503186) by Rosie Walunas/USFWS (CC BY 2.0)
-* [Piping Plover Chicks](https://www.flickr.com/photos/joeshlabotnik/29025989546/) by Joe Shlabotnik (CC BY-NC-SA 2.0)
-* [Spotted Sandpiper Hatchlings](https://www.flickr.com/photos/guylmonty/15811119800) by Guy Monty (CC BY-NC-SA 2.0)
-* [Hunger](https://unsplash.com/photos/dqdN89NNPwk) by Rob Potter (Unsplash License)
+### Inspirations
+
+* [@BirdPerHour](https://www.twitter.com/BirdPerHour)
+* [@\_everybird\_](https://www.twitter.com/_everybird_)
+* [@thegentleoracle](https://www.twitter.com/thegentleoracle)
+* [@year\_progress](https://www.twitter.com/year_progress)
+* [@Jbfletch_ebooks](https://twitter.com/Jbfletch_ebooks)
 
 ---
 
@@ -344,3 +343,13 @@ Where am I gonna host my scripts?
 Developer Avocado<br>[@CloverPlatform](https://www.twitter.com/CloverPlatform)
 
 Find today's slides and code at [github.com/rayramsay/birbybot/](https://github.com/rayramsay/birbybot/)
+
+---
+
+### Photo Credits
+
+* [Spotted Sandpiper Chick](https://www.flickr.com/photos/maxibaker/35854534516/) by Claude Bélanger (CC BY 2.0)
+* [Threatened baby bog turtle (Clemmys muhlenbergii)](https://www.flickr.com/photos/usfwsendsp/5039503186) by Rosie Walunas/USFWS (CC BY 2.0)
+* [Piping Plover Chicks](https://www.flickr.com/photos/joeshlabotnik/29025989546/) by Joe Shlabotnik (CC BY-NC-SA 2.0)
+* [Spotted Sandpiper Hatchlings](https://www.flickr.com/photos/guylmonty/15811119800) by Guy Monty (CC BY-NC-SA 2.0)
+* [Hunger](https://unsplash.com/photos/dqdN89NNPwk) by Rob Potter (Unsplash License)
