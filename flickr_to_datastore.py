@@ -26,7 +26,7 @@ def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
 
         search_terms (str): A free text search. Photos whose title, description
         or tags contain the text will be returned. You can exclude results that
-        match a term by prepending it with a - character.
+        match a term by prepending it with `-`.
 
         min_upload_date (str, optional): Photos with an upload date greater than
         or equal to this value will be returned. The date can be in the form of
@@ -138,7 +138,7 @@ def get_download_url(entity):
 
 def write_entities_to_datastore(ds_client, entities):
     logger.debug(f"Writing {len(entities)} entities to Cloud Datastore for project beachbirbys...")
-    chunks = list(utils.chunks(entities, 500))
+    chunks = list(utils.chunk(entities, 500))
     logger.debug(f"Split entities into {len(chunks)} chunks.")
     for chunk in chunks:
         try:
