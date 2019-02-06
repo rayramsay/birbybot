@@ -22,49 +22,39 @@ logger = logging.getLogger(__name__)
 utils.configure_logger(logger, console_output=True)
 ################################################################################
 
-def pull_unclassified_entities(ds_client):
-    # TODO: Update docstring
-    """Retrieves entities from datastore that have no value for vision_labels.
+def pull(ds_client, kind, key, val):
+    """Retrieves entities from datastore where key == val.
 
     Args:
         ds_client (google.cloud.datastore.client.Client)
+        kind (str): e.g., "Photo"
+        key (str): e.g., "is_classified"
+        val (bool): e.g., False
 
     Returns:
-        list of google.cloud.datastore.entity.Entity of kind 'Photo'
+        list of google.cloud.datastore.entity.Entity of kind 'Photo': 
+        [<Entity('Photo', 'Flickr-36092472285') {'source': 'Flickr',
+        'is_classified': 'False', ...}>, ...]
     """
-    query = ds_client.query(kind="Photo")
-    query.add_filter("is_classified", "=", False)
+    query = ds_client.query(kind=kind)
+    query.add_filter(key, "=", val)
     logger.debug("Retrieving unclassified entities...")
     entities = list(query.fetch())
-    logger.info(f"Retrieved {len(entities)} unclassified entities.")
-    logger.debug(entities)
-    return entities
-
-
-def pull_non_birds(ds_client):
-    # TODO: Update docstring
-    """
-    Args:
-        ds_client (google.cloud.datastore.client.Client)
-
-    Returns:
-        list of google.cloud.datastore.entity.Entity of kind 'Photo'
-    """
-    query = ds_client.query(kind="Photo")
-    query.add_filter("is_bird", "=", False)
-    logger.debug("Retrieving non-bird entities...")
-    entities = list(query.fetch())
-    logger.info(f"Retrieved {len(entities)} non-bird entities.")
+    logger.info(f"Retrieved {len(entities)} {kind} entities where {key} is {val}.")
     logger.debug(entities)
     return entities
 
 
 def download_image(url, name):
-    # TODO: Improve docstring
-    """Downloads image from url, saves, returns filepath.
+    # TODO: Handle other filetypes than JPG?
+    """Downloads image from url, saves to disk, returns filepath.
+
+    Args:
+        url (str): URL of image
+        name (str): Name to save file as (do not include extension)
     
     Returns:
-        str 
+        str: e.g., "path/to/assets/name.jpg"
     """
     if not os.path.exists("assets"):
         pathlib.Path("assets").mkdir(parents=True)
@@ -90,19 +80,19 @@ def download_image(url, name):
 
 
 def name_from_path(filepath):
+    """Given str 'path/to/assets/name.jpg', returns 'name'."""
     return filepath.split("/")[-1][:-4]
 
 
-def too_big(blob):
-    return sys.getsizeof(blob) > 1500
-
-
 def vision_img_from_path(v_client, filepath):
-    # TODO: Docstring
-    """
-    Args
-    filepath (str)
-    Returns: google.cloud.vision_v1.types.Image
+    """Given a JPG location to open, returns Google Cloud Vision Image object.
+    
+    Args:
+        v_client (google.cloud.vision_v1.ImageAnnotatorClient)
+        filepath (str): 'path/to/assets/name.jpg'
+    
+    Returns:
+        google.cloud.vision_v1.types.Image
     """
     logger.debug(f"Opening {filepath}...")
     with io.open(filepath, 'rb') as image_file:
@@ -112,8 +102,17 @@ def vision_img_from_path(v_client, filepath):
 
 
 def get_safety_annotations(v_client, image):
-    # TODO: Docstring
-    """ arg google.cloud.vision_v1.types.Image"""
+    # TODO: Change signature to match get_object_annotations and get_label_annotations.
+    """
+    Args:
+        v_client (google.cloud.vision_v1.ImageAnnotatorClient)
+        image (google.cloud.vision_v1.types.Image
+
+    Returns:
+        dict of likelihoods that image contains an unsafe category:
+        {'adult': 'VERY_UNLIKELY', 'medical': 'UNLIKELY', 'spoofed': 'POSSIBLE',
+         'violence': 'LIKELY', 'racy': 'VERY_LIKELY'}
+    """
     # https://cloud.google.com/vision/docs/detecting-safe-search
     response = v_client.safe_search_detection(image=image)
     logger.debug(f"API response for safe_search_detection: {response}")
@@ -132,16 +131,16 @@ def get_safety_annotations(v_client, image):
 
 
 def get_label_annotations(v_client, filepath):
-    # TODO: Improve docstring
-    """Retrieve image's label annotations from Cloud Vision API.
+    """Given a JPG location to open, retrieves image's label annotations.
 
-    Arg: google.cloud.vision_v1.types.Image
+    Args:
+        v_client (google.cloud.vision_v1.ImageAnnotatorClient)
+        filepath (str): 'path/to/assets/name.jpg'
 
     Returns:
-        labels (list): List of EntityAnnotation objects. E.g., [mid: "/m/02mhj"
-        description: "ecosystem" score: 0.9368894100189209 topicality: 0.9368894100189209, ...]
-        See https://cloud.google.com/vision/docs/reference/rest/v1/images/annotate#EntityAnnotation
+        list of str labels that describe image contents: ['Bird', 'Soil', 'Lark']
     """
+    # https://cloud.google.com/vision/docs/reference/rest/v1/images/annotate#EntityAnnotation
     image = vision_img_from_path(v_client, filepath)
     response = v_client.label_detection(image=image)
     logger.debug(f"API response for label_detection: {response}")
@@ -154,7 +153,21 @@ def get_label_annotations(v_client, filepath):
 
 
 def get_object_annotations(v_client, filepath):
-    # TODO: Docstring
+    """Given a JPG location to open, return information about objects detected
+    in the image.
+
+    Args:
+        v_client (google.cloud.vision_v1.ImageAnnotatorClient)
+        filepath (str): 'path/to/assets/name.jpg'
+    
+    Returns:
+        list of object annotation dictionaries with object name and box
+        dimensions:
+        [{'name': 'bird', 'crop_box': [392, 353, 542, 470], 'draw_box': [392,
+        353, 542, 353, 542, 470, 392, 470]},
+         {'name': 'animal', 'crop_box': [392, 353, 542, 470], 'draw_box': [392,
+        353, 542, 353, 542, 470, 392, 470]}]
+    """
     # https://cloud.google.com/vision/docs/detecting-objects
     image = vision_img_from_path(v_client, filepath)
     response = v_client.object_localization(image=image)
@@ -184,6 +197,21 @@ def get_object_annotations(v_client, filepath):
 
 
 def get_crop_hints(v_client, filepath):
+    """Given a JPG location to open, retrieves vertices to crop to.
+
+    Args:
+        v_client (google.cloud.vision_v1.ImageAnnotatorClient)
+        filepath (str): 'path/to/assets/name.jpg'
+    
+    Returns:
+        list-esque google.protobuf.internal.containers.RepeatedCompositeFieldContainer
+        of four google.cloud.vision_v1.types.Vertex objects. Individual points
+        can be accessed like:
+            verts[0].x, verts[0].y,
+            verts[1].x, verts[1].y,
+            verts[2].x, verts[2].y,
+            verts[3].x, verts[3].y
+    """
     # https://cloud.google.com/vision/docs/crop-hints
     image = vision_img_from_path(v_client, filepath)
     response = v_client.crop_hints(image=image)
@@ -199,7 +227,7 @@ def get_crop_hints(v_client, filepath):
 
 def is_safe(safety_annotations):
     """Returns False if it is likely or very likey that the image contains
-    questionable content.
+    questionable content. Otherwise, returns True.
     
     Args:
         safety_annotations (dict)
@@ -211,15 +239,24 @@ def is_safe(safety_annotations):
 
 
 def is_bird(labels):
-    # TODO Docstring
-    """l_a list"""
+    """Given a list of strings, returns True if any match."""
     return any(x in labels for x in ["bird", "seabird", "beak", "egg"])
 
 
 def classify_entity(v_client, entity):
-    # TODO: Docstring
+    """Classifies entity as bird (and therefore as classified), and updates
+    entity locally.
+
+    Args:
+        v_client (google.cloud.vision_v1.ImageAnnotatorClient)
+        entity: google.cloud.datastore.entity.Entity of kind 'Photo'
+    
+    Returns:
+        None
     """
-    """
+    def too_big(blob):
+        return sys.getsizeof(blob) > 1500
+
     name = entity.key.name
     # Download from URL.
     filepath = download_image(url=entity.get("download_url"),
@@ -236,7 +273,7 @@ def classify_entity(v_client, entity):
         # is longer than 1500 bytes.
         if too_big(json.dumps(obs)):
             logger.warn(f"Object annotation {obs} too long to save to datastore; truncating...")
-            obs = obs[:1]
+            obs = obs[:100]
         entity.update({
             "object_labels": json.dumps(obs),
             "is_bird": is_bird(object_names)
@@ -261,9 +298,11 @@ def classify_entity(v_client, entity):
                     # If we've found a bird, stop iterating through objects.
                     if is_bird(la):
                         break
-            # If no boxes, annotate whole image.
+            # If no boxes, annotate the whole image.
             else:
                 label_annotations = get_label_annotations(v_client, filepath)
+            
+            # TODO Before dumping and updating label_annotations, check for bigness.
             entity.update({
                 "vision_labels": json.dumps(label_annotations),
                 "is_bird": is_bird(label_annotations)
@@ -287,14 +326,22 @@ def classify_entity(v_client, entity):
 
 
 def draw_on_box(box, filepath):
-    # TODO: Docstring
+    """Given a list of coordinates and a JPG location to open, draws box and
+    saves as new file.
+    
+    Args:
+        box (list): Integer coordinates of polygon vertices. Example: [392, 353,
+        542, 353, 542, 470, 392, 470]
+        filepath (str): 'path/to/assets/name.jpg'
+    
+    Returns:
+        str: path to new file
+    """
     # https://cloud.google.com/vision/docs/crop-hints
-
     if not os.path.exists("assets/cropped"):
         pathlib.Path("assets/cropped").mkdir(parents=True)
     name = name_from_path(filepath)
     draw_path = os.path.join(os.path.dirname(__file__), f'assets/cropped/{name}_boxed.jpg')
-    
     with Image.open(filepath) as im:
         # Don't draw on original.
         with im.copy() as im2:
@@ -303,24 +350,35 @@ def draw_on_box(box, filepath):
                          fill=None,
                          outline='red')
             im2.save(draw_path, 'JPEG')
-
     return draw_path
 
 
 def crop_to_box(box, filepath):
-    # TODO: Docstring
-    im = Image.open(filepath)
-    im2 = im.crop(box=box)
+    """Given a list of points and a JPG location to open, draws crops to points
+    and saves as new file.
+    
+    Args:
+        box (list): Integer points of box. Example: [392, 353, 542, 470]
+        filepath (str): 'path/to/assets/name.jpg'
+    
+    Returns:
+        str: path to new file
+    """
     if not os.path.exists("assets/cropped"):
         pathlib.Path("assets/cropped").mkdir(parents=True)
     name = name_from_path(filepath)
     crop_path = os.path.join(os.path.dirname(__file__), f'assets/cropped/{name}_cropped.jpg')
-    im2.save(crop_path, 'JPEG')
+    with Image.open(filepath) as im:
+        with im.crop(box=box) as im2:
+            im2.save(crop_path, 'JPEG')
     return crop_path
 
 
 def classify_unclassified_entities(ds_client, v_client):
-    entities = pull_unclassified_entities(ds_client)
+    entities = pull(ds_client,
+                    kind="Photo",
+                    key="is_classified",
+                    val=False)
     if entities:
         classified = 0
         non_birds = 0
