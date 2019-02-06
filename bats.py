@@ -19,56 +19,13 @@ from google.cloud import vision
 from PIL import Image
 from twython import Twython
 
+import flickr_to_datastore
+import utils
+
 ### LOGGING ####################################################################
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
-path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-fh = logging.FileHandler(os.path.join(path, "birbybot.log"))
-fh.setLevel(logging.DEBUG)
-fh.setFormatter(formatter)
-# logger.addHandler(fh)
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+utils.configure_logger(logger, console_output=True)
 ### HELPERS ####################################################################
-def pick_download_url(entity):
-    """Prefer url_l to url_c to url_z to url_o."""
-    if entity.get("url_l"):
-        url = entity["url_l"]
-    elif entity.get("url_c"):
-        url = entity["url_c"]
-    elif entity.get("url_z"):
-        url = entity["url_z"]
-    else:
-        url = entity["url_o"]
-    return url
-
-def download_image(url, name):
-    """Downloads image from url, saves in assets folder as name.jpg, returns
-    filepath."""
-    assets_path = os.path.join(os.path.dirname(__file__), "assets")
-    if not os.path.exists(assets_path):
-        pathlib.Path(assets_path).mkdir(parents=True)
-    filepath = os.path.join(assets_path + f"/{name}.jpg")
-    
-    # If we've already downloaded the image, just return.
-    if os.path.exists(filepath):
-        return filepath
-    
-    logger.debug(f"Opening {url}...")
-    r = requests.get(url, stream=True)
-    if r.status_code == 200:
-        with open(filepath, 'wb') as image:
-            for chunk in r:
-                image.write(chunk)
-        logger.debug(f"Saved image as {filepath}")
-    else:
-        logger.error(f"Failed to download {name} from {url}")
-        r.raise_for_status()
-    return filepath
- 
 def is_a(lst, labels):
     return any(x in labels for x in lst)
 
@@ -114,7 +71,6 @@ def classify_as_resp_only(terms, entities):
         except exceptions.GoogleAPIError as e:
             logger.exception(e)
             continue
-
 ################################################################################
 
 # Instantiate clients.
@@ -165,7 +121,7 @@ def photos_to_entities(photos):
             "source": "Flickr",
             "search_terms": "bat",
             "is_classified": False,
-            "download_url": pick_download_url(entity)
+            "download_url": flickr_to_datastore.get_download_url(entity)
         })
         entities.append(entity)
     return entities
@@ -180,7 +136,7 @@ def classify_as(terms, entities):
         # Download image. (You can use Cloud Vision API with a remote image, but
         # it's flaky.)
         try:
-            filepath = download_image(url=entity.get("download_url"),
+            filepath = utils.download_image(url=entity.get("download_url"),
                                       name=name)
         except requests.exceptions.HTTPError as e:
             logger.exception(e)

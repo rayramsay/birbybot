@@ -13,7 +13,6 @@ from google.cloud import datastore
 from twython import Twython
 
 import utils
-from classify_images import download_image
 from flickr_to_datastore import write_entities_to_datastore
 
 ### LOGGING ####################################################################
@@ -21,38 +20,17 @@ logger = logging.getLogger(__name__)
 utils.configure_logger(logger, console_output=True)
 ################################################################################
 
-def pull_entities_from_datastore(ds_client, tweeted_before=None):
-    """Retrieve bird photos that haven't been tweeted recently.
-    
-    Args:
-        tweeted_before (datetime.datetime)
-
-    Returns:
-        entities (list): List of is_bird Photo entities from beachbirbys
-        datastore, tweeted before datetime if passed. E.g., [<Entity('Photo',
-        'Flickr-36092472285') {'source': 'Flickr', ...}, ...]
-    """
-    logger.info(f"Retrieving is_bird entities tweeted before {tweeted_before:%Y-%m-%d}...")
-    query = ds_client.query(kind="Photo")
-    query.add_filter("is_bird", "=", True)
-    if tweeted_before:
-        query.add_filter("last_tweeted", "<=", tweeted_before)
-    entities = list(query.fetch())
-    logger.info(f"Retrieved {len(entities)} entities.")
-    logger.debug(entities)
-    return entities
-
-
-def pull_keyonly_entities_from_datastore(ds_client, tweeted_before=None):
-    """Retrieve bird photos that haven't been tweeted recently.
+def pull_keyonly_bird_entities(ds_client, tweeted_before=None):
+    """Retrieve keys of bird Photo entities that haven't been tweeted recently.
 
     Args:
         tweeted_before (datetime.datetime)
 
     Returns:
-        list of key-only google.cloud.datastore.entity.Entity
+        list of key-only google.cloud.datastore.entity.Entity of kind Photo and
+        is_bird True, tweeted before datetime if passed.
     """
-    logger.info(f"Retrieving is_bird entities tweeted before {tweeted_before:%Y-%m-%d}...")
+    logger.info(f"Retrieving keys of is_bird entities tweeted before {tweeted_before:%Y-%m-%d}...")
     query = ds_client.query(kind="Photo")
     query.add_filter("is_bird", "=", True)
     if tweeted_before:
@@ -104,8 +82,8 @@ def tweet_and_update(ds_client, entity):
     filepath = os.path.join(os.path.dirname(__file__), f'assets/{entity.key.name}.jpg')
     logger.debug(filepath)
     if not pathlib.Path(filepath).exists():
-        filepath = download_image(url=entity.get("download_url"),
-                                  name=entity.key.name)
+        filepath = utils.download_image(url=entity.get("download_url"),
+                                        name=entity.key.name)
     r = tweet_photo(message, filepath)
     # TODO: Parse r['created_at'] and use that for last tweeted?
     entity.update({
@@ -120,7 +98,7 @@ if __name__ == "__main__":
     try:
         ds_client = datastore.Client()
         one_month_ago = datetime.datetime.utcnow() - relativedelta(months=1)
-        keyonly_entities = pull_keyonly_entities_from_datastore(ds_client, tweeted_before=one_month_ago)
+        keyonly_entities = pull_keyonly_bird_entities(ds_client, tweeted_before=one_month_ago)
         entity = ds_client.get(random.choice(keyonly_entities).key)
         tweet_and_update(ds_client, entity)
     except Exception as e:

@@ -58,6 +58,7 @@ def create_entities_from_search(ds_client, search_terms, min_upload_date=None):
     params = {"text": search_terms,
               "license": "1,2,3,4,5,6,8,9,10",  # All licenses except All Rights Reserved & 'No known copyright restrictions' (latter excluded due to poor quality results)
               "media": "photos",
+              "content_type": "1",  # Photos only
               "safe_search": "1",
               "extras": "license,date_upload,owner_name,url_z,url_c,url_l,url_o",
               "min_upload_date": min_upload_date}

@@ -45,40 +45,6 @@ def pull(ds_client, kind, key, val):
     return entities
 
 
-def download_image(url, name):
-    # TODO: Handle other filetypes than JPG?
-    """Downloads image from url, saves to disk, returns filepath.
-
-    Args:
-        url (str): URL of image
-        name (str): Name to save file as (do not include extension)
-    
-    Returns:
-        str: e.g., "path/to/assets/name.jpg"
-    """
-    if not os.path.exists("assets"):
-        pathlib.Path("assets").mkdir(parents=True)
-    filepath = os.path.join(os.path.dirname(__file__), f'assets/{name}.jpg')
-    logger.debug(filepath)
-    
-    # If we've already downloaded an image, just return.
-    if os.path.exists(filepath):
-        logger.debug(f"{filepath} already exists.")
-        return filepath
-    
-    logger.debug(f"Opening {url}...")
-    r = requests.get(url, stream=True)
-    if r.status_code == 200:
-        with open(filepath, 'wb') as image:
-            for chunk in r:
-                image.write(chunk)
-        logger.debug(f"Saved image as {filepath}")
-    else:
-        logger.error(f"Failed to download {name} from {url}")
-        r.raise_for_status()
-    return filepath
-
-
 def name_from_path(filepath):
     """Given str 'path/to/assets/name.jpg', returns 'name'."""
     return filepath.split("/")[-1][:-4]
@@ -259,7 +225,7 @@ def classify_entity(v_client, entity):
 
     name = entity.key.name
     # Download from URL.
-    filepath = download_image(url=entity.get("download_url"),
+    filepath = utils.download_image(url=entity.get("download_url"),
                               name=name)
     # Find objects in image.
     logger.debug(f"Requesting object detection for {filepath}...")

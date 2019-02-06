@@ -12,3 +12,11 @@ Birbybot is built with:
 * [Cloud Vision API](https://cloud.google.com/vision/docs/all-samples)
 
 It is hosted on [PythonAnywhere](https://www.pythonanywhere.com), where it tries to stay out of the tarpit.
+
+## Files
+* `flickr_to_datastore.py`
+Should be run once a month via cron, but I don't have it set up anywhere.
+* `classify_images.py`
+Should be run after new images are added to datastore.
+* `tweet.py`
+Chooses image from datastore and tweets it. Cron job runs daily.
