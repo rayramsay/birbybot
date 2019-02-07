@@ -3,7 +3,7 @@
 
 import pytest
 
-from classify_images import is_safe
+from utils import is_safe
 
 def test_is_safe():
     """`is_safe` should return False if any categories are LIKELY or VERY_LIKELY;
